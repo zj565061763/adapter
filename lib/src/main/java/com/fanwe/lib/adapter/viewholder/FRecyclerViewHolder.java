@@ -6,37 +6,37 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fanwe.lib.adapter.SDRecyclerAdapter;
+import com.fanwe.lib.adapter.FRecyclerAdapter;
 
 /**
  * Created by Administrator on 2016/8/27.
  */
-public abstract class SDRecyclerViewHolder<T> extends RecyclerView.ViewHolder implements
+public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder implements
         View.OnClickListener,
         View.OnLongClickListener
 {
     private T mModel;
-    private SDRecyclerAdapter mAdapter;
+    private FRecyclerAdapter mAdapter;
     private SparseArray<View> mArrayView;
 
-    public SDRecyclerViewHolder(View itemView)
+    public FRecyclerViewHolder(View itemView)
     {
         super(itemView);
         itemView.setOnClickListener(this);
         itemView.setOnLongClickListener(this);
     }
 
-    public SDRecyclerViewHolder(ViewGroup parent, int layoutId)
+    public FRecyclerViewHolder(ViewGroup parent, int layoutId)
     {
         this(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
     }
 
-    public void setAdapter(SDRecyclerAdapter adapter)
+    public void setAdapter(FRecyclerAdapter adapter)
     {
         this.mAdapter = adapter;
     }
 
-    public SDRecyclerAdapter getAdapter()
+    public FRecyclerAdapter getAdapter()
     {
         return mAdapter;
     }

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class SDPagerAdapter<T> extends PagerAdapter implements ISDAdapter<T>
+public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<T>
 {
     private List<T> mListModel = new ArrayList<T>();
     private Activity mActivity;
@@ -21,7 +21,7 @@ public abstract class SDPagerAdapter<T> extends PagerAdapter implements ISDAdapt
 
     private SDItemClickCallback<T> mItemClickCallback;
 
-    public SDPagerAdapter(List<T> listModel, Activity activity)
+    public FPagerAdapter(List<T> listModel, Activity activity)
     {
         setData(listModel);
         this.mActivity = activity;
@@ -129,7 +129,7 @@ public abstract class SDPagerAdapter<T> extends PagerAdapter implements ISDAdapt
 
     public abstract View getView(ViewGroup container, int position);
 
-    //----------ISDAdapter implements start----------
+    //----------FAdapter implements start----------
 
     @Override
     public Activity getActivity()
@@ -322,6 +322,6 @@ public abstract class SDPagerAdapter<T> extends PagerAdapter implements ISDAdapt
         updateData(null);
     }
 
-    //----------ISDAdapter implements end----------
+    //----------FAdapter implements end----------
 
 }

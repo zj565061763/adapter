@@ -1,43 +1,39 @@
 package com.fanwe.lib.adapter;
 
 import android.app.Activity;
-import android.support.v7.widget.RecyclerView;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.fanwe.lib.adapter.viewholder.SDRecyclerViewHolder;
+import android.widget.BaseAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.WeakHashMap;
 
-/**
- * RecyclerView适配器
- *
- * @param <T> 实体类型
- */
-public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecyclerViewHolder<T>> implements
-        ISDAdapter<T>,
-        View.OnClickListener
+public abstract class FBaseAdapter<T> extends BaseAdapter implements
+        FAdapter<T>,
+        View.OnClickListener,
+        FAdapter.SDItemClickCallback<T>
 {
-    private Activity mActivity;
     private List<T> mListModel = new ArrayList<>();
-    private List<Object> mDefaultPayloads = new ArrayList<>();
+    private Activity mActivity;
+
+    /**
+     * 保存每个itemView对应的position
+     */
+    private Map<View, Integer> mMapViewPosition = new WeakHashMap<>();
 
     private boolean mAutoNotifyDataSetChanged = true;
 
     private SDItemClickCallback<T> mItemClickCallback;
     private SDItemLongClickCallback<T> mItemLongClickCallback;
 
-    public SDRecyclerAdapter(Activity activity)
+    public FBaseAdapter(Activity activity)
     {
-        this(null, activity);
-    }
-
-    public SDRecyclerAdapter(List<T> listModel, Activity activity)
-    {
-        super();
-        this.mActivity = activity;
-        setData(listModel);
+        mActivity = activity;
     }
 
     /**
@@ -47,7 +43,7 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
      */
     public void setItemClickCallback(SDItemClickCallback<T> itemClickCallback)
     {
-        this.mItemClickCallback = itemClickCallback;
+        mItemClickCallback = itemClickCallback;
     }
 
     /**
@@ -57,7 +53,7 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
      */
     public void setItemLongClickCallback(SDItemLongClickCallback<T> itemLongClickCallback)
     {
-        this.mItemLongClickCallback = itemLongClickCallback;
+        mItemLongClickCallback = itemLongClickCallback;
     }
 
     /**
@@ -67,7 +63,7 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
      * @param item
      * @param view
      */
-    public void notifyItemClickCallback(int position, T item, View view)
+    public final void notifyItemClickCallback(int position, T item, View view)
     {
         if (mItemClickCallback != null)
         {
@@ -82,7 +78,7 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
      * @param item
      * @param view
      */
-    public void notifyItemLongClickCallback(int position, T item, View view)
+    public final void notifyItemLongClickCallback(int position, T item, View view)
     {
         if (mItemLongClickCallback != null)
         {
@@ -91,85 +87,101 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
     }
 
     @Override
-    public int getItemCount()
+    public void notifyDataSetChanged()
     {
-        return getDataCount();
-    }
-
-    @Override
-    public final SDRecyclerViewHolder<T> onCreateViewHolder(ViewGroup parent, int viewType)
-    {
-        SDRecyclerViewHolder<T> holder = onCreateVHolder(parent, viewType);
-        holder.setAdapter(this);
-
-        return holder;
-    }
-
-    @Override
-    public final void onBindViewHolder(SDRecyclerViewHolder<T> holder, int position, List<Object> payloads)
-    {
-        onBindViewHolderInternal(holder, position, true);
-    }
-
-    @Override
-    public final void onBindViewHolder(SDRecyclerViewHolder<T> holder, int position)
-    {
-        onBindViewHolderInternal(holder, position, false);
-    }
-
-    private void onBindViewHolderInternal(SDRecyclerViewHolder<T> holder, int position, boolean isUpdate)
-    {
-        T model = getData(position);
-        holder.setModel(model);
-
-        if (isUpdate)
-        {
-            holder.onUpdateData(position, model);
-            onUpdateData(holder, position, model);
-        } else
-        {
-            holder.onBindData(position, model);
-            onBindData(holder, position, model);
-        }
-    }
-
-    /**
-     * 创建ViewHolder
-     *
-     * @param parent
-     * @param viewType
-     * @return
-     */
-    public abstract SDRecyclerViewHolder<T> onCreateVHolder(ViewGroup parent, int viewType);
-
-    /**
-     * 绑定数据
-     *
-     * @param holder
-     * @param position
-     * @param model
-     */
-    public abstract void onBindData(SDRecyclerViewHolder<T> holder, int position, T model);
-
-    /**
-     * 刷新item的时候触发，默认整个item重新绑定数据
-     *
-     * @param holder
-     * @param position
-     * @param model
-     */
-    public void onUpdateData(SDRecyclerViewHolder<T> holder, int position, T model)
-    {
-        onBindData(holder, position, model);
+        mMapViewPosition.clear();
+        super.notifyDataSetChanged();
     }
 
     @Override
     public void onClick(View view)
     {
-
+        final Integer position = mMapViewPosition.get(view);
+        if (position != null)
+        {
+            onItemClick(position, getItem(position), view);
+        }
     }
 
-    //----------ISDAdapter implements start----------
+    @Override
+    public void onItemClick(int position, T model, View view)
+    {
+        notifyItemClickCallback(position, model, view);
+    }
+
+    @Override
+    public int getCount()
+    {
+        return getDataCount();
+    }
+
+    @Override
+    public T getItem(int position)
+    {
+        return getData(position);
+    }
+
+    @Override
+    public long getItemId(int position)
+    {
+        return position;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
+        convertView = onGetView(position, convertView, parent);
+        mMapViewPosition.put(convertView, position);
+        return convertView;
+    }
+
+    protected abstract View onGetView(int position, View convertView, ViewGroup parent);
+
+    /**
+     * 获得该position对应的itemView
+     *
+     * @param position
+     * @return
+     */
+    public List<View> getItemView(int position)
+    {
+        if (mMapViewPosition.isEmpty())
+        {
+            return null;
+        }
+
+        final List<View> list = new ArrayList<>();
+
+        final Set<Entry<View, Integer>> set = mMapViewPosition.entrySet();
+        for (Entry<View, Integer> item : set)
+        {
+            if (Integer.valueOf(position).equals(item.getValue()))
+            {
+                View view = item.getKey();
+                if (view != null && view.getParent() != null)
+                {
+                    list.add(view);
+                }
+            }
+        }
+
+        return list;
+    }
+
+    /**
+     * 若重写此方法，则应该把需要刷新的逻辑写在重写方法中，然后不调用super的方法，此方法会在调用updateItem方法刷新某一项时候触发
+     *
+     * @param position
+     * @param convertView
+     * @param parent
+     * @param model
+     */
+    protected void onUpdateView(int position, View convertView, ViewGroup parent, T model)
+    {
+        getView(position, convertView, parent);
+    }
+
+    //----------FAdapter implements start----------
 
     @Override
     public Activity getActivity()
@@ -189,8 +201,10 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
         if (position >= 0 && position < mListModel.size())
         {
             return true;
+        } else
+        {
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -205,8 +219,10 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
         if (isPositionLegal(position))
         {
             return mListModel.get(position);
+        } else
+        {
+            return null;
         }
-        return null;
     }
 
     @Override
@@ -215,8 +231,10 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
         if (mListModel != null)
         {
             return mListModel.size();
+        } else
+        {
+            return 0;
         }
-        return 0;
     }
 
     @Override
@@ -226,9 +244,9 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
     }
 
     @Override
-    public void updateData(List<T> list)
+    public void updateData(List<T> listModel)
     {
-        setData(list);
+        setData(listModel);
         if (mAutoNotifyDataSetChanged)
         {
             notifyDataSetChanged();
@@ -240,10 +258,10 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
     {
         if (list != null)
         {
-            this.mListModel = list;
+            mListModel = list;
         } else
         {
-            this.mListModel.clear();
+            mListModel.clear();
         }
     }
 
@@ -264,7 +282,7 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
         mListModel.add(model);
         if (mAutoNotifyDataSetChanged)
         {
-            notifyItemInserted(mListModel.size() - 1);
+            notifyDataSetChanged();
         }
     }
 
@@ -276,13 +294,10 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
             return;
         }
 
-        final int positionStart = mListModel.size();
-        final int itemCount = list.size();
-
         mListModel.addAll(list);
         if (mAutoNotifyDataSetChanged)
         {
-            notifyItemRangeInserted(positionStart, itemCount);
+            notifyDataSetChanged();
         }
     }
 
@@ -303,7 +318,7 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
         final T model = mListModel.remove(position);
         if (mAutoNotifyDataSetChanged)
         {
-            notifyItemRemoved(position);
+            notifyDataSetChanged();
         }
         return model;
     }
@@ -319,7 +334,7 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
         mListModel.add(position, model);
         if (mAutoNotifyDataSetChanged)
         {
-            notifyItemInserted(position);
+            notifyDataSetChanged();
         }
     }
 
@@ -331,13 +346,10 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
             return;
         }
 
-        final int positionStart = position;
-        final int itemCount = list.size();
-
         mListModel.addAll(position, list);
         if (mAutoNotifyDataSetChanged)
         {
-            notifyItemRangeInserted(positionStart, itemCount);
+            notifyDataSetChanged();
         }
     }
 
@@ -359,11 +371,16 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
     @Override
     public void updateData(int position)
     {
-        if (!isPositionLegal(position))
+        List<View> list = getItemView(position);
+        if (list == null || list.isEmpty())
         {
             return;
         }
-        notifyItemChanged(position, mDefaultPayloads);
+
+        for (View item : list)
+        {
+            onUpdateView(position, item, (ViewGroup) item.getParent(), getItem(position));
+        }
     }
 
     @Override
@@ -372,5 +389,26 @@ public abstract class SDRecyclerAdapter<T> extends RecyclerView.Adapter<SDRecycl
         updateData(null);
     }
 
-    //----------ISDAdapter implements end----------
+    //----------FAdapter implements end----------
+
+    // util method
+    @SuppressWarnings("unchecked")
+    public static <V extends View> V get(int id, View convertView)
+    {
+        SparseArray<View> viewHolder = (SparseArray<View>) convertView.getTag();
+        if (viewHolder == null)
+        {
+            viewHolder = new SparseArray<View>();
+            convertView.setTag(viewHolder);
+        }
+        View childView = viewHolder.get(id);
+        if (childView == null)
+        {
+            childView = convertView.findViewById(id);
+            viewHolder.put(id, childView);
+        }
+        return (V) childView;
+    }
+
+
 }

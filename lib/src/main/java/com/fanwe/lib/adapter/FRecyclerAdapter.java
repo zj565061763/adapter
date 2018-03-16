@@ -1,39 +1,43 @@
 package com.fanwe.lib.adapter;
 
 import android.app.Activity;
-import android.util.SparseArray;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+
+import com.fanwe.lib.adapter.viewholder.FRecyclerViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.WeakHashMap;
 
-public abstract class SDAdapter<T> extends BaseAdapter implements
-        ISDAdapter<T>,
-        View.OnClickListener,
-        ISDAdapter.SDItemClickCallback<T>
+/**
+ * RecyclerView适配器
+ *
+ * @param <T> 实体类型
+ */
+public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecyclerViewHolder<T>> implements
+        FAdapter<T>,
+        View.OnClickListener
 {
-    private List<T> mListModel = new ArrayList<>();
     private Activity mActivity;
-
-    /**
-     * 保存每个itemView对应的position
-     */
-    private Map<View, Integer> mMapViewPosition = new WeakHashMap<>();
+    private List<T> mListModel = new ArrayList<>();
+    private List<Object> mDefaultPayloads = new ArrayList<>();
 
     private boolean mAutoNotifyDataSetChanged = true;
 
     private SDItemClickCallback<T> mItemClickCallback;
     private SDItemLongClickCallback<T> mItemLongClickCallback;
 
-    public SDAdapter(Activity activity)
+    public FRecyclerAdapter(Activity activity)
     {
-        mActivity = activity;
+        this(null, activity);
+    }
+
+    public FRecyclerAdapter(List<T> listModel, Activity activity)
+    {
+        super();
+        this.mActivity = activity;
+        setData(listModel);
     }
 
     /**
@@ -43,7 +47,7 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
      */
     public void setItemClickCallback(SDItemClickCallback<T> itemClickCallback)
     {
-        mItemClickCallback = itemClickCallback;
+        this.mItemClickCallback = itemClickCallback;
     }
 
     /**
@@ -53,7 +57,7 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
      */
     public void setItemLongClickCallback(SDItemLongClickCallback<T> itemLongClickCallback)
     {
-        mItemLongClickCallback = itemLongClickCallback;
+        this.mItemLongClickCallback = itemLongClickCallback;
     }
 
     /**
@@ -63,7 +67,7 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
      * @param item
      * @param view
      */
-    public final void notifyItemClickCallback(int position, T item, View view)
+    public void notifyItemClickCallback(int position, T item, View view)
     {
         if (mItemClickCallback != null)
         {
@@ -78,7 +82,7 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
      * @param item
      * @param view
      */
-    public final void notifyItemLongClickCallback(int position, T item, View view)
+    public void notifyItemLongClickCallback(int position, T item, View view)
     {
         if (mItemLongClickCallback != null)
         {
@@ -87,101 +91,85 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
     }
 
     @Override
-    public void notifyDataSetChanged()
-    {
-        mMapViewPosition.clear();
-        super.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onClick(View view)
-    {
-        final Integer position = mMapViewPosition.get(view);
-        if (position != null)
-        {
-            onItemClick(position, getItem(position), view);
-        }
-    }
-
-    @Override
-    public void onItemClick(int position, T model, View view)
-    {
-        notifyItemClickCallback(position, model, view);
-    }
-
-    @Override
-    public int getCount()
+    public int getItemCount()
     {
         return getDataCount();
     }
 
     @Override
-    public T getItem(int position)
+    public final FRecyclerViewHolder<T> onCreateViewHolder(ViewGroup parent, int viewType)
     {
-        return getData(position);
+        FRecyclerViewHolder<T> holder = onCreateVHolder(parent, viewType);
+        holder.setAdapter(this);
+
+        return holder;
     }
 
     @Override
-    public long getItemId(int position)
+    public final void onBindViewHolder(FRecyclerViewHolder<T> holder, int position, List<Object> payloads)
     {
-        return position;
+        onBindViewHolderInternal(holder, position, true);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public final void onBindViewHolder(FRecyclerViewHolder<T> holder, int position)
     {
-        convertView = onGetView(position, convertView, parent);
-        mMapViewPosition.put(convertView, position);
-        return convertView;
+        onBindViewHolderInternal(holder, position, false);
     }
 
-    protected abstract View onGetView(int position, View convertView, ViewGroup parent);
+    private void onBindViewHolderInternal(FRecyclerViewHolder<T> holder, int position, boolean isUpdate)
+    {
+        T model = getData(position);
+        holder.setModel(model);
+
+        if (isUpdate)
+        {
+            holder.onUpdateData(position, model);
+            onUpdateData(holder, position, model);
+        } else
+        {
+            holder.onBindData(position, model);
+            onBindData(holder, position, model);
+        }
+    }
 
     /**
-     * 获得该position对应的itemView
+     * 创建ViewHolder
      *
-     * @param position
+     * @param parent
+     * @param viewType
      * @return
      */
-    public List<View> getItemView(int position)
-    {
-        if (mMapViewPosition.isEmpty())
-        {
-            return null;
-        }
-
-        final List<View> list = new ArrayList<>();
-
-        final Set<Entry<View, Integer>> set = mMapViewPosition.entrySet();
-        for (Entry<View, Integer> item : set)
-        {
-            if (Integer.valueOf(position).equals(item.getValue()))
-            {
-                View view = item.getKey();
-                if (view != null && view.getParent() != null)
-                {
-                    list.add(view);
-                }
-            }
-        }
-
-        return list;
-    }
+    public abstract FRecyclerViewHolder<T> onCreateVHolder(ViewGroup parent, int viewType);
 
     /**
-     * 若重写此方法，则应该把需要刷新的逻辑写在重写方法中，然后不调用super的方法，此方法会在调用updateItem方法刷新某一项时候触发
+     * 绑定数据
      *
+     * @param holder
      * @param position
-     * @param convertView
-     * @param parent
      * @param model
      */
-    protected void onUpdateView(int position, View convertView, ViewGroup parent, T model)
+    public abstract void onBindData(FRecyclerViewHolder<T> holder, int position, T model);
+
+    /**
+     * 刷新item的时候触发，默认整个item重新绑定数据
+     *
+     * @param holder
+     * @param position
+     * @param model
+     */
+    public void onUpdateData(FRecyclerViewHolder<T> holder, int position, T model)
     {
-        getView(position, convertView, parent);
+        onBindData(holder, position, model);
     }
 
-    //----------ISDAdapter implements start----------
+    @Override
+    public void onClick(View view)
+    {
+
+    }
+
+    //----------FAdapter implements start----------
 
     @Override
     public Activity getActivity()
@@ -201,10 +189,8 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
         if (position >= 0 && position < mListModel.size())
         {
             return true;
-        } else
-        {
-            return false;
         }
+        return false;
     }
 
     @Override
@@ -219,10 +205,8 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
         if (isPositionLegal(position))
         {
             return mListModel.get(position);
-        } else
-        {
-            return null;
         }
+        return null;
     }
 
     @Override
@@ -231,10 +215,8 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
         if (mListModel != null)
         {
             return mListModel.size();
-        } else
-        {
-            return 0;
         }
+        return 0;
     }
 
     @Override
@@ -244,9 +226,9 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
     }
 
     @Override
-    public void updateData(List<T> listModel)
+    public void updateData(List<T> list)
     {
-        setData(listModel);
+        setData(list);
         if (mAutoNotifyDataSetChanged)
         {
             notifyDataSetChanged();
@@ -258,10 +240,10 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
     {
         if (list != null)
         {
-            mListModel = list;
+            this.mListModel = list;
         } else
         {
-            mListModel.clear();
+            this.mListModel.clear();
         }
     }
 
@@ -282,7 +264,7 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
         mListModel.add(model);
         if (mAutoNotifyDataSetChanged)
         {
-            notifyDataSetChanged();
+            notifyItemInserted(mListModel.size() - 1);
         }
     }
 
@@ -294,10 +276,13 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
             return;
         }
 
+        final int positionStart = mListModel.size();
+        final int itemCount = list.size();
+
         mListModel.addAll(list);
         if (mAutoNotifyDataSetChanged)
         {
-            notifyDataSetChanged();
+            notifyItemRangeInserted(positionStart, itemCount);
         }
     }
 
@@ -318,7 +303,7 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
         final T model = mListModel.remove(position);
         if (mAutoNotifyDataSetChanged)
         {
-            notifyDataSetChanged();
+            notifyItemRemoved(position);
         }
         return model;
     }
@@ -334,7 +319,7 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
         mListModel.add(position, model);
         if (mAutoNotifyDataSetChanged)
         {
-            notifyDataSetChanged();
+            notifyItemInserted(position);
         }
     }
 
@@ -346,10 +331,13 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
             return;
         }
 
+        final int positionStart = position;
+        final int itemCount = list.size();
+
         mListModel.addAll(position, list);
         if (mAutoNotifyDataSetChanged)
         {
-            notifyDataSetChanged();
+            notifyItemRangeInserted(positionStart, itemCount);
         }
     }
 
@@ -371,16 +359,11 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
     @Override
     public void updateData(int position)
     {
-        List<View> list = getItemView(position);
-        if (list == null || list.isEmpty())
+        if (!isPositionLegal(position))
         {
             return;
         }
-
-        for (View item : list)
-        {
-            onUpdateView(position, item, (ViewGroup) item.getParent(), getItem(position));
-        }
+        notifyItemChanged(position, mDefaultPayloads);
     }
 
     @Override
@@ -389,26 +372,5 @@ public abstract class SDAdapter<T> extends BaseAdapter implements
         updateData(null);
     }
 
-    //----------ISDAdapter implements end----------
-
-    // util method
-    @SuppressWarnings("unchecked")
-    public static <V extends View> V get(int id, View convertView)
-    {
-        SparseArray<View> viewHolder = (SparseArray<View>) convertView.getTag();
-        if (viewHolder == null)
-        {
-            viewHolder = new SparseArray<View>();
-            convertView.setTag(viewHolder);
-        }
-        View childView = viewHolder.get(id);
-        if (childView == null)
-        {
-            childView = convertView.findViewById(id);
-            viewHolder.put(id, childView);
-        }
-        return (V) childView;
-    }
-
-
+    //----------FAdapter implements end----------
 }

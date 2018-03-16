@@ -4,31 +4,31 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fanwe.lib.adapter.viewholder.SDRecyclerViewHolder;
+import com.fanwe.lib.adapter.viewholder.FRecyclerViewHolder;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2016/9/7.
  */
-public abstract class SDSimpleRecyclerAdapter<T> extends SDRecyclerAdapter<T>
+public abstract class FSimpleRecyclerAdapter<T> extends FRecyclerAdapter<T>
 {
-    public SDSimpleRecyclerAdapter(Activity activity)
+    public FSimpleRecyclerAdapter(Activity activity)
     {
         super(activity);
     }
 
-    public SDSimpleRecyclerAdapter(List<T> listModel, Activity activity)
+    public FSimpleRecyclerAdapter(List<T> listModel, Activity activity)
     {
         super(listModel, activity);
     }
 
     @Override
-    public SDRecyclerViewHolder<T> onCreateVHolder(ViewGroup parent, int viewType)
+    public FRecyclerViewHolder<T> onCreateVHolder(ViewGroup parent, int viewType)
     {
         int layoutId = getLayoutId(parent, viewType);
         View itemView = inflate(layoutId, parent);
-        SDRecyclerViewHolder<T> holder = new SDRecyclerViewHolder<T>(itemView)
+        FRecyclerViewHolder<T> holder = new FRecyclerViewHolder<T>(itemView)
         {
             @Override
             public void onBindData(int position, T model)

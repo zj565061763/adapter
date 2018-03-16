@@ -4,9 +4,9 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 
-public abstract class SDSimpleAdapter<T> extends SDAdapter<T>
+public abstract class FSimpleAdapter<T> extends FBaseAdapter<T>
 {
-    public SDSimpleAdapter(Activity activity)
+    public FSimpleAdapter(Activity activity)
     {
         super(activity);
     }

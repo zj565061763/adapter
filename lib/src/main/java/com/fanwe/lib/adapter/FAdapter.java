@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by L on 2016/8/28.
  */
-public interface ISDAdapter<T>
+public interface FAdapter<T>
 {
     /**
      * 获得Activity

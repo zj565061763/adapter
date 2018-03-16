@@ -5,23 +5,23 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fanwe.lib.adapter.SDAdapter;
+import com.fanwe.lib.adapter.FBaseAdapter;
 
-public abstract class SDViewHolder<T> implements
+public abstract class FViewHolder<T> implements
         View.OnClickListener,
         View.OnLongClickListener
 {
     public View itemView;
     private T mModel;
-    private SDAdapter mAdapter;
+    private FBaseAdapter mAdapter;
     private SparseArray<View> mArrayView;
 
-    public void setAdapter(SDAdapter adapter)
+    public void setAdapter(FBaseAdapter adapter)
     {
         this.mAdapter = adapter;
     }
 
-    public SDAdapter getAdapter()
+    public FBaseAdapter getAdapter()
     {
         return mAdapter;
     }
