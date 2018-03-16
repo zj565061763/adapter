@@ -214,7 +214,8 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
     }
 
     /**
-     * 若重写此方法，则应该把需要刷新的逻辑写在重写方法中，然后不调用super的方法，此方法会在调用updateItem方法刷新某一项时候触发
+     * 若重写此方法，则应该把需要刷新的逻辑写在重写方法中，然后不调用super的方法<br>
+     * 此方法会在调用{@link #notifyItemViewChanged(int)}方法刷新某一项时候触发
      *
      * @param position
      * @param convertView
