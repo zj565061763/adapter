@@ -16,7 +16,7 @@ import java.util.WeakHashMap;
 public abstract class FBaseAdapter<T> extends BaseAdapter implements
         FAdapter<T>,
         View.OnClickListener,
-        FAdapter.SDItemClickCallback<T>
+        FAdapter.ItemClickCallback<T>
 {
     private FAdapterProxy<T> mAdapterProxy;
     /**
@@ -24,8 +24,8 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
      */
     private Map<View, Integer> mMapViewPosition = new WeakHashMap<>();
 
-    private SDItemClickCallback<T> mItemClickCallback;
-    private SDItemLongClickCallback<T> mItemLongClickCallback;
+    private ItemClickCallback<T> mItemClickCallback;
+    private ItemLongClickCallback<T> mItemLongClickCallback;
 
     public FBaseAdapter(Activity activity)
     {
@@ -85,7 +85,7 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
      *
      * @param itemClickCallback
      */
-    public void setItemClickCallback(SDItemClickCallback<T> itemClickCallback)
+    public void setItemClickCallback(ItemClickCallback<T> itemClickCallback)
     {
         mItemClickCallback = itemClickCallback;
     }
@@ -95,7 +95,7 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
      *
      * @param itemLongClickCallback
      */
-    public void setItemLongClickCallback(SDItemLongClickCallback<T> itemLongClickCallback)
+    public void setItemLongClickCallback(ItemLongClickCallback<T> itemLongClickCallback)
     {
         mItemLongClickCallback = itemLongClickCallback;
     }
@@ -122,12 +122,13 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
      * @param item
      * @param view
      */
-    public final void notifyItemLongClickCallback(int position, T item, View view)
+    public final boolean notifyItemLongClickCallback(int position, T item, View view)
     {
         if (mItemLongClickCallback != null)
         {
-            mItemLongClickCallback.onItemLongClick(position, item, view);
+            return mItemLongClickCallback.onItemLongClick(position, item, view);
         }
+        return false;
     }
 
     @Override

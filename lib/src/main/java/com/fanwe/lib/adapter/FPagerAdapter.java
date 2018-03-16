@@ -15,7 +15,7 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<
     private SparseArray<View> mArrCacheView = new SparseArray<>();
     private boolean mAutoCacheView = false;
 
-    private SDItemClickCallback<T> mItemClickCallback;
+    private ItemClickCallback<T> mItemClickCallback;
 
     public FPagerAdapter(Activity activity)
     {
@@ -107,7 +107,7 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<
         mArrCacheView.clear();
     }
 
-    public void setItemClickCallback(SDItemClickCallback<T> itemClickCallback)
+    public void setItemClickCallback(ItemClickCallback<T> itemClickCallback)
     {
         this.mItemClickCallback = itemClickCallback;
     }

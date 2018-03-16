@@ -138,13 +138,13 @@ public interface FAdapter<T>
      */
     void notifyItemViewChanged(int position);
 
-    interface SDItemClickCallback<T>
+    interface ItemClickCallback<T>
     {
         void onItemClick(int position, T item, View view);
     }
 
-    interface SDItemLongClickCallback<T>
+    interface ItemLongClickCallback<T>
     {
-        void onItemLongClick(int position, T item, View view);
+        boolean onItemLongClick(int position, T item, View view);
     }
 }

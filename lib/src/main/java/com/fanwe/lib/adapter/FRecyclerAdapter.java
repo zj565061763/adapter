@@ -22,8 +22,8 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     private FAdapterProxy<T> mAdapterProxy;
     private List<Object> mDefaultPayloads = new ArrayList<>();
 
-    private SDItemClickCallback<T> mItemClickCallback;
-    private SDItemLongClickCallback<T> mItemLongClickCallback;
+    private ItemClickCallback<T> mItemClickCallback;
+    private ItemLongClickCallback<T> mItemLongClickCallback;
 
     public FRecyclerAdapter(Activity activity)
     {
@@ -70,7 +70,7 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
      *
      * @param itemClickCallback
      */
-    public void setItemClickCallback(SDItemClickCallback<T> itemClickCallback)
+    public void setItemClickCallback(ItemClickCallback<T> itemClickCallback)
     {
         this.mItemClickCallback = itemClickCallback;
     }
@@ -80,7 +80,7 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
      *
      * @param itemLongClickCallback
      */
-    public void setItemLongClickCallback(SDItemLongClickCallback<T> itemLongClickCallback)
+    public void setItemLongClickCallback(ItemLongClickCallback<T> itemLongClickCallback)
     {
         this.mItemLongClickCallback = itemLongClickCallback;
     }
@@ -92,7 +92,7 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
      * @param item
      * @param view
      */
-    public void notifyItemClickCallback(int position, T item, View view)
+    public final void notifyItemClickCallback(int position, T item, View view)
     {
         if (mItemClickCallback != null)
         {
@@ -107,12 +107,13 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
      * @param item
      * @param view
      */
-    public void notifyItemLongClickCallback(int position, T item, View view)
+    public final boolean notifyItemLongClickCallback(int position, T item, View view)
     {
         if (mItemLongClickCallback != null)
         {
-            mItemLongClickCallback.onItemLongClick(position, item, view);
+            return mItemLongClickCallback.onItemLongClick(position, item, view);
         }
+        return false;
     }
 
     @Override
