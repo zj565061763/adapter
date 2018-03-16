@@ -8,9 +8,6 @@ import android.view.ViewGroup;
 
 import com.fanwe.lib.adapter.FRecyclerAdapter;
 
-/**
- * Created by Administrator on 2016/8/27.
- */
 public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder implements
         View.OnClickListener,
         View.OnLongClickListener

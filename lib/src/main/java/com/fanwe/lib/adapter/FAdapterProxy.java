@@ -5,9 +5,6 @@ import android.app.Activity;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by zhengjun on 2018/3/16.
- */
 public class FAdapterProxy<T> implements FAdapter<T>
 {
     private List<T> mListModel = new ArrayList<>();

@@ -5,9 +5,6 @@ import android.view.View;
 
 import java.util.List;
 
-/**
- * Created by zhengjun on 2016/8/28.
- */
 public interface FAdapter<T>
 {
     /**

@@ -7,9 +7,6 @@ import android.view.ViewGroup;
 
 import com.fanwe.lib.adapter.viewholder.FRecyclerViewHolder;
 
-/**
- * Created by Administrator on 2016/9/7.
- */
 public abstract class FSimpleRecyclerAdapter<T> extends FRecyclerAdapter<T>
 {
     public FSimpleRecyclerAdapter(Activity activity)
