@@ -1,12 +1,11 @@
 package com.fanwe.lib.adapter;
 
 import android.app.Activity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.fanwe.lib.adapter.viewholder.FRecyclerViewHolder;
-
-import java.util.List;
 
 /**
  * Created by Administrator on 2016/9/7.
@@ -18,16 +17,11 @@ public abstract class FSimpleRecyclerAdapter<T> extends FRecyclerAdapter<T>
         super(activity);
     }
 
-    public FSimpleRecyclerAdapter(List<T> listModel, Activity activity)
-    {
-        super(listModel, activity);
-    }
-
     @Override
     public FRecyclerViewHolder<T> onCreateVHolder(ViewGroup parent, int viewType)
     {
         int layoutId = getLayoutId(parent, viewType);
-        View itemView = inflate(layoutId, parent);
+        View itemView = LayoutInflater.from(getActivity()).inflate(layoutId, parent);
         FRecyclerViewHolder<T> holder = new FRecyclerViewHolder<T>(itemView)
         {
             @Override

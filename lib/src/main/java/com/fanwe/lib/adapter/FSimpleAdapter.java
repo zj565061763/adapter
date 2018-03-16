@@ -1,6 +1,7 @@
 package com.fanwe.lib.adapter;
 
 import android.app.Activity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -19,7 +20,7 @@ public abstract class FSimpleAdapter<T> extends FBaseAdapter<T>
             int layoutId = getLayoutId(position, convertView, parent);
             if (layoutId != 0)
             {
-                convertView = inflate(layoutId, parent);
+                convertView = LayoutInflater.from(getActivity()).inflate(layoutId, parent, false);
                 onInit(position, convertView, parent);
             }
         }

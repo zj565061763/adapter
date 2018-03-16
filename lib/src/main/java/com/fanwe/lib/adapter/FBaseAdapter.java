@@ -18,22 +18,66 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
         View.OnClickListener,
         FAdapter.SDItemClickCallback<T>
 {
-    private List<T> mListModel = new ArrayList<>();
-    private Activity mActivity;
-
+    private FAdapterProxy<T> mAdapterProxy;
     /**
      * 保存每个itemView对应的position
      */
     private Map<View, Integer> mMapViewPosition = new WeakHashMap<>();
-
-    private boolean mAutoNotifyDataSetChanged = true;
 
     private SDItemClickCallback<T> mItemClickCallback;
     private SDItemLongClickCallback<T> mItemLongClickCallback;
 
     public FBaseAdapter(Activity activity)
     {
-        mActivity = activity;
+        getAdapterProxy().setActivity(activity);
+    }
+
+    private FAdapterProxy<T> getAdapterProxy()
+    {
+        if (mAdapterProxy == null)
+        {
+            mAdapterProxy = new FAdapterProxy<>();
+            mAdapterProxy.setCallback(new FAdapterProxy.Callback()
+            {
+                @Override
+                public void onDataSetChanged()
+                {
+                    FBaseAdapter.this.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onItemRangeChanged(int positionStart, int itemCount)
+                {
+                    if (itemCount == 1)
+                    {
+                        final List<View> list = getItemView(positionStart);
+                        if (list != null)
+                        {
+                            for (View item : list)
+                            {
+                                FBaseAdapter.this.onUpdateView(positionStart, item, (ViewGroup) item.getParent(), getItem(positionStart));
+                            }
+                        }
+                    } else
+                    {
+                        FBaseAdapter.this.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount)
+                {
+                    FBaseAdapter.this.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onItemRangeRemoved(int positionStart, int itemCount)
+                {
+                    FBaseAdapter.this.notifyDataSetChanged();
+                }
+            });
+        }
+        return mAdapterProxy;
     }
 
     /**
@@ -186,212 +230,107 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
     @Override
     public Activity getActivity()
     {
-        return mActivity;
-    }
-
-    @Override
-    public View inflate(int resource, ViewGroup root)
-    {
-        return getActivity().getLayoutInflater().inflate(resource, root, false);
-    }
-
-    @Override
-    public boolean isPositionLegal(int position)
-    {
-        if (position >= 0 && position < mListModel.size())
-        {
-            return true;
-        } else
-        {
-            return false;
-        }
+        return getAdapterProxy().getActivity();
     }
 
     @Override
     public void setAutoNotifyDataSetChanged(boolean auto)
     {
-        mAutoNotifyDataSetChanged = auto;
+        getAdapterProxy().setAutoNotifyDataSetChanged(auto);
+    }
+
+    @Override
+    public boolean isPositionLegal(int position)
+    {
+        return getAdapterProxy().isPositionLegal(position);
     }
 
     @Override
     public T getData(int position)
     {
-        if (isPositionLegal(position))
-        {
-            return mListModel.get(position);
-        } else
-        {
-            return null;
-        }
+        return getAdapterProxy().getData(position);
     }
 
     @Override
     public int getDataCount()
     {
-        if (mListModel != null)
-        {
-            return mListModel.size();
-        } else
-        {
-            return 0;
-        }
+        return getAdapterProxy().getDataCount();
     }
 
     @Override
     public int indexOf(T model)
     {
-        return mListModel.indexOf(model);
-    }
-
-    @Override
-    public void updateData(List<T> listModel)
-    {
-        setData(listModel);
-        if (mAutoNotifyDataSetChanged)
-        {
-            notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void setData(List<T> list)
-    {
-        if (list != null)
-        {
-            mListModel = list;
-        } else
-        {
-            mListModel.clear();
-        }
+        return getAdapterProxy().indexOf(model);
     }
 
     @Override
     public List<T> getData()
     {
-        return mListModel;
+        return getAdapterProxy().getData();
+    }
+
+    @Override
+    public void setData(List<T> list)
+    {
+        getAdapterProxy().setData(list);
     }
 
     @Override
     public void appendData(T model)
     {
-        if (model == null)
-        {
-            return;
-        }
-
-        mListModel.add(model);
-        if (mAutoNotifyDataSetChanged)
-        {
-            notifyDataSetChanged();
-        }
+        getAdapterProxy().appendData(model);
     }
 
     @Override
     public void appendData(List<T> list)
     {
-        if (list == null || list.isEmpty())
-        {
-            return;
-        }
-
-        mListModel.addAll(list);
-        if (mAutoNotifyDataSetChanged)
-        {
-            notifyDataSetChanged();
-        }
+        getAdapterProxy().appendData(list);
     }
 
     @Override
     public void removeData(T model)
     {
-        removeData(indexOf(model));
+        getAdapterProxy().removeData(model);
     }
 
     @Override
     public T removeData(int position)
     {
-        if (!isPositionLegal(position))
-        {
-            return null;
-        }
-
-        final T model = mListModel.remove(position);
-        if (mAutoNotifyDataSetChanged)
-        {
-            notifyDataSetChanged();
-        }
-        return model;
+        return getAdapterProxy().removeData(position);
     }
 
     @Override
     public void insertData(int position, T model)
     {
-        if (model == null)
-        {
-            return;
-        }
-
-        mListModel.add(position, model);
-        if (mAutoNotifyDataSetChanged)
-        {
-            notifyDataSetChanged();
-        }
+        getAdapterProxy().insertData(position, model);
     }
 
     @Override
     public void insertData(int position, List<T> list)
     {
-        if (list == null || list.isEmpty())
-        {
-            return;
-        }
-
-        mListModel.addAll(position, list);
-        if (mAutoNotifyDataSetChanged)
-        {
-            notifyDataSetChanged();
-        }
+        getAdapterProxy().insertData(position, list);
     }
 
     @Override
     public void updateData(int position, T model)
     {
-        if (model == null || !isPositionLegal(position))
-        {
-            return;
-        }
-
-        mListModel.set(position, model);
-        if (mAutoNotifyDataSetChanged)
-        {
-            updateData(position);
-        }
+        getAdapterProxy().updateData(position, model);
     }
 
     @Override
-    public void updateData(int position)
+    public void notifyItemViewChanged(int position)
     {
-        List<View> list = getItemView(position);
-        if (list == null || list.isEmpty())
-        {
-            return;
-        }
-
-        for (View item : list)
-        {
-            onUpdateView(position, item, (ViewGroup) item.getParent(), getItem(position));
-        }
+        getAdapterProxy().notifyItemViewChanged(position);
     }
 
     @Override
     public void clearData()
     {
-        updateData(null);
+        getAdapterProxy().clearData();
     }
 
     //----------FAdapter implements end----------
 
-    // util method
     @SuppressWarnings("unchecked")
     public static <V extends View> V get(int id, View convertView)
     {
@@ -409,6 +348,4 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
         }
         return (V) childView;
     }
-
-
 }

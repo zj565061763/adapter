@@ -1,6 +1,7 @@
 package com.fanwe.lib.adapter;
 
 import android.app.Activity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -45,7 +46,7 @@ public abstract class FViewHolderAdapter<T> extends FBaseAdapter<T>
             holder.setAdapter(this);
 
             int layoutId = holder.getLayoutId(position, convertView, parent);
-            convertView = inflate(layoutId, parent);
+            convertView = LayoutInflater.from(getActivity()).inflate(layoutId, parent);
             holder.setItemView(convertView);
             holder.onInit(position, convertView, parent);
             convertView.setTag(holder);

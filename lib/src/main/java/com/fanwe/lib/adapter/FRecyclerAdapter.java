@@ -19,25 +19,50 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
         FAdapter<T>,
         View.OnClickListener
 {
-    private Activity mActivity;
-    private List<T> mListModel = new ArrayList<>();
+    private FAdapterProxy<T> mAdapterProxy;
     private List<Object> mDefaultPayloads = new ArrayList<>();
-
-    private boolean mAutoNotifyDataSetChanged = true;
 
     private SDItemClickCallback<T> mItemClickCallback;
     private SDItemLongClickCallback<T> mItemLongClickCallback;
 
     public FRecyclerAdapter(Activity activity)
     {
-        this(null, activity);
+        getAdapterProxy().setActivity(activity);
     }
 
-    public FRecyclerAdapter(List<T> listModel, Activity activity)
+    private FAdapterProxy<T> getAdapterProxy()
     {
-        super();
-        this.mActivity = activity;
-        setData(listModel);
+        if (mAdapterProxy == null)
+        {
+            mAdapterProxy = new FAdapterProxy<>();
+            mAdapterProxy.setCallback(new FAdapterProxy.Callback()
+            {
+                @Override
+                public void onDataSetChanged()
+                {
+                    FRecyclerAdapter.this.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onItemRangeChanged(int positionStart, int itemCount)
+                {
+                    FRecyclerAdapter.this.notifyItemRangeChanged(positionStart, itemCount, mDefaultPayloads);
+                }
+
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount)
+                {
+                    FRecyclerAdapter.this.notifyItemRangeInserted(positionStart, itemCount);
+                }
+
+                @Override
+                public void onItemRangeRemoved(int positionStart, int itemCount)
+                {
+                    FRecyclerAdapter.this.notifyItemRangeRemoved(positionStart, itemCount);
+                }
+            });
+        }
+        return mAdapterProxy;
     }
 
     /**
@@ -174,202 +199,103 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     @Override
     public Activity getActivity()
     {
-        return mActivity;
-    }
-
-    @Override
-    public View inflate(int resource, ViewGroup root)
-    {
-        return getActivity().getLayoutInflater().inflate(resource, root, false);
-    }
-
-    @Override
-    public boolean isPositionLegal(int position)
-    {
-        if (position >= 0 && position < mListModel.size())
-        {
-            return true;
-        }
-        return false;
+        return getAdapterProxy().getActivity();
     }
 
     @Override
     public void setAutoNotifyDataSetChanged(boolean auto)
     {
-        mAutoNotifyDataSetChanged = auto;
+        getAdapterProxy().setAutoNotifyDataSetChanged(auto);
+    }
+
+    @Override
+    public boolean isPositionLegal(int position)
+    {
+        return getAdapterProxy().isPositionLegal(position);
     }
 
     @Override
     public T getData(int position)
     {
-        if (isPositionLegal(position))
-        {
-            return mListModel.get(position);
-        }
-        return null;
+        return getAdapterProxy().getData(position);
     }
 
     @Override
     public int getDataCount()
     {
-        if (mListModel != null)
-        {
-            return mListModel.size();
-        }
-        return 0;
+        return getAdapterProxy().getDataCount();
     }
 
     @Override
     public int indexOf(T model)
     {
-        return mListModel.indexOf(model);
-    }
-
-    @Override
-    public void updateData(List<T> list)
-    {
-        setData(list);
-        if (mAutoNotifyDataSetChanged)
-        {
-            notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void setData(List<T> list)
-    {
-        if (list != null)
-        {
-            this.mListModel = list;
-        } else
-        {
-            this.mListModel.clear();
-        }
+        return getAdapterProxy().indexOf(model);
     }
 
     @Override
     public List<T> getData()
     {
-        return mListModel;
+        return getAdapterProxy().getData();
+    }
+
+    @Override
+    public void setData(List<T> list)
+    {
+        getAdapterProxy().setData(list);
     }
 
     @Override
     public void appendData(T model)
     {
-        if (model == null)
-        {
-            return;
-        }
-
-        mListModel.add(model);
-        if (mAutoNotifyDataSetChanged)
-        {
-            notifyItemInserted(mListModel.size() - 1);
-        }
+        getAdapterProxy().appendData(model);
     }
 
     @Override
     public void appendData(List<T> list)
     {
-        if (list == null || list.isEmpty())
-        {
-            return;
-        }
-
-        final int positionStart = mListModel.size();
-        final int itemCount = list.size();
-
-        mListModel.addAll(list);
-        if (mAutoNotifyDataSetChanged)
-        {
-            notifyItemRangeInserted(positionStart, itemCount);
-        }
+        getAdapterProxy().appendData(list);
     }
 
     @Override
     public void removeData(T model)
     {
-        removeData(indexOf(model));
+        getAdapterProxy().removeData(model);
     }
 
     @Override
     public T removeData(int position)
     {
-        if (!isPositionLegal(position))
-        {
-            return null;
-        }
-
-        final T model = mListModel.remove(position);
-        if (mAutoNotifyDataSetChanged)
-        {
-            notifyItemRemoved(position);
-        }
-        return model;
+        return getAdapterProxy().removeData(position);
     }
 
     @Override
     public void insertData(int position, T model)
     {
-        if (model == null)
-        {
-            return;
-        }
-
-        mListModel.add(position, model);
-        if (mAutoNotifyDataSetChanged)
-        {
-            notifyItemInserted(position);
-        }
+        getAdapterProxy().insertData(position, model);
     }
 
     @Override
     public void insertData(int position, List<T> list)
     {
-        if (list == null || list.isEmpty())
-        {
-            return;
-        }
-
-        final int positionStart = position;
-        final int itemCount = list.size();
-
-        mListModel.addAll(position, list);
-        if (mAutoNotifyDataSetChanged)
-        {
-            notifyItemRangeInserted(positionStart, itemCount);
-        }
+        getAdapterProxy().insertData(position, list);
     }
 
     @Override
     public void updateData(int position, T model)
     {
-        if (model == null || !isPositionLegal(position))
-        {
-            return;
-        }
-
-        mListModel.set(position, model);
-        if (mAutoNotifyDataSetChanged)
-        {
-            updateData(position);
-        }
+        getAdapterProxy().updateData(position, model);
     }
 
     @Override
-    public void updateData(int position)
+    public void notifyItemViewChanged(int position)
     {
-        if (!isPositionLegal(position))
-        {
-            return;
-        }
-        notifyItemChanged(position, mDefaultPayloads);
+        getAdapterProxy().notifyItemViewChanged(position);
     }
 
     @Override
     public void clearData()
     {
-        updateData(null);
+        getAdapterProxy().clearData();
     }
 
     //----------FAdapter implements end----------
