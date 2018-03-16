@@ -126,7 +126,6 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     {
         FRecyclerViewHolder<T> holder = onCreateVHolder(parent, viewType);
         holder.setAdapter(this);
-
         return holder;
     }
 
@@ -144,7 +143,7 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
 
     private void onBindViewHolderInternal(FRecyclerViewHolder<T> holder, int position, boolean isUpdate)
     {
-        T model = getData(position);
+        final T model = getData(position);
         holder.setModel(model);
 
         if (isUpdate)
