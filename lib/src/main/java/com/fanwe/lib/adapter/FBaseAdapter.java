@@ -224,7 +224,7 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
      */
     protected void onUpdateView(int position, View convertView, ViewGroup parent, T model)
     {
-        getView(position, convertView, parent);
+        onGetView(position, convertView, parent);
     }
 
     //----------FAdapter implements start----------
