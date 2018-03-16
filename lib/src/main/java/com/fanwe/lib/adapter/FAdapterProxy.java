@@ -12,7 +12,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
 {
     private List<T> mListModel = new ArrayList<>();
     private Activity mActivity;
-    private boolean mAutoNotifyDataSetChanged = true;
+    private boolean mNotifyOnDataChanged = true;
 
     private Callback mCallback;
 
@@ -39,9 +39,9 @@ public class FAdapterProxy<T> implements FAdapter<T>
     }
 
     @Override
-    public void setAutoNotifyDataSetChanged(boolean auto)
+    public void setNotifyOnDataChanged(boolean notify)
     {
-        mAutoNotifyDataSetChanged = auto;
+        mNotifyOnDataChanged = notify;
     }
 
     @Override
@@ -176,7 +176,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
         }
 
         mListModel.set(position, model);
-        if (mAutoNotifyDataSetChanged)
+        if (mNotifyOnDataChanged)
         {
             notifyItemViewChanged(position);
         }
@@ -207,7 +207,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
         @Override
         public void onDataSetChanged()
         {
-            if (mAutoNotifyDataSetChanged)
+            if (mNotifyOnDataChanged)
             {
                 mCallback.onDataSetChanged();
             }
@@ -216,7 +216,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
         @Override
         public void onItemRangeChanged(int positionStart, int itemCount)
         {
-            if (mAutoNotifyDataSetChanged)
+            if (mNotifyOnDataChanged)
             {
                 mCallback.onItemRangeChanged(positionStart, itemCount);
             }
@@ -225,7 +225,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
         @Override
         public void onItemRangeInserted(int positionStart, int itemCount)
         {
-            if (mAutoNotifyDataSetChanged)
+            if (mNotifyOnDataChanged)
             {
                 mCallback.onItemRangeInserted(positionStart, itemCount);
             }
@@ -234,7 +234,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
         @Override
         public void onItemRangeRemoved(int positionStart, int itemCount)
         {
-            if (mAutoNotifyDataSetChanged)
+            if (mNotifyOnDataChanged)
             {
                 mCallback.onItemRangeRemoved(positionStart, itemCount);
             }

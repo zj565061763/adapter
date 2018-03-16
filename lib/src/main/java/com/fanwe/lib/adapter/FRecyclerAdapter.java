@@ -203,9 +203,9 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     }
 
     @Override
-    public void setAutoNotifyDataSetChanged(boolean auto)
+    public void setNotifyOnDataChanged(boolean notify)
     {
-        getAdapterProxy().setAutoNotifyDataSetChanged(auto);
+        getAdapterProxy().setNotifyOnDataChanged(notify);
     }
 
     @Override

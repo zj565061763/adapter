@@ -18,11 +18,11 @@ public interface FAdapter<T>
     Activity getActivity();
 
     /**
-     * 调用改变数据的方法之后是否自动通知adapter刷新，默认-true
+     * 调用改变数据的方法之后是否刷新UI，默认-true
      *
-     * @param auto
+     * @param notify
      */
-    void setAutoNotifyDataSetChanged(boolean auto);
+    void setNotifyOnDataChanged(boolean notify);
 
     /**
      * 位置在数据集中是否合法
