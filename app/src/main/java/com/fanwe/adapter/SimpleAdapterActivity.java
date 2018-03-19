@@ -1,6 +1,7 @@
 package com.fanwe.adapter;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,10 +38,27 @@ public class SimpleAdapterActivity extends Activity
         }
 
         @Override
-        public void onBindData(int position, View convertView, ViewGroup parent, DataModel model)
+        public void onBindData(int position, View convertView, ViewGroup parent, final DataModel model)
         {
             Button button = get(R.id.button, convertView);
             button.setText(model.name);
+
+            if (model.isSelected())
+            {
+                button.setTextColor(Color.RED);
+            } else
+            {
+                button.setTextColor(Color.BLACK);
+            }
+
+            button.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    getSelectManager().performClick(model);
+                }
+            });
         }
     };
 }
