@@ -22,7 +22,8 @@ import java.util.List;
  */
 public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecyclerViewHolder<T>> implements
         FAdapter<T>,
-        View.OnClickListener
+        View.OnClickListener,
+        FSelectManager.Callback<T>
 {
     private FAdapterProxy<T> mAdapterProxy;
     private List<Object> mDefaultPayloads = new ArrayList<>();
@@ -76,11 +77,26 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
         if (mSelectManager == null)
         {
             final AdapterSelectManager<T> manager = new AdapterSelectManager<>();
+            manager.addCallback(this);
             getDataHolder().addDataChangeCallback(manager);
 
             mSelectManager = manager;
         }
         return mSelectManager;
+    }
+
+    @Override
+    public void onNormal(T item)
+    {
+        final int index = getDataHolder().indexOf(item);
+        notifyItemViewChanged(index);
+    }
+
+    @Override
+    public void onSelected(T item)
+    {
+        final int index = getDataHolder().indexOf(item);
+        notifyItemViewChanged(index);
     }
 
     /**

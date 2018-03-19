@@ -22,7 +22,8 @@ import java.util.WeakHashMap;
 public abstract class FBaseAdapter<T> extends BaseAdapter implements
         FAdapter<T>,
         View.OnClickListener,
-        ItemClickCallback<T>
+        ItemClickCallback<T>,
+        FSelectManager.Callback<T>
 {
     private FAdapterProxy<T> mAdapterProxy;
     /**
@@ -92,11 +93,26 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
         if (mSelectManager == null)
         {
             final AdapterSelectManager<T> manager = new AdapterSelectManager<>();
+            manager.addCallback(this);
             getDataHolder().addDataChangeCallback(manager);
 
             mSelectManager = manager;
         }
         return mSelectManager;
+    }
+
+    @Override
+    public void onNormal(T item)
+    {
+        final int index = getDataHolder().indexOf(item);
+        notifyItemViewChanged(index);
+    }
+
+    @Override
+    public void onSelected(T item)
+    {
+        final int index = getDataHolder().indexOf(item);
+        notifyItemViewChanged(index);
     }
 
     /**
