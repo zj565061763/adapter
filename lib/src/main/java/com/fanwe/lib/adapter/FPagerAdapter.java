@@ -23,41 +23,6 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<
         getAdapterProxy().setActivity(activity);
     }
 
-    private FAdapterProxy<T> getAdapterProxy()
-    {
-        if (mAdapterProxy == null)
-        {
-            mAdapterProxy = new FAdapterProxy<>();
-            mAdapterProxy.setCallback(new FAdapterProxy.Callback()
-            {
-                @Override
-                public void onDataSetChanged()
-                {
-                    FPagerAdapter.this.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onItemRangeChanged(int positionStart, int itemCount)
-                {
-                    FPagerAdapter.this.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onItemRangeInserted(int positionStart, int itemCount)
-                {
-                    FPagerAdapter.this.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onItemRangeRemoved(int positionStart, int itemCount)
-                {
-                    FPagerAdapter.this.notifyDataSetChanged();
-                }
-            });
-        }
-        return mAdapterProxy;
-    }
-
     /**
      * 设置是否自动缓存view
      *
@@ -159,6 +124,41 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<
     }
 
     public abstract View getView(ViewGroup container, int position);
+
+    private FAdapterProxy<T> getAdapterProxy()
+    {
+        if (mAdapterProxy == null)
+        {
+            mAdapterProxy = new FAdapterProxy<>();
+            mAdapterProxy.setCallback(new FAdapterProxy.Callback()
+            {
+                @Override
+                public void onDataSetChanged()
+                {
+                    FPagerAdapter.this.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onItemRangeChanged(int positionStart, int itemCount)
+                {
+                    FPagerAdapter.this.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount)
+                {
+                    FPagerAdapter.this.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onItemRangeRemoved(int positionStart, int itemCount)
+                {
+                    FPagerAdapter.this.notifyDataSetChanged();
+                }
+            });
+        }
+        return mAdapterProxy;
+    }
 
     //----------FAdapter implements start----------
 

@@ -36,54 +36,6 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
         getAdapterProxy().setActivity(activity);
     }
 
-    private FAdapterProxy<T> getAdapterProxy()
-    {
-        if (mAdapterProxy == null)
-        {
-            mAdapterProxy = new FAdapterProxy<>();
-            mAdapterProxy.setCallback(new FAdapterProxy.Callback()
-            {
-                @Override
-                public void onDataSetChanged()
-                {
-                    FBaseAdapter.this.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onItemRangeChanged(int positionStart, int itemCount)
-                {
-                    if (itemCount == 1)
-                    {
-                        final List<View> list = getItemView(positionStart);
-                        if (list != null)
-                        {
-                            for (View item : list)
-                            {
-                                FBaseAdapter.this.onUpdateView(positionStart, item, (ViewGroup) item.getParent(), getItem(positionStart));
-                            }
-                        }
-                    } else
-                    {
-                        FBaseAdapter.this.notifyDataSetChanged();
-                    }
-                }
-
-                @Override
-                public void onItemRangeInserted(int positionStart, int itemCount)
-                {
-                    FBaseAdapter.this.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onItemRangeRemoved(int positionStart, int itemCount)
-                {
-                    FBaseAdapter.this.notifyDataSetChanged();
-                }
-            });
-        }
-        return mAdapterProxy;
-    }
-
     /**
      * 设置item点击回调
      *
@@ -229,6 +181,54 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
     protected void onUpdateView(int position, View convertView, ViewGroup parent, T model)
     {
         onGetView(position, convertView, parent);
+    }
+
+    private FAdapterProxy<T> getAdapterProxy()
+    {
+        if (mAdapterProxy == null)
+        {
+            mAdapterProxy = new FAdapterProxy<>();
+            mAdapterProxy.setCallback(new FAdapterProxy.Callback()
+            {
+                @Override
+                public void onDataSetChanged()
+                {
+                    FBaseAdapter.this.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onItemRangeChanged(int positionStart, int itemCount)
+                {
+                    if (itemCount == 1)
+                    {
+                        final List<View> list = getItemView(positionStart);
+                        if (list != null)
+                        {
+                            for (View item : list)
+                            {
+                                FBaseAdapter.this.onUpdateView(positionStart, item, (ViewGroup) item.getParent(), getItem(positionStart));
+                            }
+                        }
+                    } else
+                    {
+                        FBaseAdapter.this.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount)
+                {
+                    FBaseAdapter.this.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onItemRangeRemoved(int positionStart, int itemCount)
+                {
+                    FBaseAdapter.this.notifyDataSetChanged();
+                }
+            });
+        }
+        return mAdapterProxy;
     }
 
     //----------FAdapter implements start----------

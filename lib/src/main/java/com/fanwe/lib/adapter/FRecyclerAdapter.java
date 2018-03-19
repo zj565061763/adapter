@@ -33,41 +33,6 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
         getAdapterProxy().setActivity(activity);
     }
 
-    private FAdapterProxy<T> getAdapterProxy()
-    {
-        if (mAdapterProxy == null)
-        {
-            mAdapterProxy = new FAdapterProxy<>();
-            mAdapterProxy.setCallback(new FAdapterProxy.Callback()
-            {
-                @Override
-                public void onDataSetChanged()
-                {
-                    FRecyclerAdapter.this.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onItemRangeChanged(int positionStart, int itemCount)
-                {
-                    FRecyclerAdapter.this.notifyItemRangeChanged(positionStart, itemCount, mDefaultPayloads);
-                }
-
-                @Override
-                public void onItemRangeInserted(int positionStart, int itemCount)
-                {
-                    FRecyclerAdapter.this.notifyItemRangeInserted(positionStart, itemCount);
-                }
-
-                @Override
-                public void onItemRangeRemoved(int positionStart, int itemCount)
-                {
-                    FRecyclerAdapter.this.notifyItemRangeRemoved(positionStart, itemCount);
-                }
-            });
-        }
-        return mAdapterProxy;
-    }
-
     /**
      * 设置item点击回调
      *
@@ -195,6 +160,41 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     public void onClick(View view)
     {
 
+    }
+
+    private FAdapterProxy<T> getAdapterProxy()
+    {
+        if (mAdapterProxy == null)
+        {
+            mAdapterProxy = new FAdapterProxy<>();
+            mAdapterProxy.setCallback(new FAdapterProxy.Callback()
+            {
+                @Override
+                public void onDataSetChanged()
+                {
+                    FRecyclerAdapter.this.notifyDataSetChanged();
+                }
+
+                @Override
+                public void onItemRangeChanged(int positionStart, int itemCount)
+                {
+                    FRecyclerAdapter.this.notifyItemRangeChanged(positionStart, itemCount, mDefaultPayloads);
+                }
+
+                @Override
+                public void onItemRangeInserted(int positionStart, int itemCount)
+                {
+                    FRecyclerAdapter.this.notifyItemRangeInserted(positionStart, itemCount);
+                }
+
+                @Override
+                public void onItemRangeRemoved(int positionStart, int itemCount)
+                {
+                    FRecyclerAdapter.this.notifyItemRangeRemoved(positionStart, itemCount);
+                }
+            });
+        }
+        return mAdapterProxy;
     }
 
     //----------FAdapter implements start----------
