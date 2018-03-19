@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.fanwe.adapter.model.DataModel;
 import com.fanwe.lib.adapter.FSimpleAdapter;
+import com.fanwe.lib.adapter.select.FSelectSimpleAdapter;
 
 /**
  * Created by Administrator on 2018/3/19.
@@ -29,7 +30,7 @@ public class SimpleAdapterActivity extends Activity
         mAdapter.getDataHolder().setData(DataModel.get(50));
     }
 
-    private FSimpleAdapter<DataModel> mAdapter = new FSimpleAdapter<DataModel>(this)
+    private FSimpleAdapter<DataModel> mAdapter = new FSelectSimpleAdapter<DataModel>(this)
     {
         @Override
         public int getLayoutId(int position, View convertView, ViewGroup parent)
