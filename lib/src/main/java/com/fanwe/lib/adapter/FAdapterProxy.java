@@ -61,7 +61,10 @@ public class FAdapterProxy<T> implements FAdapter<T>
                 @Override
                 public void onSetData(List<T> list)
                 {
-                    mCallbackProxy.onDataSetChanged();
+                    if (mNotifyOnDataChanged)
+                    {
+                        mCallback.onDataSetChanged();
+                    }
                 }
 
                 @Override
@@ -70,7 +73,10 @@ public class FAdapterProxy<T> implements FAdapter<T>
                     final int itemCount = 1;
                     final int positionStart = getDataHolder().size() - itemCount;
 
-                    mCallbackProxy.onItemRangeInserted(positionStart, itemCount);
+                    if (mNotifyOnDataChanged)
+                    {
+                        mCallback.onItemRangeInserted(positionStart, itemCount);
+                    }
                 }
 
                 @Override
@@ -79,7 +85,10 @@ public class FAdapterProxy<T> implements FAdapter<T>
                     final int itemCount = list.size();
                     final int positionStart = getDataHolder().size() - itemCount;
 
-                    mCallbackProxy.onItemRangeInserted(positionStart, itemCount);
+                    if (mNotifyOnDataChanged)
+                    {
+                        mCallback.onItemRangeInserted(positionStart, itemCount);
+                    }
                 }
 
                 @Override
@@ -88,7 +97,10 @@ public class FAdapterProxy<T> implements FAdapter<T>
                     final int itemCount = 1;
                     final int positionStart = index;
 
-                    mCallbackProxy.onItemRangeRemoved(positionStart, itemCount);
+                    if (mNotifyOnDataChanged)
+                    {
+                        mCallback.onItemRangeRemoved(positionStart, itemCount);
+                    }
                 }
 
                 @Override
@@ -97,7 +109,10 @@ public class FAdapterProxy<T> implements FAdapter<T>
                     final int itemCount = 1;
                     final int positionStart = index;
 
-                    mCallbackProxy.onItemRangeInserted(positionStart, itemCount);
+                    if (mNotifyOnDataChanged)
+                    {
+                        mCallback.onItemRangeInserted(positionStart, itemCount);
+                    }
                 }
 
                 @Override
@@ -106,7 +121,10 @@ public class FAdapterProxy<T> implements FAdapter<T>
                     final int itemCount = list.size();
                     final int positionStart = index;
 
-                    mCallbackProxy.onItemRangeInserted(positionStart, itemCount);
+                    if (mNotifyOnDataChanged)
+                    {
+                        mCallback.onItemRangeInserted(positionStart, itemCount);
+                    }
                 }
 
                 @Override
@@ -121,45 +139,6 @@ public class FAdapterProxy<T> implements FAdapter<T>
         }
         return mDataHolder;
     }
-
-    private final Callback mCallbackProxy = new Callback()
-    {
-        @Override
-        public void onDataSetChanged()
-        {
-            if (mNotifyOnDataChanged)
-            {
-                mCallback.onDataSetChanged();
-            }
-        }
-
-        @Override
-        public void onItemRangeChanged(int positionStart, int itemCount)
-        {
-            if (mNotifyOnDataChanged)
-            {
-                mCallback.onItemRangeChanged(positionStart, itemCount);
-            }
-        }
-
-        @Override
-        public void onItemRangeInserted(int positionStart, int itemCount)
-        {
-            if (mNotifyOnDataChanged)
-            {
-                mCallback.onItemRangeInserted(positionStart, itemCount);
-            }
-        }
-
-        @Override
-        public void onItemRangeRemoved(int positionStart, int itemCount)
-        {
-            if (mNotifyOnDataChanged)
-            {
-                mCallback.onItemRangeRemoved(positionStart, itemCount);
-            }
-        }
-    };
 
     public interface Callback
     {
