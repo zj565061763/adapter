@@ -2,6 +2,7 @@ package com.fanwe.lib.adapter.data;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by zhengjun on 2018/3/19.
@@ -27,6 +28,11 @@ public class ListDataHolder<T> implements DataHolder<T>
         mListDataChangeCallback.remove(callback);
     }
 
+    private ListIterator<DataChangeCallback<T>> getListIteratorPrevious()
+    {
+        return mListDataChangeCallback.listIterator(mListDataChangeCallback.size());
+    }
+
     //---------- modify start ----------
 
     @Override
@@ -40,8 +46,10 @@ public class ListDataHolder<T> implements DataHolder<T>
             mListData.clear();
         }
 
-        for (DataChangeCallback<T> item : mListDataChangeCallback)
+        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
+        while (it.hasPrevious())
         {
+            final DataChangeCallback<T> item = it.previous();
             item.onSetData(list);
         }
     }
@@ -53,10 +61,12 @@ public class ListDataHolder<T> implements DataHolder<T>
         {
             return;
         }
-
         mListData.add(data);
-        for (DataChangeCallback<T> item : mListDataChangeCallback)
+
+        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
+        while (it.hasPrevious())
         {
+            final DataChangeCallback<T> item = it.previous();
             item.onAppendData(data);
         }
     }
@@ -68,10 +78,12 @@ public class ListDataHolder<T> implements DataHolder<T>
         {
             return;
         }
-
         mListData.addAll(list);
-        for (DataChangeCallback<T> item : mListDataChangeCallback)
+
+        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
+        while (it.hasPrevious())
         {
+            final DataChangeCallback<T> item = it.previous();
             item.onAppendData(list);
         }
     }
@@ -90,8 +102,10 @@ public class ListDataHolder<T> implements DataHolder<T>
         {
             final T model = mListData.remove(index);
 
-            for (DataChangeCallback<T> item : mListDataChangeCallback)
+            final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
+            while (it.hasPrevious())
             {
+                final DataChangeCallback<T> item = it.previous();
                 item.onRemoveData(index, model);
             }
             return model;
@@ -108,10 +122,12 @@ public class ListDataHolder<T> implements DataHolder<T>
         {
             return;
         }
-
         mListData.add(index, data);
-        for (DataChangeCallback<T> item : mListDataChangeCallback)
+
+        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
+        while (it.hasPrevious())
         {
+            final DataChangeCallback<T> item = it.previous();
             item.onInsertData(index, data);
         }
     }
@@ -123,10 +139,12 @@ public class ListDataHolder<T> implements DataHolder<T>
         {
             return;
         }
-
         mListData.addAll(index, list);
-        for (DataChangeCallback<T> item : mListDataChangeCallback)
+
+        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
+        while (it.hasPrevious())
         {
+            final DataChangeCallback<T> item = it.previous();
             item.onInsertData(index, list);
         }
     }
@@ -138,10 +156,12 @@ public class ListDataHolder<T> implements DataHolder<T>
         {
             return;
         }
-
         mListData.set(index, data);
-        for (DataChangeCallback<T> item : mListDataChangeCallback)
+
+        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
+        while (it.hasPrevious())
         {
+            final DataChangeCallback<T> item = it.previous();
             item.onUpdateData(index, data);
         }
     }
