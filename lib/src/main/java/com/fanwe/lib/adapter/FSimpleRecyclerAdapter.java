@@ -18,7 +18,7 @@ public abstract class FSimpleRecyclerAdapter<T> extends FRecyclerAdapter<T>
     public FRecyclerViewHolder<T> onCreateVHolder(ViewGroup parent, int viewType)
     {
         int layoutId = getLayoutId(parent, viewType);
-        View itemView = LayoutInflater.from(getActivity()).inflate(layoutId, parent);
+        View itemView = LayoutInflater.from(getActivity()).inflate(layoutId, parent, false);
         FRecyclerViewHolder<T> holder = new FRecyclerViewHolder<T>(itemView)
         {
             @Override
