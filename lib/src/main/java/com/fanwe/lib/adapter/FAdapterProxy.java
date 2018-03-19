@@ -13,12 +13,12 @@ public class FAdapterProxy<T> implements FAdapter<T>
 
     private Callback mCallback;
 
-    public final void setCallback(Callback callback)
+    final void setCallback(Callback callback)
     {
         mCallback = callback;
     }
 
-    public final void setActivity(Activity activity)
+    final void setActivity(Activity activity)
     {
         mActivity = activity;
     }
