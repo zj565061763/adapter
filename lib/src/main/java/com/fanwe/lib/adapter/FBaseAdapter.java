@@ -18,11 +18,7 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 public abstract class FBaseAdapter<T> extends BaseAdapter implements
-        FAdapter<T>,
-        View.OnClickListener,
-        ItemClickCallback<T>,
-        View.OnLongClickListener,
-        ItemLongClickCallback<T>
+        FAdapter<T>
 {
     private FAdapterProxy<T> mAdapterProxy;
     /**
@@ -61,30 +57,29 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
     /**
      * 通知item点击回调
      *
-     * @param position
      * @param item
      * @param view
      */
-    public final void notifyItemClickCallback(int position, T item, View view)
+    public final void notifyItemClickCallback(T item, View view)
     {
         if (mItemClickCallback != null)
         {
-            mItemClickCallback.onItemClick(position, item, view);
+            mItemClickCallback.onItemClick(item, view);
         }
     }
 
     /**
      * 通知item长按回调
      *
-     * @param position
      * @param item
      * @param view
+     * @return
      */
-    public final boolean notifyItemLongClickCallback(int position, T item, View view)
+    public final boolean notifyItemLongClickCallback(T item, View view)
     {
         if (mItemLongClickCallback != null)
         {
-            return mItemLongClickCallback.onItemLongClick(position, item, view);
+            return mItemLongClickCallback.onItemLongClick(item, view);
         }
         return false;
     }
@@ -94,39 +89,6 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
     {
         mMapItemViewPosition.clear();
         super.notifyDataSetChanged();
-    }
-
-    @Override
-    public void onClick(View view)
-    {
-        final Integer position = mMapItemViewPosition.get(view);
-        if (position != null)
-        {
-            onItemClick(position, getDataHolder().get(position), view);
-        }
-    }
-
-    @Override
-    public void onItemClick(int position, T model, View view)
-    {
-        notifyItemClickCallback(position, model, view);
-    }
-
-    @Override
-    public boolean onLongClick(View view)
-    {
-        final Integer position = mMapItemViewPosition.get(view);
-        if (position != null)
-        {
-            return onItemLongClick(position, getDataHolder().get(position), view);
-        }
-        return false;
-    }
-
-    @Override
-    public boolean onItemLongClick(int position, T item, View view)
-    {
-        return notifyItemLongClickCallback(position, item, view);
     }
 
     @Override

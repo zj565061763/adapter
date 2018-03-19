@@ -95,22 +95,23 @@ public class RecyclerViewActivity extends Activity
                 textview.setTextColor(Color.BLACK);
             }
 
-            holder.itemView.setOnClickListener(this);
-            holder.itemView.setOnLongClickListener(this);
-        }
-
-        @Override
-        public void onItemClick(int position, DataModel model, View view)
-        {
-            super.onItemClick(position, model, view);
-            getSelectManager().performClick(model);
-        }
-
-        @Override
-        public boolean onItemLongClick(int position, DataModel item, View view)
-        {
-            getDataHolder().removeData(position);
-            return super.onItemLongClick(position, item, view);
+            holder.itemView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    getSelectManager().performClick(model);
+                }
+            });
+            holder.itemView.setOnLongClickListener(new View.OnLongClickListener()
+            {
+                @Override
+                public boolean onLongClick(View v)
+                {
+                    getDataHolder().removeData(model);
+                    return false;
+                }
+            });
         }
 
         @Override

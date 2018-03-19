@@ -4,5 +4,5 @@ import android.view.View;
 
 public interface ItemClickCallback<T>
 {
-    void onItemClick(int position, T item, View view);
+    void onItemClick(T item, View view);
 }

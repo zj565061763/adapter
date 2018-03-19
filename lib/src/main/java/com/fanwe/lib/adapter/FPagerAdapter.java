@@ -78,11 +78,11 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<
         this.mItemClickCallback = itemClickCallback;
     }
 
-    public void notifyItemClickCallback(int position, T item, View view)
+    public final void notifyItemClickCallback(T item, View view)
     {
         if (mItemClickCallback != null)
         {
-            mItemClickCallback.onItemClick(position, item, view);
+            mItemClickCallback.onItemClick(item, view);
         }
     }
 

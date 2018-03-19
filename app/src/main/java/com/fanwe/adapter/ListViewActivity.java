@@ -94,22 +94,23 @@ public class ListViewActivity extends Activity
                 textView.setTextColor(Color.BLACK);
             }
 
-            convertView.setOnClickListener(this);
-            convertView.setOnLongClickListener(this);
-        }
-
-        @Override
-        public void onItemClick(int position, DataModel model, View view)
-        {
-            super.onItemClick(position, model, view);
-            getSelectManager().performClick(model);
-        }
-
-        @Override
-        public boolean onItemLongClick(int position, DataModel item, View view)
-        {
-            getDataHolder().removeData(position);
-            return super.onItemLongClick(position, item, view);
+            convertView.setOnClickListener(new View.OnClickListener()
+            {
+                @Override
+                public void onClick(View v)
+                {
+                    getSelectManager().performClick(model);
+                }
+            });
+            convertView.setOnLongClickListener(new View.OnLongClickListener()
+            {
+                @Override
+                public boolean onLongClick(View v)
+                {
+                    getDataHolder().removeData(model);
+                    return false;
+                }
+            });
         }
     };
 }
