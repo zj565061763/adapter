@@ -77,6 +77,7 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
         if (mSelectManager == null)
         {
             final AdapterSelectManager<T> manager = new AdapterSelectManager<>();
+            manager.setMode(FSelectManager.Mode.SINGLE);
             manager.addCallback(this);
             getDataHolder().addDataChangeCallback(manager);
 
