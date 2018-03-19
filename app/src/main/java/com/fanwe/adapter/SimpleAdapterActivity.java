@@ -3,6 +3,7 @@ package com.fanwe.adapter;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -17,6 +18,8 @@ import com.fanwe.lib.adapter.select.FSelectSimpleAdapter;
  */
 public class SimpleAdapterActivity extends Activity
 {
+    public static final String TAG = SimpleAdapterActivity.class.getSimpleName();
+
     private ListView mListView;
 
     @Override
@@ -36,6 +39,13 @@ public class SimpleAdapterActivity extends Activity
         public int getLayoutId(int position, View convertView, ViewGroup parent)
         {
             return R.layout.item_list;
+        }
+
+        @Override
+        protected void onUpdateView(int position, View convertView, ViewGroup parent, DataModel model)
+        {
+            super.onUpdateView(position, convertView, parent, model);
+            Log.i(TAG, "onUpdateView:" + model.name);
         }
 
         @Override
