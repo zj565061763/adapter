@@ -12,6 +12,8 @@ import com.fanwe.lib.adapter.viewholder.FRecyclerViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
 /**
  * RecyclerView适配器
@@ -20,10 +22,15 @@ import java.util.List;
  */
 public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecyclerViewHolder<T>> implements
         FAdapter<T>,
-        View.OnClickListener
+        View.OnClickListener,
+        ItemClickCallback<T>
 {
     private FAdapterProxy<T> mAdapterProxy;
     private List<Object> mDefaultPayloads = new ArrayList<>();
+    /**
+     * 保存每个itemView对应的position
+     */
+    private Map<View, Integer> mMapItemViewPosition = new WeakHashMap<>();
 
     private ItemClickCallback<T> mItemClickCallback;
     private ItemLongClickCallback<T> mItemLongClickCallback;
@@ -112,6 +119,8 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
 
     private void onBindViewHolderInternal(FRecyclerViewHolder<T> holder, int position, boolean isUpdate)
     {
+        mMapItemViewPosition.put(holder.itemView, position);
+
         final T model = getDataHolder().get(position);
 
         if (isUpdate)
@@ -158,7 +167,17 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     @Override
     public void onClick(View view)
     {
+        final Integer position = mMapItemViewPosition.get(view);
+        if (position != null)
+        {
+            onItemClick(position, getDataHolder().get(position), view);
+        }
+    }
 
+    @Override
+    public void onItemClick(int position, T model, View view)
+    {
+        notifyItemClickCallback(position, model, view);
     }
 
     private FAdapterProxy<T> getAdapterProxy()

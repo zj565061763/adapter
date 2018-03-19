@@ -26,7 +26,7 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
     /**
      * 保存每个itemView对应的position
      */
-    private Map<View, Integer> mMapViewPosition = new WeakHashMap<>();
+    private Map<View, Integer> mMapItemViewPosition = new WeakHashMap<>();
 
     private ItemClickCallback<T> mItemClickCallback;
     private ItemLongClickCallback<T> mItemLongClickCallback;
@@ -90,17 +90,17 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
     @Override
     public void notifyDataSetChanged()
     {
-        mMapViewPosition.clear();
+        mMapItemViewPosition.clear();
         super.notifyDataSetChanged();
     }
 
     @Override
     public void onClick(View view)
     {
-        final Integer position = mMapViewPosition.get(view);
+        final Integer position = mMapItemViewPosition.get(view);
         if (position != null)
         {
-            onItemClick(position, getItem(position), view);
+            onItemClick(position, getDataHolder().get(position), view);
         }
     }
 
@@ -132,7 +132,7 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
     public View getView(int position, View convertView, ViewGroup parent)
     {
         convertView = onGetView(position, convertView, parent);
-        mMapViewPosition.put(convertView, position);
+        mMapItemViewPosition.put(convertView, position);
         return convertView;
     }
 
@@ -146,14 +146,14 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
      */
     public List<View> getItemView(int position)
     {
-        if (mMapViewPosition.isEmpty())
+        if (mMapItemViewPosition.isEmpty())
         {
             return null;
         }
 
         final List<View> list = new ArrayList<>();
 
-        final Set<Entry<View, Integer>> set = mMapViewPosition.entrySet();
+        final Set<Entry<View, Integer>> set = mMapItemViewPosition.entrySet();
         for (Entry<View, Integer> item : set)
         {
             if (Integer.valueOf(position).equals(item.getValue()))
