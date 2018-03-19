@@ -23,7 +23,9 @@ import java.util.WeakHashMap;
 public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecyclerViewHolder<T>> implements
         FAdapter<T>,
         View.OnClickListener,
-        ItemClickCallback<T>
+        ItemClickCallback<T>,
+        View.OnLongClickListener,
+        ItemLongClickCallback<T>
 {
     private FAdapterProxy<T> mAdapterProxy;
     private List<Object> mDefaultPayloads = new ArrayList<>();
@@ -178,6 +180,23 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     public void onItemClick(int position, T model, View view)
     {
         notifyItemClickCallback(position, model, view);
+    }
+
+    @Override
+    public boolean onLongClick(View view)
+    {
+        final Integer position = mMapItemViewPosition.get(view);
+        if (position != null)
+        {
+            return onItemLongClick(position, getDataHolder().get(position), view);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onItemLongClick(int position, T item, View view)
+    {
+        return notifyItemLongClickCallback(position, item, view);
     }
 
     private FAdapterProxy<T> getAdapterProxy()

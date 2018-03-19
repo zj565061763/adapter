@@ -38,14 +38,6 @@ public class ListViewActivity extends Activity
                 mAdapter.getDataHolder().appendData(model);
             }
         });
-        findViewById(R.id.btn_remove).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                mAdapter.getDataHolder().removeData(0);
-            }
-        });
 
         mListView.setAdapter(mAdapter);
         mAdapter.getDataHolder().setData(DataModel.get(5));
@@ -103,6 +95,7 @@ public class ListViewActivity extends Activity
             }
 
             convertView.setOnClickListener(this);
+            convertView.setOnLongClickListener(this);
         }
 
         @Override
@@ -110,6 +103,13 @@ public class ListViewActivity extends Activity
         {
             super.onItemClick(position, model, view);
             getSelectManager().performClick(model);
+        }
+
+        @Override
+        public boolean onItemLongClick(int position, DataModel item, View view)
+        {
+            getDataHolder().removeData(position);
+            return super.onItemLongClick(position, item, view);
         }
     };
 }

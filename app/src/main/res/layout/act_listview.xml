@@ -11,13 +11,6 @@
         android:text="add"
         android:textAllCaps="false" />
 
-    <Button
-        android:id="@+id/btn_remove"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="remove"
-        android:textAllCaps="false" />
-
     <TextView
         android:id="@+id/tv_select"
         android:layout_width="match_parent"

@@ -45,14 +45,6 @@ public class RecyclerViewActivity extends Activity
                 mAdapter.getDataHolder().appendData(model);
             }
         });
-        findViewById(R.id.btn_remove).setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v)
-            {
-                mAdapter.getDataHolder().removeData(0);
-            }
-        });
 
         mRecyclerView.setAdapter(mAdapter);
         mAdapter.getDataHolder().setData(DataModel.get(5));
@@ -104,6 +96,7 @@ public class RecyclerViewActivity extends Activity
             }
 
             holder.itemView.setOnClickListener(this);
+            holder.itemView.setOnLongClickListener(this);
         }
 
         @Override
@@ -111,6 +104,13 @@ public class RecyclerViewActivity extends Activity
         {
             super.onItemClick(position, model, view);
             getSelectManager().performClick(model);
+        }
+
+        @Override
+        public boolean onItemLongClick(int position, DataModel item, View view)
+        {
+            getDataHolder().removeData(position);
+            return super.onItemLongClick(position, item, view);
         }
 
         @Override
