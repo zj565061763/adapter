@@ -7,8 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.fanwe.lib.adapter.callback.ItemClickCallback;
-
-import java.util.List;
+import com.fanwe.lib.adapter.data.DataHolder;
 
 public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<T>
 {
@@ -125,7 +124,7 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<
     @Override
     public int getCount()
     {
-        return getDataCount();
+        return getDataHolder().size();
     }
 
     @Override
@@ -176,87 +175,15 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<
     }
 
     @Override
-    public boolean isPositionLegal(int position)
-    {
-        return getAdapterProxy().isPositionLegal(position);
-    }
-
-    @Override
-    public T getData(int position)
-    {
-        return getAdapterProxy().getData(position);
-    }
-
-    @Override
-    public int getDataCount()
-    {
-        return getAdapterProxy().getDataCount();
-    }
-
-    @Override
-    public int indexOf(T model)
-    {
-        return getAdapterProxy().indexOf(model);
-    }
-
-    @Override
-    public List<T> getData()
-    {
-        return getAdapterProxy().getData();
-    }
-
-    @Override
     public void notifyItemViewChanged(int position)
     {
         getAdapterProxy().notifyItemViewChanged(position);
     }
 
     @Override
-    public void setData(List<T> listModel)
+    public DataHolder<T> getDataHolder()
     {
-        getAdapterProxy().setData(listModel);
-    }
-
-    @Override
-    public void appendData(T model)
-    {
-        getAdapterProxy().appendData(model);
-    }
-
-    @Override
-    public void appendData(List<T> list)
-    {
-        getAdapterProxy().appendData(list);
-    }
-
-    @Override
-    public void removeData(T model)
-    {
-        getAdapterProxy().removeData(model);
-    }
-
-    @Override
-    public T removeData(int position)
-    {
-        return getAdapterProxy().removeData(position);
-    }
-
-    @Override
-    public void insertData(int position, T model)
-    {
-        getAdapterProxy().insertData(position, model);
-    }
-
-    @Override
-    public void insertData(int position, List<T> list)
-    {
-        getAdapterProxy().insertData(position, list);
-    }
-
-    @Override
-    public void updateData(int position, T model)
-    {
-        getAdapterProxy().updateData(position, model);
+        return getAdapterProxy().getDataHolder();
     }
 
     //----------FAdapter implements end----------

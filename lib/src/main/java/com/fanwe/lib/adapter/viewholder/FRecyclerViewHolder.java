@@ -52,7 +52,7 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder imp
     {
         if (mAdapter != null)
         {
-            return mAdapter.indexOf(mModel);
+            return mAdapter.getDataHolder().indexOf(mModel);
         } else
         {
             return -1;

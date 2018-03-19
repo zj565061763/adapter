@@ -25,7 +25,7 @@ public class SimpleAdapterActivity extends Activity
         mListView = findViewById(R.id.listview);
 
         mListView.setAdapter(mAdapter);
-        mAdapter.setData(DataModel.get(50));
+        mAdapter.getDataHolder().setData(DataModel.get(50));
     }
 
     private FSimpleAdapter<DataModel> mAdapter = new FSimpleAdapter<DataModel>(this)
