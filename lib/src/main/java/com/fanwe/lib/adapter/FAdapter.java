@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import java.util.List;
 
-public interface FAdapter<T> extends FAdapterDataModifier<T>
+public interface FAdapter<T> extends AdapterDataModifier<T>
 {
     /**
      * 获得Activity

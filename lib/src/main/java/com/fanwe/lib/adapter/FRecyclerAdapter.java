@@ -241,6 +241,12 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     }
 
     @Override
+    public void notifyItemViewChanged(int position)
+    {
+        getAdapterProxy().notifyItemViewChanged(position);
+    }
+
+    @Override
     public void setData(List<T> list)
     {
         getAdapterProxy().setData(list);
@@ -286,12 +292,6 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     public void updateData(int position, T model)
     {
         getAdapterProxy().updateData(position, model);
-    }
-
-    @Override
-    public void notifyItemViewChanged(int position)
-    {
-        getAdapterProxy().notifyItemViewChanged(position);
     }
 
     //----------FAdapter implements end----------

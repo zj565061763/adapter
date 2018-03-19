@@ -69,6 +69,22 @@ public class FAdapterProxy<T> implements FAdapter<T>
         return mListModel;
     }
 
+
+    @Override
+    public void notifyItemViewChanged(int position)
+    {
+        if (!isPositionLegal(position))
+        {
+            return;
+        }
+
+        final int positionStart = position;
+        final int itemCount = 1;
+        mCallback.onItemRangeChanged(positionStart, itemCount);
+    }
+
+    //---------- AdapterDataModifier start ----------
+
     @Override
     public void setData(List<T> list)
     {
@@ -179,18 +195,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
         }
     }
 
-    @Override
-    public void notifyItemViewChanged(int position)
-    {
-        if (!isPositionLegal(position))
-        {
-            return;
-        }
-
-        final int positionStart = position;
-        final int itemCount = 1;
-        mCallback.onItemRangeChanged(positionStart, itemCount);
-    }
+    //---------- AdapterDataModifier end ----------
 
     private final Callback mCallbackProxy = new Callback()
     {

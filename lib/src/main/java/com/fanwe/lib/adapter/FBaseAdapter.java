@@ -275,6 +275,12 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
     }
 
     @Override
+    public void notifyItemViewChanged(int position)
+    {
+        getAdapterProxy().notifyItemViewChanged(position);
+    }
+
+    @Override
     public void setData(List<T> list)
     {
         getAdapterProxy().setData(list);
@@ -320,12 +326,6 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
     public void updateData(int position, T model)
     {
         getAdapterProxy().updateData(position, model);
-    }
-
-    @Override
-    public void notifyItemViewChanged(int position)
-    {
-        getAdapterProxy().notifyItemViewChanged(position);
     }
 
     //----------FAdapter implements end----------

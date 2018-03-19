@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by zhengjun on 2018/3/19.
  */
-public interface FAdapterDataModifier<T>
+public interface AdapterDataModifier<T>
 {
     /**
      * 设置数据集并刷新界面

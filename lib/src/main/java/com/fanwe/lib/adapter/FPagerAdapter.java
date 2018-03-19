@@ -206,6 +206,12 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<
     }
 
     @Override
+    public void notifyItemViewChanged(int position)
+    {
+        getAdapterProxy().notifyItemViewChanged(position);
+    }
+
+    @Override
     public void setData(List<T> listModel)
     {
         getAdapterProxy().setData(listModel);
@@ -251,12 +257,6 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<
     public void updateData(int position, T model)
     {
         getAdapterProxy().updateData(position, model);
-    }
-
-    @Override
-    public void notifyItemViewChanged(int position)
-    {
-        getAdapterProxy().notifyItemViewChanged(position);
     }
 
     //----------FAdapter implements end----------
