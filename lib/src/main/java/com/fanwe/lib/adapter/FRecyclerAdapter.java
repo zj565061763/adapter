@@ -89,6 +89,12 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     @Override
     public void onNormal(T item)
     {
+        if (item instanceof FSelectManager.Selectable)
+        {
+            FSelectManager.Selectable selectable = (FSelectManager.Selectable) item;
+            selectable.setSelected(false);
+        }
+
         final int index = getDataHolder().indexOf(item);
         notifyItemViewChanged(index);
     }
@@ -96,6 +102,12 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     @Override
     public void onSelected(T item)
     {
+        if (item instanceof FSelectManager.Selectable)
+        {
+            FSelectManager.Selectable selectable = (FSelectManager.Selectable) item;
+            selectable.setSelected(true);
+        }
+
         final int index = getDataHolder().indexOf(item);
         notifyItemViewChanged(index);
     }
