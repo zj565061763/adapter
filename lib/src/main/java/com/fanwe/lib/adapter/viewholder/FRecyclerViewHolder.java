@@ -28,12 +28,12 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
         mAdapter = adapter;
     }
 
-    public FAdapter<T> getAdapter()
+    public final FAdapter<T> getAdapter()
     {
         return mAdapter;
     }
 
-    public <V extends View> V findViewById(int id)
+    public final <V extends View> V findViewById(int id)
     {
         return itemView.findViewById(id);
     }
@@ -45,7 +45,7 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
      * @param <V>
      * @return
      */
-    public <V extends View> V get(int id)
+    public final <V extends View> V get(int id)
     {
         if (mArrayView == null)
         {
