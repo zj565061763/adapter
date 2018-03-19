@@ -5,17 +5,27 @@
     android:orientation="vertical">
 
     <Button
+        android:id="@+id/btn_add"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickListViewActivity"
-        android:text="ListViewActivity"
+        android:text="add"
         android:textAllCaps="false" />
 
     <Button
+        android:id="@+id/btn_remove"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="onClickRecyclerViewActivity"
-        android:text="RecyclerViewActivity"
+        android:text="remove"
         android:textAllCaps="false" />
+
+    <TextView
+        android:id="@+id/tv_select"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
