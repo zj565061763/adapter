@@ -6,69 +6,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fanwe.lib.adapter.FRecyclerAdapter;
+import com.fanwe.lib.adapter.FAdapter;
 
-public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder implements
-        View.OnClickListener,
-        View.OnLongClickListener
+public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
 {
-    private T mModel;
-    private FRecyclerAdapter mAdapter;
+    private FAdapter<T> mAdapter;
     private SparseArray<View> mArrayView;
 
     public FRecyclerViewHolder(View itemView)
     {
         super(itemView);
-        itemView.setOnClickListener(this);
-        itemView.setOnLongClickListener(this);
     }
 
-    public FRecyclerViewHolder(ViewGroup parent, int layoutId)
+    public FRecyclerViewHolder(int layoutId, ViewGroup parent)
     {
         this(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
     }
 
-    public void setAdapter(FRecyclerAdapter adapter)
+    public void setAdapter(FAdapter<T> adapter)
     {
-        this.mAdapter = adapter;
+        mAdapter = adapter;
     }
 
-    public FRecyclerAdapter getAdapter()
+    public FAdapter<T> getAdapter()
     {
         return mAdapter;
     }
 
-    public T getModel()
-    {
-        return mModel;
-    }
-
-    public void setModel(T model)
-    {
-        this.mModel = model;
-    }
-
-    public int getModelPosition()
-    {
-        if (mAdapter != null)
-        {
-            return mAdapter.getDataHolder().indexOf(mModel);
-        } else
-        {
-            return -1;
-        }
-    }
-
-    /**
-     * 用findViewById(id)替代
-     */
-    @Deprecated
-    public <V extends View> V find(int id)
-    {
-        return (V) itemView.findViewById(id);
-    }
-
-    public View findViewById(int id)
+    public <V extends View> V findViewById(int id)
     {
         return itemView.findViewById(id);
     }
@@ -96,32 +61,6 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder imp
             }
         }
         return (V) view;
-    }
-
-    @Override
-    public void onClick(View view)
-    {
-        if (view == itemView)
-        {
-            if (mAdapter != null)
-            {
-                mAdapter.notifyItemClickCallback(getModelPosition(), getModel(), view);
-            }
-        }
-    }
-
-    @Override
-    public boolean onLongClick(View view)
-    {
-        if (view == itemView)
-        {
-            if (mAdapter != null)
-            {
-                mAdapter.notifyItemLongClickCallback(getModelPosition(), getModel(), view);
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
