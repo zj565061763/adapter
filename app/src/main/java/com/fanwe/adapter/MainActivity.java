@@ -14,8 +14,8 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
     }
 
-    public void onClickSimpleAdapterActivity(View view)
+    public void onClickListViewActivity(View view)
     {
-        startActivity(new Intent(this, SimpleAdapterActivity.class));
+        startActivity(new Intent(this, ListViewActivity.class));
     }
 }

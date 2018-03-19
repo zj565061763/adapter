@@ -17,9 +17,9 @@ import com.fanwe.lib.selectmanager.FSelectManager;
 /**
  * Created by Administrator on 2018/3/19.
  */
-public class SimpleAdapterActivity extends Activity
+public class ListViewActivity extends Activity
 {
-    public static final String TAG = SimpleAdapterActivity.class.getSimpleName();
+    public static final String TAG = ListViewActivity.class.getSimpleName();
 
     private ListView mListView;
 
@@ -27,7 +27,7 @@ public class SimpleAdapterActivity extends Activity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_simple_adapter);
+        setContentView(R.layout.act_listview);
         mListView = findViewById(R.id.listview);
         findViewById(R.id.btn_add).setOnClickListener(new View.OnClickListener()
         {
