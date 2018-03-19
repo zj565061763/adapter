@@ -64,7 +64,8 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
     {
         if (mItemClickCallback != null)
         {
-            mItemClickCallback.onItemClick(item, view);
+            final int position = getDataHolder().indexOf(item);
+            mItemClickCallback.onItemClick(position, item, view);
         }
     }
 
@@ -79,7 +80,8 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
     {
         if (mItemLongClickCallback != null)
         {
-            return mItemLongClickCallback.onItemLongClick(item, view);
+            final int position = getDataHolder().indexOf(item);
+            return mItemLongClickCallback.onItemLongClick(position, item, view);
         }
         return false;
     }

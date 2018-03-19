@@ -62,7 +62,8 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     {
         if (mItemClickCallback != null)
         {
-            mItemClickCallback.onItemClick(item, view);
+            final int position = getDataHolder().indexOf(item);
+            mItemClickCallback.onItemClick(position, item, view);
         }
     }
 
@@ -77,7 +78,8 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     {
         if (mItemLongClickCallback != null)
         {
-            return mItemLongClickCallback.onItemLongClick(item, view);
+            final int position = getDataHolder().indexOf(item);
+            return mItemLongClickCallback.onItemLongClick(position, item, view);
         }
         return false;
     }
