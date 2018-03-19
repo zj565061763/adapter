@@ -53,8 +53,8 @@ public class ListDataHolder<T> implements DataHolder<T>
         {
             return;
         }
-        mListData.add(model);
 
+        mListData.add(model);
         for (DataChangeCallback<T> item : mListDataChangeCallback)
         {
             item.onAppendData(model);
@@ -68,8 +68,8 @@ public class ListDataHolder<T> implements DataHolder<T>
         {
             return;
         }
-        mListData.addAll(list);
 
+        mListData.addAll(list);
         for (DataChangeCallback<T> item : mListDataChangeCallback)
         {
             item.onAppendData(list);
@@ -108,8 +108,8 @@ public class ListDataHolder<T> implements DataHolder<T>
         {
             return;
         }
-        mListData.add(index, model);
 
+        mListData.add(index, model);
         for (DataChangeCallback<T> item : mListDataChangeCallback)
         {
             item.onInsertData(index, model);
@@ -123,8 +123,8 @@ public class ListDataHolder<T> implements DataHolder<T>
         {
             return;
         }
-        mListData.addAll(index, list);
 
+        mListData.addAll(index, list);
         for (DataChangeCallback<T> item : mListDataChangeCallback)
         {
             item.onInsertData(index, list);
@@ -138,8 +138,8 @@ public class ListDataHolder<T> implements DataHolder<T>
         {
             return;
         }
-        mListData.set(index, model);
 
+        mListData.set(index, model);
         for (DataChangeCallback<T> item : mListDataChangeCallback)
         {
             item.onUpdateData(index, model);
