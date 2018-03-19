@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.fanwe.lib.adapter.FBaseAdapter;
 import com.fanwe.lib.selectmanager.FSelectManager;
 
-public abstract class FSelectBaseAdapter<T> extends FBaseAdapter<T>
+public abstract class FSelectBaseAdapter<T> extends FBaseAdapter<T> implements FSelectableAdapter<T>
 {
     private FSelectManager<T> mSelectManager;
 
@@ -15,6 +15,7 @@ public abstract class FSelectBaseAdapter<T> extends FBaseAdapter<T>
         getSelectManager().setMode(FSelectManager.Mode.SINGLE);
     }
 
+    @Override
     public final FSelectManager<T> getSelectManager()
     {
         if (mSelectManager == null)
