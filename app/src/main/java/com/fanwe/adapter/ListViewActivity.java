@@ -3,10 +3,8 @@ package com.fanwe.adapter;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -91,34 +89,27 @@ public class ListViewActivity extends Activity
         }
 
         @Override
-        protected void onUpdateView(int position, View convertView, ViewGroup parent, DataModel model)
-        {
-            super.onUpdateView(position, convertView, parent, model);
-            Log.i(TAG, "onUpdateView:" + model.name);
-        }
-
-        @Override
         public void onBindData(int position, View convertView, ViewGroup parent, final DataModel model)
         {
-            Button button = get(R.id.button, convertView);
-            button.setText(model.name);
+            TextView textView = get(R.id.textview, convertView);
+            textView.setText(model.name);
 
             if (model.isSelected())
             {
-                button.setTextColor(Color.RED);
+                textView.setTextColor(Color.RED);
             } else
             {
-                button.setTextColor(Color.BLACK);
+                textView.setTextColor(Color.BLACK);
             }
 
-            button.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    getSelectManager().performClick(model);
-                }
-            });
+            convertView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onItemClick(int position, DataModel model, View view)
+        {
+            super.onItemClick(position, model, view);
+            getSelectManager().performClick(model);
         }
     };
 }

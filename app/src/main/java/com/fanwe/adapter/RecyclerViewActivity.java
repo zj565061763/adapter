@@ -8,7 +8,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.fanwe.adapter.model.DataModel;
@@ -93,25 +92,25 @@ public class RecyclerViewActivity extends Activity
         @Override
         public void onBindData(FRecyclerViewHolder<DataModel> holder, int position, final DataModel model)
         {
-            Button button = holder.get(R.id.button);
-            button.setText(model.name);
+            TextView textview = holder.get(R.id.textview);
+            textview.setText(model.name);
 
             if (model.isSelected())
             {
-                button.setTextColor(Color.RED);
+                textview.setTextColor(Color.RED);
             } else
             {
-                button.setTextColor(Color.BLACK);
+                textview.setTextColor(Color.BLACK);
             }
 
-            button.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
-                {
-                    getSelectManager().performClick(model);
-                }
-            });
+            holder.itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onItemClick(int position, DataModel model, View view)
+        {
+            super.onItemClick(position, model, view);
+            getSelectManager().performClick(model);
         }
 
         @Override
