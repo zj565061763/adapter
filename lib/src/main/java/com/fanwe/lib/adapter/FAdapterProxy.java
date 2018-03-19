@@ -32,7 +32,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
     @Override
     public boolean isPositionLegal(int position)
     {
-        return position >= 0 && position < mListModel.size();
+        return position >= 0 && position < getDataCount();
     }
 
     @Override
