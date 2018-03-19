@@ -1,7 +1,6 @@
 package com.fanwe.lib.adapter;
 
 import android.app.Activity;
-import android.view.View;
 
 import java.util.List;
 
@@ -134,14 +133,4 @@ public interface FAdapter<T>
      * @param position
      */
     void notifyItemViewChanged(int position);
-
-    interface ItemClickCallback<T>
-    {
-        void onItemClick(int position, T item, View view);
-    }
-
-    interface ItemLongClickCallback<T>
-    {
-        boolean onItemLongClick(int position, T item, View view);
-    }
 }

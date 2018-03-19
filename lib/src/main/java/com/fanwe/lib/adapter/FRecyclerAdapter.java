@@ -5,6 +5,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fanwe.lib.adapter.callback.ItemClickCallback;
+import com.fanwe.lib.adapter.callback.ItemLongClickCallback;
 import com.fanwe.lib.adapter.viewholder.FRecyclerViewHolder;
 
 import java.util.ArrayList;

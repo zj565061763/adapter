@@ -6,6 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.fanwe.lib.adapter.callback.ItemClickCallback;
+import com.fanwe.lib.adapter.callback.ItemLongClickCallback;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +19,7 @@ import java.util.WeakHashMap;
 public abstract class FBaseAdapter<T> extends BaseAdapter implements
         FAdapter<T>,
         View.OnClickListener,
-        FAdapter.ItemClickCallback<T>
+        ItemClickCallback<T>
 {
     private FAdapterProxy<T> mAdapterProxy;
     /**

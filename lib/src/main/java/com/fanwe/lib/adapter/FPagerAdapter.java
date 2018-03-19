@@ -6,6 +6,8 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.fanwe.lib.adapter.callback.ItemClickCallback;
+
 import java.util.List;
 
 public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<T>
