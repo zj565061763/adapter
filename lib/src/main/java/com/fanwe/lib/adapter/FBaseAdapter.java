@@ -328,12 +328,6 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
         getAdapterProxy().notifyItemViewChanged(position);
     }
 
-    @Override
-    public void clearData()
-    {
-        getAdapterProxy().clearData();
-    }
-
     //----------FAdapter implements end----------
 
     @SuppressWarnings("unchecked")

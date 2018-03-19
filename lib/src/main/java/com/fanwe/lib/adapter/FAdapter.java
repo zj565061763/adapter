@@ -120,11 +120,6 @@ public interface FAdapter<T>
      */
     void updateData(int position, T model);
 
-    /**
-     * 清空数据并刷新界面
-     */
-    void clearData();
-
     //---------- data modify end ----------
 
     /**

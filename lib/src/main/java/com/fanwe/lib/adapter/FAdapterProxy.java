@@ -180,13 +180,6 @@ public class FAdapterProxy<T> implements FAdapter<T>
     }
 
     @Override
-    public void clearData()
-    {
-        mListModel.clear();
-        mCallbackProxy.onDataSetChanged();
-    }
-
-    @Override
     public void notifyItemViewChanged(int position)
     {
         if (!isPositionLegal(position))

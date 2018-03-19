@@ -259,11 +259,5 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<
         getAdapterProxy().notifyItemViewChanged(position);
     }
 
-    @Override
-    public void clearData()
-    {
-        getAdapterProxy().clearData();
-    }
-
     //----------FAdapter implements end----------
 }

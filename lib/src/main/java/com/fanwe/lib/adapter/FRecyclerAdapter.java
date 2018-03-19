@@ -294,11 +294,5 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
         getAdapterProxy().notifyItemViewChanged(position);
     }
 
-    @Override
-    public void clearData()
-    {
-        getAdapterProxy().clearData();
-    }
-
     //----------FAdapter implements end----------
 }
