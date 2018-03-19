@@ -24,4 +24,10 @@ public class DataModel extends FSelectManager.SelectableModel
         }
         return list;
     }
+
+    @Override
+    public String toString()
+    {
+        return name;
+    }
 }
