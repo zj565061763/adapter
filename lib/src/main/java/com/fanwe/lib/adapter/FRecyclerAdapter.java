@@ -8,7 +8,9 @@ import android.view.ViewGroup;
 import com.fanwe.lib.adapter.callback.ItemClickCallback;
 import com.fanwe.lib.adapter.callback.ItemLongClickCallback;
 import com.fanwe.lib.adapter.data.DataHolder;
+import com.fanwe.lib.adapter.select.AdapterSelectManager;
 import com.fanwe.lib.adapter.viewholder.FRecyclerViewHolder;
+import com.fanwe.lib.selectmanager.FSelectManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +26,7 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
 {
     private FAdapterProxy<T> mAdapterProxy;
     private List<Object> mDefaultPayloads = new ArrayList<>();
+    private FSelectManager<T> mSelectManager;
 
     private ItemClickCallback<T> mItemClickCallback;
     private ItemLongClickCallback<T> mItemLongClickCallback;
@@ -66,6 +69,18 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
             });
         }
         return mAdapterProxy;
+    }
+
+    public final FSelectManager<T> getSelectManager()
+    {
+        if (mSelectManager == null)
+        {
+            final AdapterSelectManager<T> manager = new AdapterSelectManager<>();
+            getDataHolder().addDataChangeCallback(manager);
+
+            mSelectManager = manager;
+        }
+        return mSelectManager;
     }
 
     /**

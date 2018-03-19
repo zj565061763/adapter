@@ -65,7 +65,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
                 }
 
                 @Override
-                public void onAppendData(T model)
+                public void onAppendData(T data)
                 {
                     final int itemCount = 1;
                     final int positionStart = getDataHolder().size() - itemCount;
@@ -83,7 +83,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
                 }
 
                 @Override
-                public void onRemoveData(int index, T model)
+                public void onRemoveData(int index, T data)
                 {
                     final int itemCount = 1;
                     final int positionStart = index;
@@ -92,7 +92,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
                 }
 
                 @Override
-                public void onInsertData(int index, T model)
+                public void onInsertData(int index, T data)
                 {
                     final int itemCount = 1;
                     final int positionStart = index;
@@ -110,7 +110,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
                 }
 
                 @Override
-                public void onUpdateData(int index, T model)
+                public void onUpdateData(int index, T data)
                 {
                     if (mNotifyOnDataChanged)
                     {

@@ -23,9 +23,9 @@ public interface DataHolder<T>
     /**
      * 在末尾添加数据
      *
-     * @param model
+     * @param data
      */
-    void appendData(T model);
+    void appendData(T data);
 
     /**
      * 在末尾添加数据集
@@ -37,9 +37,9 @@ public interface DataHolder<T>
     /**
      * 移除数据
      *
-     * @param model
+     * @param data
      */
-    void removeData(T model);
+    void removeData(T data);
 
     /**
      * 移除该位置对应的数据
@@ -53,9 +53,9 @@ public interface DataHolder<T>
      * 插入数据
      *
      * @param index 插入位置
-     * @param model
+     * @param data
      */
-    void insertData(int index, T model);
+    void insertData(int index, T data);
 
     /**
      * 插入数据集
@@ -69,9 +69,9 @@ public interface DataHolder<T>
      * 更新该位置对应的数据
      *
      * @param index
-     * @param model
+     * @param data
      */
-    void updateData(int index, T model);
+    void updateData(int index, T data);
 
     //---------- modify end ----------
 
@@ -101,10 +101,10 @@ public interface DataHolder<T>
     /**
      * 实体在数据集中的位置
      *
-     * @param model
+     * @param data
      * @return
      */
-    int indexOf(T model);
+    int indexOf(T data);
 
     /**
      * 获得数据集
@@ -117,16 +117,16 @@ public interface DataHolder<T>
     {
         void onSetData(List<T> list);
 
-        void onAppendData(T model);
+        void onAppendData(T data);
 
         void onAppendData(List<T> list);
 
-        void onRemoveData(int index, T model);
+        void onRemoveData(int index, T data);
 
-        void onInsertData(int index, T model);
+        void onInsertData(int index, T data);
 
         void onInsertData(int index, List<T> list);
 
-        void onUpdateData(int index, T model);
+        void onUpdateData(int index, T data);
     }
 }

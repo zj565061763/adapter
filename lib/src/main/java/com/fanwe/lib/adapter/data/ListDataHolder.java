@@ -47,17 +47,17 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
-    public void appendData(T model)
+    public void appendData(T data)
     {
-        if (model == null)
+        if (data == null)
         {
             return;
         }
 
-        mListData.add(model);
+        mListData.add(data);
         for (DataChangeCallback<T> item : mListDataChangeCallback)
         {
-            item.onAppendData(model);
+            item.onAppendData(data);
         }
     }
 
@@ -77,9 +77,9 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
-    public void removeData(T model)
+    public void removeData(T data)
     {
-        final int position = mListData.indexOf(model);
+        final int position = mListData.indexOf(data);
         removeData(position);
     }
 
@@ -102,17 +102,17 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
-    public void insertData(int index, T model)
+    public void insertData(int index, T data)
     {
-        if (model == null)
+        if (data == null)
         {
             return;
         }
 
-        mListData.add(index, model);
+        mListData.add(index, data);
         for (DataChangeCallback<T> item : mListDataChangeCallback)
         {
-            item.onInsertData(index, model);
+            item.onInsertData(index, data);
         }
     }
 
@@ -132,17 +132,17 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
-    public void updateData(int index, T model)
+    public void updateData(int index, T data)
     {
-        if (model == null || !isIndexLegal(index))
+        if (data == null || !isIndexLegal(index))
         {
             return;
         }
 
-        mListData.set(index, model);
+        mListData.set(index, data);
         for (DataChangeCallback<T> item : mListDataChangeCallback)
         {
-            item.onUpdateData(index, model);
+            item.onUpdateData(index, data);
         }
     }
 
@@ -171,9 +171,9 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
-    public int indexOf(T model)
+    public int indexOf(T data)
     {
-        return mListData.indexOf(model);
+        return mListData.indexOf(data);
     }
 
     @Override

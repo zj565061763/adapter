@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import com.fanwe.lib.adapter.callback.ItemClickCallback;
 import com.fanwe.lib.adapter.callback.ItemLongClickCallback;
 import com.fanwe.lib.adapter.data.DataHolder;
+import com.fanwe.lib.adapter.select.AdapterSelectManager;
+import com.fanwe.lib.selectmanager.FSelectManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,7 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
      * 保存每个itemView对应的position
      */
     private Map<View, Integer> mMapViewPosition = new WeakHashMap<>();
+    private FSelectManager<T> mSelectManager;
 
     private ItemClickCallback<T> mItemClickCallback;
     private ItemLongClickCallback<T> mItemLongClickCallback;
@@ -82,6 +85,18 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
             });
         }
         return mAdapterProxy;
+    }
+
+    public final FSelectManager<T> getSelectManager()
+    {
+        if (mSelectManager == null)
+        {
+            final AdapterSelectManager<T> manager = new AdapterSelectManager<>();
+            getDataHolder().addDataChangeCallback(manager);
+
+            mSelectManager = manager;
+        }
+        return mSelectManager;
     }
 
     /**
