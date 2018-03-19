@@ -9,8 +9,6 @@ import android.widget.BaseAdapter;
 import com.fanwe.lib.adapter.callback.ItemClickCallback;
 import com.fanwe.lib.adapter.callback.ItemLongClickCallback;
 import com.fanwe.lib.adapter.data.DataHolder;
-import com.fanwe.lib.adapter.select.AdapterSelectManager;
-import com.fanwe.lib.selectmanager.FSelectManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,15 +20,13 @@ import java.util.WeakHashMap;
 public abstract class FBaseAdapter<T> extends BaseAdapter implements
         FAdapter<T>,
         View.OnClickListener,
-        ItemClickCallback<T>,
-        FSelectManager.Callback<T>
+        ItemClickCallback<T>
 {
     private FAdapterProxy<T> mAdapterProxy;
     /**
      * 保存每个itemView对应的position
      */
     private Map<View, Integer> mMapViewPosition = new WeakHashMap<>();
-    private FSelectManager<T> mSelectManager;
 
     private ItemClickCallback<T> mItemClickCallback;
     private ItemLongClickCallback<T> mItemLongClickCallback;
@@ -86,45 +82,6 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
             });
         }
         return mAdapterProxy;
-    }
-
-    public final FSelectManager<T> getSelectManager()
-    {
-        if (mSelectManager == null)
-        {
-            final AdapterSelectManager<T> manager = new AdapterSelectManager<>();
-            manager.addCallback(this);
-            getDataHolder().addDataChangeCallback(manager);
-
-            mSelectManager = manager;
-        }
-        return mSelectManager;
-    }
-
-    @Override
-    public void onNormal(T item)
-    {
-        if (item instanceof FSelectManager.Selectable)
-        {
-            FSelectManager.Selectable selectable = (FSelectManager.Selectable) item;
-            selectable.setSelected(false);
-        }
-
-        final int index = getDataHolder().indexOf(item);
-        notifyItemViewChanged(index);
-    }
-
-    @Override
-    public void onSelected(T item)
-    {
-        if (item instanceof FSelectManager.Selectable)
-        {
-            FSelectManager.Selectable selectable = (FSelectManager.Selectable) item;
-            selectable.setSelected(true);
-        }
-
-        final int index = getDataHolder().indexOf(item);
-        notifyItemViewChanged(index);
     }
 
     /**
