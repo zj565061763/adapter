@@ -81,7 +81,7 @@ class AdapterSelectManager<T> extends FSelectManager<T> implements DataHolder.Da
     }
 
     @Override
-    public void onUpdateData(int index, T data)
+    public void onDataChanged(int index, T data)
     {
         updateItem(index, data);
     }
