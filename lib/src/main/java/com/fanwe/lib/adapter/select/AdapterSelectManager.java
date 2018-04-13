@@ -63,7 +63,7 @@ class AdapterSelectManager<T> extends FSelectManager<T> implements DataHolder.Da
     }
 
     @Override
-    public void onRemoveData(int index, T data)
+    public void onDataRemoved(int index, T data)
     {
         removeItem(data);
     }

@@ -117,11 +117,9 @@ public interface DataHolder<T>
     {
         void onDataChanged(List<T> list);
 
-        void onAppendData(T data);
+        void onDataAdded(int index, List<T> list);
 
-        void onAppendData(List<T> list);
-
-        void onRemoveData(int index, T data);
+        void onDataRemoved(int index, T data);
 
         void onInsertData(int index, T data);
 

@@ -61,13 +61,18 @@ public class ListDataHolder<T> implements DataHolder<T>
         {
             return;
         }
+
+        final int oldSize = size();
         mListData.add(data);
+
+        final List<T> list = new ArrayList<>();
+        list.add(data);
 
         final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
         while (it.hasPrevious())
         {
             final DataChangeCallback<T> item = it.previous();
-            item.onAppendData(data);
+            item.onDataAdded(oldSize, list);
         }
     }
 
@@ -78,13 +83,15 @@ public class ListDataHolder<T> implements DataHolder<T>
         {
             return;
         }
+
+        final int oldSize = size();
         mListData.addAll(list);
 
         final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
         while (it.hasPrevious())
         {
             final DataChangeCallback<T> item = it.previous();
-            item.onAppendData(list);
+            item.onDataAdded(oldSize, list);
         }
     }
 
@@ -106,7 +113,7 @@ public class ListDataHolder<T> implements DataHolder<T>
             while (it.hasPrevious())
             {
                 final DataChangeCallback<T> item = it.previous();
-                item.onRemoveData(index, model);
+                item.onDataRemoved(index, model);
             }
             return model;
         } else

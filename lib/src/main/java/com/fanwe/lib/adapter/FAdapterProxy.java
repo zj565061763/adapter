@@ -92,7 +92,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
                 }
 
                 @Override
-                public void onRemoveData(int index, T data)
+                public void onDataRemoved(int index, T data)
                 {
                     final int itemCount = 1;
                     final int positionStart = index;
