@@ -77,6 +77,15 @@ public class FAdapterProxy<T> implements FAdapter<T>
                 }
 
                 @Override
+                public void onDataAppended(int index, List<T> list)
+                {
+                    if (mNotifyOnDataChanged)
+                    {
+                        mCallback.onItemRangeInserted(index, list.size());
+                    }
+                }
+
+                @Override
                 public void onDataInserted(int index, List<T> list)
                 {
                     if (mNotifyOnDataChanged)
