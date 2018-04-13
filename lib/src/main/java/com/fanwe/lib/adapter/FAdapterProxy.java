@@ -77,7 +77,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
                 }
 
                 @Override
-                public void onDataAdded(int index, List<T> list)
+                public void onDataInserted(int index, List<T> list)
                 {
                     if (mNotifyOnDataChanged)
                     {

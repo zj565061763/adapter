@@ -42,7 +42,7 @@ public class RecyclerViewActivity extends Activity
                 DataModel model = new DataModel();
                 model.name = String.valueOf(mAdapter.getDataHolder().size());
 
-                mAdapter.getDataHolder().addData(model);
+                mAdapter.getDataHolder().appendData(model);
             }
         });
 

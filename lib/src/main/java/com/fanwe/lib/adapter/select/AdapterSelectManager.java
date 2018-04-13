@@ -51,6 +51,18 @@ class AdapterSelectManager<T> extends FSelectManager<T> implements DataHolder.Da
     }
 
     @Override
+    public void onDataChanged(int index, T data)
+    {
+        updateItem(index, data);
+    }
+
+    @Override
+    public void onDataInserted(int index, List<T> list)
+    {
+        appendItems();
+    }
+
+    @Override
     public void onAppendData(T data)
     {
         appendItem(data);
@@ -80,9 +92,5 @@ class AdapterSelectManager<T> extends FSelectManager<T> implements DataHolder.Da
         insertItem(index, list);
     }
 
-    @Override
-    public void onDataChanged(int index, T data)
-    {
-        updateItem(index, data);
-    }
+
 }

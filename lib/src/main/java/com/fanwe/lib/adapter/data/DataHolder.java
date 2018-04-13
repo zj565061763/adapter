@@ -25,14 +25,14 @@ public interface DataHolder<T>
      *
      * @param data
      */
-    void addData(T data);
+    void appendData(T data);
 
     /**
      * 在末尾添加数据集
      *
      * @param list
      */
-    void addData(List<T> list);
+    void appendData(List<T> list);
 
     /**
      * 插入数据
@@ -40,7 +40,7 @@ public interface DataHolder<T>
      * @param index 插入位置
      * @param data
      */
-    void addData(int index, T data);
+    void insertData(int index, T data);
 
     /**
      * 插入数据集
@@ -48,7 +48,7 @@ public interface DataHolder<T>
      * @param index 插入位置
      * @param list
      */
-    void addData(int index, List<T> list);
+    void insertData(int index, List<T> list);
 
     /**
      * 移除数据
@@ -119,7 +119,9 @@ public interface DataHolder<T>
 
         void onDataChanged(int index, T data);
 
-        void onDataAdded(int index, List<T> list);
+        void onDataAppended(int index, List<T> list);
+
+        void onDataInserted(int index, List<T> list);
 
         void onDataRemoved(int index, T data);
     }

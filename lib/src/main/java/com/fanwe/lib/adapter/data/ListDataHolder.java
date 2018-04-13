@@ -55,7 +55,7 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
-    public void addData(T data)
+    public void appendData(T data)
     {
         if (data == null)
         {
@@ -72,12 +72,12 @@ public class ListDataHolder<T> implements DataHolder<T>
         while (it.hasPrevious())
         {
             final DataChangeCallback<T> item = it.previous();
-            item.onDataAdded(oldSize, list);
+            item.onDataAppended(oldSize, list);
         }
     }
 
     @Override
-    public void addData(List<T> list)
+    public void appendData(List<T> list)
     {
         if (list == null || list.isEmpty())
         {
@@ -91,12 +91,12 @@ public class ListDataHolder<T> implements DataHolder<T>
         while (it.hasPrevious())
         {
             final DataChangeCallback<T> item = it.previous();
-            item.onDataAdded(oldSize, list);
+            item.onDataAppended(oldSize, list);
         }
     }
 
     @Override
-    public void addData(int index, T data)
+    public void insertData(int index, T data)
     {
         if (data == null)
         {
@@ -111,12 +111,12 @@ public class ListDataHolder<T> implements DataHolder<T>
         while (it.hasPrevious())
         {
             final DataChangeCallback<T> item = it.previous();
-            item.onDataAdded(index, list);
+            item.onDataInserted(index, list);
         }
     }
 
     @Override
-    public void addData(int index, List<T> list)
+    public void insertData(int index, List<T> list)
     {
         if (list == null || list.isEmpty())
         {
@@ -128,7 +128,7 @@ public class ListDataHolder<T> implements DataHolder<T>
         while (it.hasPrevious())
         {
             final DataChangeCallback<T> item = it.previous();
-            item.onDataAdded(index, list);
+            item.onDataInserted(index, list);
         }
     }
 
