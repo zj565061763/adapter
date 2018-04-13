@@ -50,7 +50,7 @@ public class ListDataHolder<T> implements DataHolder<T>
         while (it.hasPrevious())
         {
             final DataChangeCallback<T> item = it.previous();
-            item.onSetData(list);
+            item.onDataChanged(list);
         }
     }
 

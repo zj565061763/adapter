@@ -45,7 +45,7 @@ class AdapterSelectManager<T> extends FSelectManager<T> implements DataHolder.Da
     }
 
     @Override
-    public void onSetData(List<T> list)
+    public void onDataChanged(List<T> list)
     {
         setItems(list);
     }

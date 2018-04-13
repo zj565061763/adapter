@@ -115,7 +115,7 @@ public interface DataHolder<T>
 
     interface DataChangeCallback<T>
     {
-        void onSetData(List<T> list);
+        void onDataChanged(List<T> list);
 
         void onAppendData(T data);
 

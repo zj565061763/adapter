@@ -59,7 +59,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
             mDataHolder.addDataChangeCallback(new DataHolder.DataChangeCallback<T>()
             {
                 @Override
-                public void onSetData(List<T> list)
+                public void onDataChanged(List<T> list)
                 {
                     if (mNotifyOnDataChanged)
                     {
