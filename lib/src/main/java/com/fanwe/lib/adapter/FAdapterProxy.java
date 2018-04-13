@@ -68,71 +68,29 @@ public class FAdapterProxy<T> implements FAdapter<T>
                 }
 
                 @Override
-                public void onAppendData(T data)
+                public void onDataChanged(int index, T data)
                 {
-                    final int itemCount = 1;
-                    final int positionStart = getDataHolder().size() - itemCount;
-
                     if (mNotifyOnDataChanged)
                     {
-                        mCallback.onItemRangeInserted(positionStart, itemCount);
+                        notifyItemViewChanged(index);
                     }
                 }
 
                 @Override
-                public void onAppendData(List<T> list)
+                public void onDataAdded(int index, List<T> list)
                 {
-                    final int itemCount = list.size();
-                    final int positionStart = getDataHolder().size() - itemCount;
-
                     if (mNotifyOnDataChanged)
                     {
-                        mCallback.onItemRangeInserted(positionStart, itemCount);
+                        mCallback.onItemRangeInserted(index, list.size());
                     }
                 }
 
                 @Override
                 public void onDataRemoved(int index, T data)
                 {
-                    final int itemCount = 1;
-                    final int positionStart = index;
-
                     if (mNotifyOnDataChanged)
                     {
-                        mCallback.onItemRangeRemoved(positionStart, itemCount);
-                    }
-                }
-
-                @Override
-                public void onInsertData(int index, T data)
-                {
-                    final int itemCount = 1;
-                    final int positionStart = index;
-
-                    if (mNotifyOnDataChanged)
-                    {
-                        mCallback.onItemRangeInserted(positionStart, itemCount);
-                    }
-                }
-
-                @Override
-                public void onInsertData(int index, List<T> list)
-                {
-                    final int itemCount = list.size();
-                    final int positionStart = index;
-
-                    if (mNotifyOnDataChanged)
-                    {
-                        mCallback.onItemRangeInserted(positionStart, itemCount);
-                    }
-                }
-
-                @Override
-                public void onDataChanged(int index, T data)
-                {
-                    if (mNotifyOnDataChanged)
-                    {
-                        notifyItemViewChanged(index);
+                        mCallback.onItemRangeRemoved(index, 1);
                     }
                 }
             });
