@@ -96,6 +96,40 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
+    public void addData(int index, T data)
+    {
+        if (data == null)
+        {
+            return;
+        }
+        mListData.add(index, data);
+
+        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
+        while (it.hasPrevious())
+        {
+            final DataChangeCallback<T> item = it.previous();
+            item.onInsertData(index, data);
+        }
+    }
+
+    @Override
+    public void addData(int index, List<T> list)
+    {
+        if (list == null || list.isEmpty())
+        {
+            return;
+        }
+        mListData.addAll(index, list);
+
+        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
+        while (it.hasPrevious())
+        {
+            final DataChangeCallback<T> item = it.previous();
+            item.onInsertData(index, list);
+        }
+    }
+
+    @Override
     public void removeData(T data)
     {
         final int position = mListData.indexOf(data);
@@ -119,40 +153,6 @@ public class ListDataHolder<T> implements DataHolder<T>
         } else
         {
             return null;
-        }
-    }
-
-    @Override
-    public void insertData(int index, T data)
-    {
-        if (data == null)
-        {
-            return;
-        }
-        mListData.add(index, data);
-
-        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
-        while (it.hasPrevious())
-        {
-            final DataChangeCallback<T> item = it.previous();
-            item.onInsertData(index, data);
-        }
-    }
-
-    @Override
-    public void insertData(int index, List<T> list)
-    {
-        if (list == null || list.isEmpty())
-        {
-            return;
-        }
-        mListData.addAll(index, list);
-
-        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
-        while (it.hasPrevious())
-        {
-            final DataChangeCallback<T> item = it.previous();
-            item.onInsertData(index, list);
         }
     }
 

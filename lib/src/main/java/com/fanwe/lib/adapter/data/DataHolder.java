@@ -35,6 +35,22 @@ public interface DataHolder<T>
     void addData(List<T> list);
 
     /**
+     * 插入数据
+     *
+     * @param index 插入位置
+     * @param data
+     */
+    void addData(int index, T data);
+
+    /**
+     * 插入数据集
+     *
+     * @param index 插入位置
+     * @param list
+     */
+    void addData(int index, List<T> list);
+
+    /**
      * 移除数据
      *
      * @param data
@@ -48,22 +64,6 @@ public interface DataHolder<T>
      * @return
      */
     T removeData(int index);
-
-    /**
-     * 插入数据
-     *
-     * @param index 插入位置
-     * @param data
-     */
-    void insertData(int index, T data);
-
-    /**
-     * 插入数据集
-     *
-     * @param index 插入位置
-     * @param list
-     */
-    void insertData(int index, List<T> list);
 
     /**
      * 更新该位置对应的数据
