@@ -140,19 +140,19 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<
                 }
 
                 @Override
-                public void onItemRangeChanged(int positionStart, int itemCount)
+                public void onItemRangeChanged(int index, int itemCount)
                 {
                     FPagerAdapter.this.notifyDataSetChanged();
                 }
 
                 @Override
-                public void onItemRangeInserted(int positionStart, int itemCount)
+                public void onItemRangeInserted(int index, int itemCount)
                 {
                     FPagerAdapter.this.notifyDataSetChanged();
                 }
 
                 @Override
-                public void onItemRangeRemoved(int positionStart, int itemCount)
+                public void onItemRangeRemoved(int index, int itemCount)
                 {
                     FPagerAdapter.this.notifyDataSetChanged();
                 }

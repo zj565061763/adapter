@@ -111,10 +111,10 @@ public class FAdapterProxy<T> implements FAdapter<T>
     {
         void onDataSetChanged();
 
-        void onItemRangeChanged(int positionStart, int itemCount);
+        void onItemRangeChanged(int index, int itemCount);
 
-        void onItemRangeInserted(int positionStart, int itemCount);
+        void onItemRangeInserted(int index, int itemCount);
 
-        void onItemRangeRemoved(int positionStart, int itemCount);
+        void onItemRangeRemoved(int index, int itemCount);
     }
 }

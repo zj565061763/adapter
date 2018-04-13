@@ -180,16 +180,16 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
                 }
 
                 @Override
-                public void onItemRangeChanged(int positionStart, int itemCount)
+                public void onItemRangeChanged(int index, int itemCount)
                 {
                     if (itemCount == 1)
                     {
-                        final List<View> list = getItemView(positionStart);
+                        final List<View> list = getItemView(index);
                         if (list != null)
                         {
                             for (View item : list)
                             {
-                                FBaseAdapter.this.onUpdateView(positionStart, item, (ViewGroup) item.getParent(), getItem(positionStart));
+                                FBaseAdapter.this.onUpdateView(index, item, (ViewGroup) item.getParent(), getItem(index));
                             }
                         }
                     } else
@@ -199,13 +199,13 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
                 }
 
                 @Override
-                public void onItemRangeInserted(int positionStart, int itemCount)
+                public void onItemRangeInserted(int index, int itemCount)
                 {
                     FBaseAdapter.this.notifyDataSetChanged();
                 }
 
                 @Override
-                public void onItemRangeRemoved(int positionStart, int itemCount)
+                public void onItemRangeRemoved(int index, int itemCount)
                 {
                     FBaseAdapter.this.notifyDataSetChanged();
                 }

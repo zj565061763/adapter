@@ -169,21 +169,21 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
                 }
 
                 @Override
-                public void onItemRangeChanged(int positionStart, int itemCount)
+                public void onItemRangeChanged(int index, int itemCount)
                 {
-                    FRecyclerAdapter.this.notifyItemRangeChanged(positionStart, itemCount, mDefaultPayloads);
+                    FRecyclerAdapter.this.notifyItemRangeChanged(index, itemCount, mDefaultPayloads);
                 }
 
                 @Override
-                public void onItemRangeInserted(int positionStart, int itemCount)
+                public void onItemRangeInserted(int index, int itemCount)
                 {
-                    FRecyclerAdapter.this.notifyItemRangeInserted(positionStart, itemCount);
+                    FRecyclerAdapter.this.notifyItemRangeInserted(index, itemCount);
                 }
 
                 @Override
-                public void onItemRangeRemoved(int positionStart, int itemCount)
+                public void onItemRangeRemoved(int index, int itemCount)
                 {
-                    FRecyclerAdapter.this.notifyItemRangeRemoved(positionStart, itemCount);
+                    FRecyclerAdapter.this.notifyItemRangeRemoved(index, itemCount);
                 }
             });
         }
