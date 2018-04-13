@@ -55,7 +55,7 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
-    public void appendData(T data)
+    public void addData(T data)
     {
         if (data == null)
         {
@@ -72,7 +72,7 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
-    public void appendData(List<T> list)
+    public void addData(List<T> list)
     {
         if (list == null || list.isEmpty())
         {

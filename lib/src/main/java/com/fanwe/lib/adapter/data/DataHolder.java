@@ -25,14 +25,14 @@ public interface DataHolder<T>
      *
      * @param data
      */
-    void appendData(T data);
+    void addData(T data);
 
     /**
      * 在末尾添加数据集
      *
      * @param list
      */
-    void appendData(List<T> list);
+    void addData(List<T> list);
 
     /**
      * 移除数据
