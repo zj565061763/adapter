@@ -18,11 +18,10 @@ import java.util.List;
  *
  * @param <T> 实体类型
  */
-public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecyclerViewHolder<T>> implements
-        Adapter<T>
+public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecyclerViewHolder<T>> implements Adapter<T>
 {
     private AdapterProxy<T> mAdapterProxy;
-    private List<Object> mDefaultPayloads = new ArrayList<>();
+    private final List<Object> mDefaultPayloads = new ArrayList<>();
 
     private ItemClickCallback<T> mItemClickCallback;
     private ItemLongClickCallback<T> mItemLongClickCallback;

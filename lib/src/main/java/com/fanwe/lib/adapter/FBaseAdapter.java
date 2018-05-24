@@ -17,14 +17,13 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.WeakHashMap;
 
-public abstract class FBaseAdapter<T> extends BaseAdapter implements
-        Adapter<T>
+public abstract class FBaseAdapter<T> extends BaseAdapter implements Adapter<T>
 {
     private AdapterProxy<T> mAdapterProxy;
     /**
      * 保存每个itemView对应的position
      */
-    private Map<View, Integer> mMapItemViewPosition = new WeakHashMap<>();
+    private final Map<View, Integer> mMapItemViewPosition = new WeakHashMap<>();
 
     private ItemClickCallback<T> mItemClickCallback;
     private ItemLongClickCallback<T> mItemLongClickCallback;
