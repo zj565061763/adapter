@@ -68,7 +68,7 @@ public interface DataHolder<T>
     void removeData(T data);
 
     /**
-     * 移除index位置对应的数据
+     * 移除index位置的数据
      *
      * @param index
      * @return
@@ -76,7 +76,7 @@ public interface DataHolder<T>
     T removeData(int index);
 
     /**
-     * 更新index位置对应的数据
+     * 更新index位置的数据
      *
      * @param index
      * @param data
@@ -94,7 +94,7 @@ public interface DataHolder<T>
     boolean isIndexLegal(int index);
 
     /**
-     * 获得某个位置对应的数据
+     * 返回index位置的数据
      *
      * @param index
      * @return
