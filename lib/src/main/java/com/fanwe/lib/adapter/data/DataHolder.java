@@ -35,30 +35,30 @@ public interface DataHolder<T>
      *
      * @param data
      */
-    void appendData(T data);
+    void addData(T data);
 
     /**
-     * 在末尾添加数据集
+     * 在末尾添加数据
      *
      * @param list
      */
-    void appendData(List<T> list);
+    void addData(List<T> list);
 
     /**
-     * 插入数据
+     * 在index位置添加数据
      *
-     * @param index 插入位置
+     * @param index
      * @param data
      */
-    void insertData(int index, T data);
+    void addData(int index, T data);
 
     /**
-     * 插入数据集
+     * 在index位置添加数据
      *
-     * @param index 插入位置
+     * @param index
      * @param list
      */
-    void insertData(int index, List<T> list);
+    void addData(int index, List<T> list);
 
     /**
      * 移除数据
@@ -146,20 +146,12 @@ public interface DataHolder<T>
         void onDataChanged(int index, T data);
 
         /**
-         * 末尾添加了数据
+         * index位置添加了数据
          *
          * @param index
          * @param list
          */
-        void onDataAppended(int index, List<T> list);
-
-        /**
-         * index位置插入了数据
-         *
-         * @param index
-         * @param list
-         */
-        void onDataInserted(int index, List<T> list);
+        void onDataAdded(int index, List<T> list);
 
         /**
          * index位置的数据被删除了

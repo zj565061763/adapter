@@ -36,7 +36,7 @@ public class ListViewActivity extends Activity
                 /**
                  * 添加数据
                  */
-                mAdapter.getDataHolder().appendData(model);
+                mAdapter.getDataHolder().addData(model);
             }
         });
         mAdapter.setItemLongClickCallback(new ItemLongClickCallback<DataModel>()

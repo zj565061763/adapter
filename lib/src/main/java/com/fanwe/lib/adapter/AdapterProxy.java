@@ -69,14 +69,7 @@ public class AdapterProxy<T> implements Adapter<T>
                 }
 
                 @Override
-                public void onDataAppended(int index, List<T> list)
-                {
-                    if (mNotifyOnDataChanged)
-                        mCallback.onItemRangeInserted(index, list.size());
-                }
-
-                @Override
-                public void onDataInserted(int index, List<T> list)
+                public void onDataAdded(int index, List<T> list)
                 {
                     if (mNotifyOnDataChanged)
                         mCallback.onItemRangeInserted(index, list.size());
