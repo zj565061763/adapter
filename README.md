@@ -103,7 +103,7 @@ public interface DataHolder<T>
     void removeData(T data);
 
     /**
-     * 移除该位置对应的数据
+     * 移除index位置对应的数据
      *
      * @param index
      * @return
@@ -111,7 +111,7 @@ public interface DataHolder<T>
     T removeData(int index);
 
     /**
-     * 更新该位置对应的数据
+     * 更新index位置对应的数据
      *
      * @param index
      * @param data
