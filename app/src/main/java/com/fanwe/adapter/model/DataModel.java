@@ -1,7 +1,5 @@
 package com.fanwe.adapter.model;
 
-import com.fanwe.lib.selectmanager.FSelectManager;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +7,7 @@ import java.util.List;
  * Created by Administrator on 2018/3/19.
  */
 
-public class DataModel extends FSelectManager.SelectableModel
+public class DataModel
 {
     public String name;
 

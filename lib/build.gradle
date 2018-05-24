@@ -7,8 +7,8 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 22
-        versionCode 20180523
-        versionName "1.0.7"
+        versionCode 20180524
+        versionName "1.0.8"
     }
 
     buildTypes {
@@ -21,7 +21,6 @@ android {
 
 dependencies {
     compileOnly 'com.android.support:recyclerview-v7:27.1.1'
-    api 'com.github.zj565061763:selectmanager:1.0.8'
 }
 
 publish {
@@ -29,7 +28,7 @@ publish {
     groupId = 'com.fanwe.android'
 
     artifactId = 'adapter'
-    publishVersion = '1.0.7'
+    publishVersion = '1.0.8'
     desc = 'android adapter library'
     website = 'https://github.com/zj565061763/adapter'
 }

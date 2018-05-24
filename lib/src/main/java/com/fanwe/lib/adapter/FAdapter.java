@@ -27,5 +27,10 @@ public interface FAdapter<T>
      */
     void notifyItemViewChanged(int position);
 
+    /**
+     * 返回数据持有者对象
+     *
+     * @return
+     */
     DataHolder<T> getDataHolder();
 }
