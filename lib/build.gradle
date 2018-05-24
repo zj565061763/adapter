@@ -8,7 +8,7 @@ android {
         minSdkVersion 15
         targetSdkVersion 22
         versionCode 20180524
-        versionName "1.0.8"
+        versionName "1.0.9"
     }
 
     buildTypes {
@@ -28,7 +28,7 @@ publish {
     groupId = 'com.fanwe.android'
 
     artifactId = 'adapter'
-    publishVersion = '1.0.8'
+    publishVersion = '1.0.9'
     desc = 'android adapter library'
     website = 'https://github.com/zj565061763/adapter'
 }
