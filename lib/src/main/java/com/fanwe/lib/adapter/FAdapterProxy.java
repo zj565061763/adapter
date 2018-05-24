@@ -45,9 +45,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
             return;
         }
 
-        final int positionStart = position;
-        final int itemCount = 1;
-        mCallback.onItemRangeChanged(positionStart, itemCount);
+        mCallback.onItemRangeChanged(position, 1);
     }
 
     @Override
