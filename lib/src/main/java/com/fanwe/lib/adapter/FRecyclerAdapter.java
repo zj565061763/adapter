@@ -19,9 +19,9 @@ import java.util.List;
  * @param <T> 实体类型
  */
 public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecyclerViewHolder<T>> implements
-        FAdapter<T>
+        Adapter<T>
 {
-    private FAdapterProxy<T> mAdapterProxy;
+    private AdapterProxy<T> mAdapterProxy;
     private List<Object> mDefaultPayloads = new ArrayList<>();
 
     private ItemClickCallback<T> mItemClickCallback;
@@ -155,12 +155,12 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
         onBindData(holder, position, model);
     }
 
-    private FAdapterProxy<T> getAdapterProxy()
+    private AdapterProxy<T> getAdapterProxy()
     {
         if (mAdapterProxy == null)
         {
-            mAdapterProxy = new FAdapterProxy<>();
-            mAdapterProxy.setCallback(new FAdapterProxy.Callback()
+            mAdapterProxy = new AdapterProxy<>();
+            mAdapterProxy.setCallback(new AdapterProxy.Callback()
             {
                 @Override
                 public void onDataSetChanged()
@@ -190,7 +190,7 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
         return mAdapterProxy;
     }
 
-    //----------FAdapter implements start----------
+    //----------Adapter implements start----------
 
     @Override
     public Activity getActivity()
@@ -216,5 +216,5 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
         return getAdapterProxy().getDataHolder();
     }
 
-    //----------FAdapter implements end----------
+    //----------Adapter implements end----------
 }

@@ -6,11 +6,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fanwe.lib.adapter.FAdapter;
+import com.fanwe.lib.adapter.Adapter;
 
 public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
 {
-    private FAdapter<T> mAdapter;
+    private Adapter<T> mAdapter;
     private SparseArray<View> mArrayView;
 
     public FRecyclerViewHolder(View itemView)
@@ -23,12 +23,12 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
         this(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
     }
 
-    public void setAdapter(FAdapter<T> adapter)
+    public void setAdapter(Adapter<T> adapter)
     {
         mAdapter = adapter;
     }
 
-    public final FAdapter<T> getAdapter()
+    public final Adapter<T> getAdapter()
     {
         return mAdapter;
     }

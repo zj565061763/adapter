@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import com.fanwe.lib.adapter.data.DataHolder;
 
-public interface FAdapter<T>
+public interface Adapter<T>
 {
     /**
      * 获得Activity

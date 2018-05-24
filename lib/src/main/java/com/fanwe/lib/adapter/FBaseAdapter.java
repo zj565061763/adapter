@@ -18,9 +18,9 @@ import java.util.Set;
 import java.util.WeakHashMap;
 
 public abstract class FBaseAdapter<T> extends BaseAdapter implements
-        FAdapter<T>
+        Adapter<T>
 {
-    private FAdapterProxy<T> mAdapterProxy;
+    private AdapterProxy<T> mAdapterProxy;
     /**
      * 保存每个itemView对应的position
      */
@@ -166,12 +166,12 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
         onGetView(position, convertView, parent);
     }
 
-    private FAdapterProxy<T> getAdapterProxy()
+    private AdapterProxy<T> getAdapterProxy()
     {
         if (mAdapterProxy == null)
         {
-            mAdapterProxy = new FAdapterProxy<>();
-            mAdapterProxy.setCallback(new FAdapterProxy.Callback()
+            mAdapterProxy = new AdapterProxy<>();
+            mAdapterProxy.setCallback(new AdapterProxy.Callback()
             {
                 @Override
                 public void onDataSetChanged()
@@ -214,7 +214,7 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
         return mAdapterProxy;
     }
 
-    //----------FAdapter implements start----------
+    //----------Adapter implements start----------
 
     @Override
     public Activity getActivity()
@@ -240,7 +240,7 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements
         return getAdapterProxy().getDataHolder();
     }
 
-    //----------FAdapter implements end----------
+    //----------Adapter implements end----------
 
     @SuppressWarnings("unchecked")
     public static <V extends View> V get(int id, View convertView)

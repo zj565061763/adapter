@@ -4,9 +4,9 @@
 # Gradle
 `implementation 'com.fanwe.android:adapter:1.0.8'`
 
-# FAdapter接口
+# Adapter接口
 ```java
-public interface FAdapter<T>
+public interface Adapter<T>
 {
     /**
      * 获得Activity

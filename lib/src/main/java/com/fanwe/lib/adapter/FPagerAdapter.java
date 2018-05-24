@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import com.fanwe.lib.adapter.callback.ItemClickCallback;
 import com.fanwe.lib.adapter.data.DataHolder;
 
-public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<T>
+public abstract class FPagerAdapter<T> extends PagerAdapter implements Adapter<T>
 {
-    private FAdapterProxy<T> mAdapterProxy;
+    private AdapterProxy<T> mAdapterProxy;
 
     private SparseArray<View> mArrCacheView = new SparseArray<>();
     private boolean mAutoCacheView = false;
@@ -126,12 +126,12 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<
 
     public abstract View getView(ViewGroup container, int position);
 
-    private FAdapterProxy<T> getAdapterProxy()
+    private AdapterProxy<T> getAdapterProxy()
     {
         if (mAdapterProxy == null)
         {
-            mAdapterProxy = new FAdapterProxy<>();
-            mAdapterProxy.setCallback(new FAdapterProxy.Callback()
+            mAdapterProxy = new AdapterProxy<>();
+            mAdapterProxy.setCallback(new AdapterProxy.Callback()
             {
                 @Override
                 public void onDataSetChanged()
@@ -161,7 +161,7 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<
         return mAdapterProxy;
     }
 
-    //----------FAdapter implements start----------
+    //----------Adapter implements start----------
 
     @Override
     public Activity getActivity()
@@ -187,5 +187,5 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements FAdapter<
         return getAdapterProxy().getDataHolder();
     }
 
-    //----------FAdapter implements end----------
+    //----------Adapter implements end----------
 }

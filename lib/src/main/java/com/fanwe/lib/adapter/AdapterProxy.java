@@ -7,7 +7,7 @@ import com.fanwe.lib.adapter.data.ListDataHolder;
 
 import java.util.List;
 
-public class FAdapterProxy<T> implements FAdapter<T>
+public class AdapterProxy<T> implements Adapter<T>
 {
     private DataHolder<T> mDataHolder;
     private Activity mActivity;
@@ -15,12 +15,12 @@ public class FAdapterProxy<T> implements FAdapter<T>
 
     private Callback mCallback;
 
-    final void setCallback(Callback callback)
+    public void setCallback(Callback callback)
     {
         mCallback = callback;
     }
 
-    final void setActivity(Activity activity)
+    public void setActivity(Activity activity)
     {
         mActivity = activity;
     }
@@ -41,9 +41,7 @@ public class FAdapterProxy<T> implements FAdapter<T>
     public void notifyItemViewChanged(int position)
     {
         if (!getDataHolder().isIndexLegal(position))
-        {
             return;
-        }
 
         mCallback.onItemRangeChanged(position, 1);
     }
@@ -60,45 +58,35 @@ public class FAdapterProxy<T> implements FAdapter<T>
                 public void onDataChanged(List<T> list)
                 {
                     if (mNotifyOnDataChanged)
-                    {
                         mCallback.onDataSetChanged();
-                    }
                 }
 
                 @Override
                 public void onDataChanged(int index, T data)
                 {
                     if (mNotifyOnDataChanged)
-                    {
                         notifyItemViewChanged(index);
-                    }
                 }
 
                 @Override
                 public void onDataAppended(int index, List<T> list)
                 {
                     if (mNotifyOnDataChanged)
-                    {
                         mCallback.onItemRangeInserted(index, list.size());
-                    }
                 }
 
                 @Override
                 public void onDataInserted(int index, List<T> list)
                 {
                     if (mNotifyOnDataChanged)
-                    {
                         mCallback.onItemRangeInserted(index, list.size());
-                    }
                 }
 
                 @Override
                 public void onDataRemoved(int index, T data)
                 {
                     if (mNotifyOnDataChanged)
-                    {
                         mCallback.onItemRangeRemoved(index, 1);
-                    }
                 }
             });
         }
