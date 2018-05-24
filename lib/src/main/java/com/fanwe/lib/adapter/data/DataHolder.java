@@ -7,8 +7,18 @@ import java.util.List;
  */
 public interface DataHolder<T>
 {
+    /**
+     * 添加数据变化回调
+     *
+     * @param callback
+     */
     void addDataChangeCallback(DataChangeCallback<T> callback);
 
+    /**
+     * 移除数据变化回调
+     *
+     * @param callback
+     */
     void removeDataChangeCallback(DataChangeCallback<T> callback);
 
     //---------- modify start ----------
@@ -113,16 +123,50 @@ public interface DataHolder<T>
      */
     List<T> getData();
 
+    /**
+     * 数据变化回调
+     *
+     * @param <T>
+     */
     interface DataChangeCallback<T>
     {
+        /**
+         * 数据集发生变化
+         *
+         * @param list
+         */
         void onDataChanged(List<T> list);
 
+        /**
+         * index位置的数据发生变化
+         *
+         * @param index
+         * @param data
+         */
         void onDataChanged(int index, T data);
 
+        /**
+         * 末尾添加了数据
+         *
+         * @param index
+         * @param list
+         */
         void onDataAppended(int index, List<T> list);
 
+        /**
+         * index位置插入了数据
+         *
+         * @param index
+         * @param list
+         */
         void onDataInserted(int index, List<T> list);
 
+        /**
+         * index位置的数据被删除了
+         *
+         * @param index
+         * @param data
+         */
         void onDataRemoved(int index, T data);
     }
 }
