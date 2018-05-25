@@ -41,6 +41,14 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     private ItemClickCallback<T> mItemClickCallback;
     private ItemLongClickCallback<T> mItemLongClickCallback;
 
+    public FRecyclerAdapter()
+    {
+    }
+
+    public FRecyclerAdapter(Context context)
+    {
+        setContext(context);
+    }
 
     /**
      * 设置item点击回调

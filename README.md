@@ -2,18 +2,25 @@
 对adapter抽象封装，让使用RecyclerView，ListView等不同view的时候，用的Adapter的接口是一样的
 
 # Gradle
-`implementation 'com.fanwe.android:adapter:1.0.9'`
+`implementation 'com.fanwe.android:adapter:1.0.10'`
 
 # Adapter接口
 ```java
 public interface Adapter<T>
 {
     /**
-     * 获得Activity
+     * 设置Context对象
+     *
+     * @param context
+     */
+    void setContext(Context context);
+
+    /**
+     * 返回Context对象
      *
      * @return
      */
-    Activity getActivity();
+    Context getContext();
 
     /**
      * 调用改变数据的方法之后是否刷新UI，默认-true

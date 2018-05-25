@@ -33,6 +33,14 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements Adapter<T
 
     private ItemClickCallback<T> mItemClickCallback;
 
+    public FPagerAdapter()
+    {
+    }
+
+    public FPagerAdapter(Context context)
+    {
+        setContext(context);
+    }
 
     /**
      * 设置是否自动缓存view

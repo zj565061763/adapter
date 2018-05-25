@@ -43,6 +43,14 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements Adapter<T>
     private ItemClickCallback<T> mItemClickCallback;
     private ItemLongClickCallback<T> mItemLongClickCallback;
 
+    public FBaseAdapter()
+    {
+    }
+
+    public FBaseAdapter(Context context)
+    {
+        setContext(context);
+    }
 
     /**
      * 设置item点击回调

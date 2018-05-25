@@ -15,6 +15,7 @@
  */
 package com.fanwe.lib.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,15 @@ import com.fanwe.lib.adapter.viewholder.FRecyclerViewHolder;
 
 public abstract class FSimpleRecyclerAdapter<T> extends FRecyclerAdapter<T>
 {
+    public FSimpleRecyclerAdapter()
+    {
+    }
+
+    public FSimpleRecyclerAdapter(Context context)
+    {
+        super(context);
+    }
+
     @Override
     public FRecyclerViewHolder<T> onCreateVHolder(ViewGroup parent, int viewType)
     {
