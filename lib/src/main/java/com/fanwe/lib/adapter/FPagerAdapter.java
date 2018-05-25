@@ -15,7 +15,7 @@
  */
 package com.fanwe.lib.adapter;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.util.SparseArray;
 import android.view.View;
@@ -33,10 +33,6 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements Adapter<T
 
     private ItemClickCallback<T> mItemClickCallback;
 
-    public FPagerAdapter(Activity activity)
-    {
-        getAdapterProxy().setActivity(activity);
-    }
 
     /**
      * 设置是否自动缓存view
@@ -117,6 +113,8 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements Adapter<T
     @Override
     public Object instantiateItem(ViewGroup container, int position)
     {
+        setContext(container.getContext());
+
         View view = mArrCacheView.get(position);
         if (view == null)
         {
@@ -141,12 +139,13 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements Adapter<T
 
     public abstract View getView(ViewGroup container, int position);
 
+    //----------Adapter implements start----------
+
     private AdapterProxy<T> getAdapterProxy()
     {
         if (mAdapterProxy == null)
         {
-            mAdapterProxy = new AdapterProxy<>();
-            mAdapterProxy.setCallback(new AdapterProxy.Callback()
+            mAdapterProxy = new AdapterProxy<>(new AdapterProxy.Callback()
             {
                 @Override
                 public void onDataSetChanged()
@@ -176,12 +175,16 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements Adapter<T
         return mAdapterProxy;
     }
 
-    //----------Adapter implements start----------
+    @Override
+    public void setContext(Context context)
+    {
+        getAdapterProxy().setContext(context);
+    }
 
     @Override
-    public Activity getActivity()
+    public Context getContext()
     {
-        return getAdapterProxy().getActivity();
+        return getAdapterProxy().getContext();
     }
 
     @Override

@@ -15,7 +15,7 @@
  */
 package com.fanwe.lib.adapter;
 
-import android.app.Activity;
+import android.content.Context;
 
 import com.fanwe.lib.adapter.data.DataHolder;
 import com.fanwe.lib.adapter.data.ListDataHolder;
@@ -24,26 +24,33 @@ import java.util.List;
 
 public class AdapterProxy<T> implements Adapter<T>
 {
+    private Context mContext;
     private DataHolder<T> mDataHolder;
-    private Activity mActivity;
     private boolean mNotifyOnDataChanged = true;
 
-    private Callback mCallback;
+    private final Callback mCallback;
 
-    public void setCallback(Callback callback)
+    public AdapterProxy(Callback callback)
     {
+        if (callback == null)
+            throw new NullPointerException("callback is null");
+
         mCallback = callback;
     }
 
-    public void setActivity(Activity activity)
+    @Override
+    public void setContext(Context context)
     {
-        mActivity = activity;
+        if (context == null)
+            throw new NullPointerException("context is null");
+
+        mContext = context;
     }
 
     @Override
-    public Activity getActivity()
+    public Context getContext()
     {
-        return mActivity;
+        return mContext;
     }
 
     @Override

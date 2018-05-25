@@ -15,7 +15,7 @@
  */
 package com.fanwe.lib.adapter;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,10 +41,6 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     private ItemClickCallback<T> mItemClickCallback;
     private ItemLongClickCallback<T> mItemLongClickCallback;
 
-    public FRecyclerAdapter(Activity activity)
-    {
-        getAdapterProxy().setActivity(activity);
-    }
 
     /**
      * 设置item点击回调
@@ -107,6 +103,8 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     @Override
     public final FRecyclerViewHolder<T> onCreateViewHolder(ViewGroup parent, int viewType)
     {
+        setContext(parent.getContext());
+
         FRecyclerViewHolder<T> holder = onCreateVHolder(parent, viewType);
         holder.setAdapter(this);
         return holder;
@@ -169,12 +167,13 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
         onBindData(holder, position, model);
     }
 
+    //----------Adapter implements start----------
+
     private AdapterProxy<T> getAdapterProxy()
     {
         if (mAdapterProxy == null)
         {
-            mAdapterProxy = new AdapterProxy<>();
-            mAdapterProxy.setCallback(new AdapterProxy.Callback()
+            mAdapterProxy = new AdapterProxy<>(new AdapterProxy.Callback()
             {
                 @Override
                 public void onDataSetChanged()
@@ -204,12 +203,16 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
         return mAdapterProxy;
     }
 
-    //----------Adapter implements start----------
+    @Override
+    public void setContext(Context context)
+    {
+        getAdapterProxy().setContext(context);
+    }
 
     @Override
-    public Activity getActivity()
+    public Context getContext()
     {
-        return getAdapterProxy().getActivity();
+        return getAdapterProxy().getContext();
     }
 
     @Override

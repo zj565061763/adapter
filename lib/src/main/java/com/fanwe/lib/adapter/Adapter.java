@@ -15,18 +15,25 @@
  */
 package com.fanwe.lib.adapter;
 
-import android.app.Activity;
+import android.content.Context;
 
 import com.fanwe.lib.adapter.data.DataHolder;
 
 public interface Adapter<T>
 {
     /**
-     * 获得Activity
+     * 设置Context对象
+     *
+     * @param context
+     */
+    void setContext(Context context);
+
+    /**
+     * 返回Context对象
      *
      * @return
      */
-    Activity getActivity();
+    Context getContext();
 
     /**
      * 调用改变数据的方法之后是否刷新UI，默认-true

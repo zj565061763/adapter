@@ -19,7 +19,7 @@ public class RecyclerViewActivity extends Activity
     public static final String TAG = RecyclerViewActivity.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
-    private RecyclerViewAdapter mAdapter;
+    private RecyclerViewAdapter mAdapter = new RecyclerViewAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -27,11 +27,12 @@ public class RecyclerViewActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_recyclerview);
         mRecyclerView = findViewById(R.id.recyclerview);
+
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
+        mRecyclerView.setAdapter(mAdapter);
 
-        mAdapter = new RecyclerViewAdapter(this);
         mAdapter.setItemClickCallback(new ItemClickCallback<DataModel>()
         {
             @Override
@@ -58,8 +59,6 @@ public class RecyclerViewActivity extends Activity
                 return false;
             }
         });
-        mRecyclerView.setAdapter(mAdapter);
-
         /**
          * 设置数据
          */

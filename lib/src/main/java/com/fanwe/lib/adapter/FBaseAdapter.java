@@ -15,7 +15,7 @@
  */
 package com.fanwe.lib.adapter;
 
-import android.app.Activity;
+import android.content.Context;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,10 +43,6 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements Adapter<T>
     private ItemClickCallback<T> mItemClickCallback;
     private ItemLongClickCallback<T> mItemLongClickCallback;
 
-    public FBaseAdapter(Activity activity)
-    {
-        getAdapterProxy().setActivity(activity);
-    }
 
     /**
      * 设置item点击回调
@@ -128,6 +124,8 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements Adapter<T>
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
     {
+        setContext(parent.getContext());
+
         convertView = onGetView(position, convertView, parent);
         mMapItemViewPosition.put(convertView, position);
         return convertView;
@@ -180,12 +178,13 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements Adapter<T>
         onGetView(position, convertView, parent);
     }
 
+    //----------Adapter implements start----------
+
     private AdapterProxy<T> getAdapterProxy()
     {
         if (mAdapterProxy == null)
         {
-            mAdapterProxy = new AdapterProxy<>();
-            mAdapterProxy.setCallback(new AdapterProxy.Callback()
+            mAdapterProxy = new AdapterProxy<>(new AdapterProxy.Callback()
             {
                 @Override
                 public void onDataSetChanged()
@@ -228,12 +227,16 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements Adapter<T>
         return mAdapterProxy;
     }
 
-    //----------Adapter implements start----------
+    @Override
+    public void setContext(Context context)
+    {
+        getAdapterProxy().setContext(context);
+    }
 
     @Override
-    public Activity getActivity()
+    public Context getContext()
     {
-        return getAdapterProxy().getActivity();
+        return getAdapterProxy().getContext();
     }
 
     @Override

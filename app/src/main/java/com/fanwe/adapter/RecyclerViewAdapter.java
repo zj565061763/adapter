@@ -1,6 +1,5 @@
 package com.fanwe.adapter;
 
-import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -11,11 +10,6 @@ import com.fanwe.lib.adapter.viewholder.FRecyclerViewHolder;
 
 public class RecyclerViewAdapter extends FSimpleRecyclerAdapter<DataModel>
 {
-    public RecyclerViewAdapter(Activity activity)
-    {
-        super(activity);
-    }
-
     @Override
     public int getLayoutId(ViewGroup parent, int viewType)
     {

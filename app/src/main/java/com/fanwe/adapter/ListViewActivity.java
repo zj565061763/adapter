@@ -15,7 +15,7 @@ import com.fanwe.lib.adapter.callback.ItemLongClickCallback;
 public class ListViewActivity extends Activity
 {
     private ListView mListView;
-    private ListViewAdapter mAdapter;
+    private ListViewAdapter mAdapter = new ListViewAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -23,8 +23,8 @@ public class ListViewActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_listview);
         mListView = findViewById(R.id.listview);
+        mListView.setAdapter(mAdapter);
 
-        mAdapter = new ListViewAdapter(this);
         mAdapter.setItemClickCallback(new ItemClickCallback<DataModel>()
         {
             @Override
@@ -51,8 +51,6 @@ public class ListViewActivity extends Activity
                 return false;
             }
         });
-        mListView.setAdapter(mAdapter);
-
         /**
          * 设置数据
          */

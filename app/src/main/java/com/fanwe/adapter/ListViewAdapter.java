@@ -1,6 +1,5 @@
 package com.fanwe.adapter;
 
-import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -10,11 +9,6 @@ import com.fanwe.lib.adapter.FSimpleAdapter;
 
 public class ListViewAdapter extends FSimpleAdapter<DataModel>
 {
-    public ListViewAdapter(Activity activity)
-    {
-        super(activity);
-    }
-
     @Override
     public int getLayoutId(int position, View convertView, ViewGroup parent)
     {

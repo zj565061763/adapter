@@ -15,18 +15,12 @@
  */
 package com.fanwe.lib.adapter;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 public abstract class FSimpleAdapter<T> extends FBaseAdapter<T>
 {
-    public FSimpleAdapter(Activity activity)
-    {
-        super(activity);
-    }
-
     @Override
     protected View onGetView(int position, View convertView, ViewGroup parent)
     {
@@ -35,8 +29,8 @@ public abstract class FSimpleAdapter<T> extends FBaseAdapter<T>
             final int layoutId = getLayoutId(position, convertView, parent);
             if (layoutId != 0)
             {
-                convertView = LayoutInflater.from(getActivity()).inflate(layoutId, parent, false);
-                onInit(position, convertView, parent);
+                convertView = LayoutInflater.from(getContext()).inflate(layoutId, parent, false);
+                onInitView(position, convertView, parent);
             }
         }
         onBindData(position, convertView, parent, getItem(position));
@@ -45,7 +39,7 @@ public abstract class FSimpleAdapter<T> extends FBaseAdapter<T>
 
     public abstract int getLayoutId(int position, View convertView, ViewGroup parent);
 
-    public void onInit(int position, View convertView, ViewGroup parent)
+    public void onInitView(int position, View convertView, ViewGroup parent)
     {
     }
 
