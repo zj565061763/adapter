@@ -31,9 +31,8 @@ public class ListDataHolder<T> implements DataHolder<T>
     public void addDataChangeCallback(DataChangeCallback<T> callback)
     {
         if (callback == null || mListDataChangeCallback.contains(callback))
-        {
             return;
-        }
+
         mListDataChangeCallback.add(callback);
     }
 
@@ -56,7 +55,7 @@ public class ListDataHolder<T> implements DataHolder<T>
         if (list != null)
             mListData = list;
         else
-            mListData.clear();
+            mListData = new ArrayList<>();
 
         final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
         while (it.hasPrevious())
