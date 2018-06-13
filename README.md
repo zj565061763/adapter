@@ -2,7 +2,12 @@
 对adapter抽象封装，让使用RecyclerView，ListView等不同view的时候，用的Adapter的接口是一样的
 
 # Gradle
-`implementation 'com.fanwe.android:adapter:1.0.11'`
+```
+implementation 'com.fanwe.android:adapter:1.0.12'
+
+// 依赖以下库
+implementation 'com.android.support:recyclerview-v7:+'
+```
 
 # Adapter接口
 ```java
