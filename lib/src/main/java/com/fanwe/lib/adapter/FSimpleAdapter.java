@@ -36,20 +36,26 @@ public abstract class FSimpleAdapter<T> extends FBaseAdapter<T>
     {
         if (convertView == null)
         {
-            final int layoutId = getLayoutId(position, convertView, parent);
-            if (layoutId != 0)
-            {
-                convertView = LayoutInflater.from(getContext()).inflate(layoutId, parent, false);
-                onInitView(position, convertView, parent);
-            }
+            convertView = createItemView(position, convertView, parent);
+            if (convertView != null)
+                onInitItemView(position, convertView, parent);
         }
         onBindData(position, convertView, parent, getItem(position));
         return convertView;
     }
 
+    public View createItemView(int position, View convertView, ViewGroup parent)
+    {
+        final int layoutId = getLayoutId(position, convertView, parent);
+        if (layoutId != 0)
+            return LayoutInflater.from(getContext()).inflate(layoutId, parent, false);
+
+        return null;
+    }
+
     public abstract int getLayoutId(int position, View convertView, ViewGroup parent);
 
-    public void onInitView(int position, View convertView, ViewGroup parent)
+    public void onInitItemView(int position, View convertView, ViewGroup parent)
     {
     }
 
