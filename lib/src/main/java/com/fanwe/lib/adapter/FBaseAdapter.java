@@ -130,7 +130,7 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements Adapter<T>
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent)
+    public final View getView(int position, View convertView, ViewGroup parent)
     {
         setContext(parent.getContext());
 
