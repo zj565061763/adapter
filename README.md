@@ -3,7 +3,7 @@
 
 # Gradle
 ```
-implementation 'com.fanwe.android:adapter:1.0.12'
+implementation 'com.fanwe.android:adapter:1.0.13'
 
 // 依赖以下库
 implementation 'com.android.support:recyclerview-v7:+'
