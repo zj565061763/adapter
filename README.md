@@ -2,10 +2,10 @@
 对adapter抽象封装，让使用RecyclerView，ListView等不同view的时候，用的Adapter的接口是一样的
 
 # Gradle
+[![](https://jitpack.io/v/zj565061763/adapter.svg)](https://jitpack.io/#zj565061763/adapter)
+<br>
+本库需要依赖以下库:
 ```
-implementation 'com.fanwe.android:adapter:1.0.13'
-
-// 依赖以下库
 implementation 'com.android.support:recyclerview-v7:+'
 ```
 
