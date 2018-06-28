@@ -65,13 +65,13 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
-    public void addData(T data)
+    public boolean addData(T data)
     {
         if (data == null)
-            return;
+            return false;
 
         final int index = size();
-        mListData.add(data);
+        final boolean result = mListData.add(data);
 
         final List<T> list = new ArrayList<>(1);
         list.add(data);
@@ -81,22 +81,26 @@ public class ListDataHolder<T> implements DataHolder<T>
         {
             it.previous().onDataAdded(index, list);
         }
+
+        return result;
     }
 
     @Override
-    public void addData(List<T> list)
+    public boolean addData(List<T> list)
     {
         if (list == null || list.isEmpty())
-            return;
+            return false;
 
         final int index = size();
-        mListData.addAll(list);
+        final boolean result = mListData.addAll(list);
 
         final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
         while (it.hasPrevious())
         {
             it.previous().onDataAdded(index, list);
         }
+
+        return result;
     }
 
     @Override
@@ -118,25 +122,27 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
-    public void addData(int index, List<T> list)
+    public boolean addData(int index, List<T> list)
     {
         if (list == null || list.isEmpty())
-            return;
+            return false;
 
-        mListData.addAll(index, list);
+        final boolean result = mListData.addAll(index, list);
 
         final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
         while (it.hasPrevious())
         {
             it.previous().onDataAdded(index, list);
         }
+
+        return result;
     }
 
     @Override
-    public void removeData(T data)
+    public boolean removeData(T data)
     {
         final int position = mListData.indexOf(data);
-        removeData(position);
+        return removeData(position) != null;
     }
 
     @Override

@@ -49,15 +49,17 @@ public interface DataHolder<T>
      * 在末尾添加数据
      *
      * @param data
+     * @return
      */
-    void addData(T data);
+    boolean addData(T data);
 
     /**
      * 在末尾添加数据
      *
      * @param list
+     * @return
      */
-    void addData(List<T> list);
+    boolean addData(List<T> list);
 
     /**
      * 在index位置添加数据
@@ -72,15 +74,17 @@ public interface DataHolder<T>
      *
      * @param index
      * @param list
+     * @return
      */
-    void addData(int index, List<T> list);
+    boolean addData(int index, List<T> list);
 
     /**
      * 移除数据
      *
      * @param data
+     * @return
      */
-    void removeData(T data);
+    boolean removeData(T data);
 
     /**
      * 移除index位置的数据
