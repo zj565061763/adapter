@@ -91,6 +91,8 @@ public class ListDataHolder<T> implements DataHolder<T>
         if (list == null || list.isEmpty())
             return false;
 
+        // 这里不判断list里面是否包含null的元素
+
         final int index = size();
         final boolean result = mListData.addAll(list);
 
