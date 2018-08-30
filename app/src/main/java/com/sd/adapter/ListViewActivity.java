@@ -1,13 +1,13 @@
-package com.fanwe.adapter;
+package com.sd.adapter;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-import com.fanwe.adapter.model.DataModel;
-import com.fanwe.lib.adapter.callback.ItemClickCallback;
-import com.fanwe.lib.adapter.callback.ItemLongClickCallback;
+import com.sd.adapter.model.DataModel;
+import com.sd.lib.adapter.callback.ItemClickCallback;
+import com.sd.lib.adapter.callback.ItemLongClickCallback;
 
 /**
  * Created by Administrator on 2018/3/19.

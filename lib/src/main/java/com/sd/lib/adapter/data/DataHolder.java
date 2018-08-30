@@ -1,10 +1,7 @@
-package com.fanwe.lib.adapter.data;
+package com.sd.lib.adapter.data;
 
 import java.util.List;
 
-/**
- * Created by zhengjun on 2018/3/19.
- */
 public interface DataHolder<T>
 {
     /**

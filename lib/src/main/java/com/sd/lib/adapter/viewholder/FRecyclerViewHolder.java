@@ -1,4 +1,4 @@
-package com.fanwe.lib.adapter.viewholder;
+package com.sd.lib.adapter.viewholder;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseArray;
@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fanwe.lib.adapter.Adapter;
+import com.sd.lib.adapter.Adapter;
 
 public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
 {

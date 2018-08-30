@@ -1,4 +1,4 @@
-package com.fanwe.lib.adapter;
+package com.sd.lib.adapter;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
@@ -6,8 +6,8 @@ import android.util.SparseArray;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fanwe.lib.adapter.callback.ItemClickCallback;
-import com.fanwe.lib.adapter.data.DataHolder;
+import com.sd.lib.adapter.callback.ItemClickCallback;
+import com.sd.lib.adapter.data.DataHolder;
 
 public abstract class FPagerAdapter<T> extends PagerAdapter implements Adapter<T>
 {

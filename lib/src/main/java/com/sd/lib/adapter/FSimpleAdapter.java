@@ -1,4 +1,4 @@
-package com.fanwe.lib.adapter;
+package com.sd.lib.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

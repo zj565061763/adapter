@@ -1,4 +1,4 @@
-package com.fanwe.lib.adapter.callback;
+package com.sd.lib.adapter.callback;
 
 import android.view.View;
 

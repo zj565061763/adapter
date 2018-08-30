@@ -1,11 +1,11 @@
-package com.fanwe.lib.adapter;
+package com.sd.lib.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fanwe.lib.adapter.viewholder.FRecyclerViewHolder;
+import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 
 public abstract class FSimpleRecyclerAdapter<T> extends FRecyclerAdapter<T>
 {

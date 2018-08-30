@@ -1,9 +1,9 @@
-package com.fanwe.lib.adapter;
+package com.sd.lib.adapter;
 
 import android.content.Context;
 
-import com.fanwe.lib.adapter.data.DataHolder;
-import com.fanwe.lib.adapter.data.ListDataHolder;
+import com.sd.lib.adapter.data.DataHolder;
+import com.sd.lib.adapter.data.ListDataHolder;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.fanwe.lib.adapter;
+package com.sd.lib.adapter;
 
 import android.content.Context;
 import android.util.SparseArray;
@@ -6,9 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.fanwe.lib.adapter.callback.ItemClickCallback;
-import com.fanwe.lib.adapter.callback.ItemLongClickCallback;
-import com.fanwe.lib.adapter.data.DataHolder;
+import com.sd.lib.adapter.callback.ItemClickCallback;
+import com.sd.lib.adapter.callback.ItemLongClickCallback;
+import com.sd.lib.adapter.data.DataHolder;
 
 import java.util.ArrayList;
 import java.util.List;

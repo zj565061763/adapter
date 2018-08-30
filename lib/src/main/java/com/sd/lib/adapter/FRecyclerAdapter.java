@@ -1,14 +1,14 @@
-package com.fanwe.lib.adapter;
+package com.sd.lib.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fanwe.lib.adapter.callback.ItemClickCallback;
-import com.fanwe.lib.adapter.callback.ItemLongClickCallback;
-import com.fanwe.lib.adapter.data.DataHolder;
-import com.fanwe.lib.adapter.viewholder.FRecyclerViewHolder;
+import com.sd.lib.adapter.callback.ItemClickCallback;
+import com.sd.lib.adapter.callback.ItemLongClickCallback;
+import com.sd.lib.adapter.data.DataHolder;
+import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;

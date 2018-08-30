@@ -1,4 +1,4 @@
-package com.fanwe.adapter.model;
+package com.sd.adapter.model;
 
 import java.util.ArrayList;
 import java.util.List;

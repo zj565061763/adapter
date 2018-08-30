@@ -1,12 +1,9 @@
-package com.fanwe.lib.adapter.data;
+package com.sd.lib.adapter.data;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-/**
- * Created by zhengjun on 2018/3/19.
- */
 public class ListDataHolder<T> implements DataHolder<T>
 {
     private List<T> mListData = new ArrayList<>();

@@ -1,12 +1,12 @@
-package com.fanwe.adapter;
+package com.sd.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.fanwe.adapter.model.DataModel;
-import com.fanwe.lib.adapter.FSimpleRecyclerAdapter;
-import com.fanwe.lib.adapter.viewholder.FRecyclerViewHolder;
+import com.sd.adapter.model.DataModel;
+import com.sd.lib.adapter.FSimpleRecyclerAdapter;
+import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 
 public class RecyclerViewAdapter extends FSimpleRecyclerAdapter<DataModel>
 {

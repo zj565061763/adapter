@@ -1,11 +1,11 @@
-package com.fanwe.adapter;
+package com.sd.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.fanwe.adapter.model.DataModel;
-import com.fanwe.lib.adapter.FSimpleAdapter;
+import com.sd.adapter.model.DataModel;
+import com.sd.lib.adapter.FSimpleAdapter;
 
 public class ListViewAdapter extends FSimpleAdapter<DataModel>
 {
