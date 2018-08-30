@@ -21,15 +21,17 @@ public abstract class FSimpleAdapter<T> extends FBaseAdapter<T>
     {
         if (convertView == null)
         {
-            convertView = createItemView(position, convertView, parent);
-            if (convertView != null)
-                onInitItemView(position, convertView, parent);
+            convertView = onCreateItemView(position, convertView, parent);
+            if (convertView == null)
+                throw new NullPointerException();
+
+            onInitItemView(position, convertView, parent);
         }
         onBindData(position, convertView, parent, getItem(position));
         return convertView;
     }
 
-    public View createItemView(int position, View convertView, ViewGroup parent)
+    public View onCreateItemView(int position, View convertView, ViewGroup parent)
     {
         final int layoutId = getLayoutId(position, convertView, parent);
         if (layoutId != 0)
