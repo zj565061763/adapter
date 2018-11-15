@@ -27,12 +27,15 @@ public interface Adapter<T>
      */
     Context getContext();
 
-    /**
-     * 调用改变数据的方法之后是否刷新UI，默认-true
-     *
-     * @param notify
-     */
+    @Deprecated
     void setNotifyOnDataChanged(boolean notify);
+
+    /**
+     * 设置数据变更后刷新ui的方式，默认{@link NotifyDataChangeMode#Smart}
+     *
+     * @param mode {@link NotifyDataChangeMode}
+     */
+    void setNotifyDataChangeMode(NotifyDataChangeMode mode);
 
     /**
      * 刷新position对应的item
@@ -47,6 +50,22 @@ public interface Adapter<T>
      * @return
      */
     DataHolder<T> getDataHolder();
+
+    enum NotifyDataChangeMode
+    {
+        /**
+         * 不刷新
+         */
+        None,
+        /**
+         * 智能刷新需要刷新的项
+         */
+        Smart,
+        /**
+         * 刷新全部可见的项
+         */
+        All
+    }
 }
 ```
 
