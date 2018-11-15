@@ -11,7 +11,7 @@ public class AdapterProxy<T> implements Adapter<T>
 {
     private Context mContext;
     private DataHolder<T> mDataHolder;
-    private boolean mNotifyOnDataChanged = true;
+    private NotifyDataChangeMode mNotifyDataChangeMode = NotifyDataChangeMode.Smart;
 
     private final Callback mCallback;
 
@@ -41,7 +41,17 @@ public class AdapterProxy<T> implements Adapter<T>
     @Override
     public void setNotifyOnDataChanged(boolean notify)
     {
-        mNotifyOnDataChanged = notify;
+        if (notify)
+            setNotifyDataChangeMode(NotifyDataChangeMode.Smart);
+        else
+            setNotifyDataChangeMode(NotifyDataChangeMode.None);
+    }
+
+    @Override
+    public void setNotifyDataChangeMode(NotifyDataChangeMode mode)
+    {
+        if (mode != null)
+            mNotifyDataChangeMode = mode;
     }
 
     @Override
@@ -64,29 +74,44 @@ public class AdapterProxy<T> implements Adapter<T>
                 @Override
                 public void onDataChanged(List<T> list)
                 {
-                    if (mNotifyOnDataChanged)
+                    if (mNotifyDataChangeMode != NotifyDataChangeMode.None)
                         mCallback.onDataSetChanged();
                 }
 
                 @Override
                 public void onDataChanged(int index, T data)
                 {
-                    if (mNotifyOnDataChanged)
+                    if (mNotifyDataChangeMode == NotifyDataChangeMode.All)
+                    {
+                        mCallback.onDataSetChanged();
+                    } else if (mNotifyDataChangeMode == NotifyDataChangeMode.Smart)
+                    {
                         notifyItemViewChanged(index);
+                    }
                 }
 
                 @Override
                 public void onDataAdded(int index, List<T> list)
                 {
-                    if (mNotifyOnDataChanged)
+                    if (mNotifyDataChangeMode == NotifyDataChangeMode.All)
+                    {
+                        mCallback.onDataSetChanged();
+                    } else if (mNotifyDataChangeMode == NotifyDataChangeMode.Smart)
+                    {
                         mCallback.onItemRangeInserted(index, list.size());
+                    }
                 }
 
                 @Override
                 public void onDataRemoved(int index, T data)
                 {
-                    if (mNotifyOnDataChanged)
+                    if (mNotifyDataChangeMode == NotifyDataChangeMode.All)
+                    {
+                        mCallback.onDataSetChanged();
+                    } else if (mNotifyDataChangeMode == NotifyDataChangeMode.Smart)
+                    {
                         mCallback.onItemRangeRemoved(index, 1);
+                    }
                 }
             });
         }

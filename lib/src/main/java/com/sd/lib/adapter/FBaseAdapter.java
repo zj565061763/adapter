@@ -239,6 +239,12 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements Adapter<T>
     }
 
     @Override
+    public void setNotifyDataChangeMode(NotifyDataChangeMode mode)
+    {
+        getAdapterProxy().setNotifyDataChangeMode(mode);
+    }
+
+    @Override
     public void notifyItemViewChanged(int position)
     {
         getAdapterProxy().notifyItemViewChanged(position);

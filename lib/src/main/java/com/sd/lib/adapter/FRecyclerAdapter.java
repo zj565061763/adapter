@@ -215,6 +215,12 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     }
 
     @Override
+    public void setNotifyDataChangeMode(NotifyDataChangeMode mode)
+    {
+        getAdapterProxy().setNotifyDataChangeMode(mode);
+    }
+
+    @Override
     public void notifyItemViewChanged(int position)
     {
         getAdapterProxy().notifyItemViewChanged(position);
