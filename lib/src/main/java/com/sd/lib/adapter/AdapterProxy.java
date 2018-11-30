@@ -39,15 +39,6 @@ public class AdapterProxy<T> implements Adapter<T>
     }
 
     @Override
-    public void setNotifyOnDataChanged(boolean notify)
-    {
-        if (notify)
-            setNotifyDataChangeMode(NotifyDataChangeMode.Smart);
-        else
-            setNotifyDataChangeMode(NotifyDataChangeMode.None);
-    }
-
-    @Override
     public void setNotifyDataChangeMode(NotifyDataChangeMode mode)
     {
         if (mode != null)
@@ -60,7 +51,13 @@ public class AdapterProxy<T> implements Adapter<T>
         if (!getDataHolder().isIndexLegal(position))
             return;
 
-        mCallback.onItemRangeChanged(position, 1);
+        if (mNotifyDataChangeMode == NotifyDataChangeMode.All)
+        {
+            mCallback.onDataSetChanged();
+        } else if (mNotifyDataChangeMode == NotifyDataChangeMode.Smart)
+        {
+            mCallback.onItemRangeChanged(position, 1);
+        }
     }
 
     @Override

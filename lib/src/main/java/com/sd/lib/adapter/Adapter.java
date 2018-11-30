@@ -20,9 +20,6 @@ public interface Adapter<T>
      */
     Context getContext();
 
-    @Deprecated
-    void setNotifyOnDataChanged(boolean notify);
-
     /**
      * 设置数据变更后刷新ui的方式，默认{@link NotifyDataChangeMode#Smart}
      *

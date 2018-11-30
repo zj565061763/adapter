@@ -181,12 +181,6 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements Adapter<T
     }
 
     @Override
-    public void setNotifyOnDataChanged(boolean notify)
-    {
-        getAdapterProxy().setNotifyOnDataChanged(notify);
-    }
-
-    @Override
     public void setNotifyDataChangeMode(NotifyDataChangeMode mode)
     {
         getAdapterProxy().setNotifyDataChangeMode(mode);
