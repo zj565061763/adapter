@@ -61,6 +61,12 @@ public class AdapterProxy<T> implements Adapter<T>
     }
 
     @Override
+    public void notifyDataSetChanged()
+    {
+        mCallback.onDataSetChanged();
+    }
+
+    @Override
     public DataHolder<T> getDataHolder()
     {
         if (mDataHolder == null)

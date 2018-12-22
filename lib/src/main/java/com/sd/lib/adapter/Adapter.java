@@ -35,6 +35,11 @@ public interface Adapter<T>
     void notifyItemViewChanged(int position);
 
     /**
+     * 通知数据变更
+     */
+    void notifyDataSetChanged();
+
+    /**
      * 返回数据持有者对象
      *
      * @return
