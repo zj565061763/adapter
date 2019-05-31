@@ -27,6 +27,7 @@ android {
 
 dependencies {
     compileOnly 'com.android.support:recyclerview-v7:+'
+    compileOnly 'com.github.zj565061763:selectmanager:+'
 }
 
 // 指定编码
