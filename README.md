@@ -3,13 +3,6 @@
 
 # Gradle
 [![](https://jitpack.io/v/zj565061763/adapter.svg)](https://jitpack.io/#zj565061763/adapter)
-<br>
-本库需要依赖以下库:
-```
-implementation 'com.android.support:recyclerview-v7:+'
-implementation 'com.github.zj565061763:selectmanager:+'
-```
-[selectmanager](https://github.com/zj565061763/selectmanager)
 
 # Adapter接口
 ```java
@@ -29,9 +22,6 @@ public interface Adapter<T>
      */
     Context getContext();
 
-    @Deprecated
-    void setNotifyOnDataChanged(boolean notify);
-
     /**
      * 设置数据变更后刷新ui的方式，默认{@link NotifyDataChangeMode#Smart}
      *
@@ -45,6 +35,11 @@ public interface Adapter<T>
      * @param position
      */
     void notifyItemViewChanged(int position);
+
+    /**
+     * 通知数据变更
+     */
+    void notifyDataSetChanged();
 
     /**
      * 返回数据持有者对象
@@ -102,15 +97,17 @@ public interface DataHolder<T>
      * 在末尾添加数据
      *
      * @param data
+     * @return
      */
-    void addData(T data);
+    boolean addData(T data);
 
     /**
      * 在末尾添加数据
      *
      * @param list
+     * @return
      */
-    void addData(List<T> list);
+    boolean addData(List<T> list);
 
     /**
      * 在index位置添加数据
@@ -125,18 +122,20 @@ public interface DataHolder<T>
      *
      * @param index
      * @param list
+     * @return
      */
-    void addData(int index, List<T> list);
+    boolean addData(int index, List<T> list);
 
     /**
      * 移除数据
      *
      * @param data
+     * @return
      */
-    void removeData(T data);
+    boolean removeData(T data);
 
     /**
-     * 移除index位置对应的数据
+     * 移除index位置的数据
      *
      * @param index
      * @return
@@ -144,7 +143,7 @@ public interface DataHolder<T>
     T removeData(int index);
 
     /**
-     * 更新index位置对应的数据
+     * 更新index位置的数据
      *
      * @param index
      * @param data
@@ -162,7 +161,7 @@ public interface DataHolder<T>
     boolean isIndexLegal(int index);
 
     /**
-     * 获得某个位置对应的数据
+     * 返回index位置的数据
      *
      * @param index
      * @return
