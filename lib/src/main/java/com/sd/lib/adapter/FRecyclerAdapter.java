@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import com.sd.lib.adapter.callback.ItemClickCallback;
 import com.sd.lib.adapter.callback.ItemLongClickCallback;
 import com.sd.lib.adapter.data.DataHolder;
-import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +99,7 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
 
         FRecyclerViewHolder<T> holder = onCreateVHolder(parent, viewType);
         holder.setAdapter(this);
+        holder.init();
         return holder;
     }
 

@@ -1,17 +1,13 @@
-package com.sd.lib.adapter.viewholder;
+package com.sd.lib.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sd.lib.adapter.Adapter;
-
 public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
 {
     private Adapter<T> mAdapter;
-    private SparseArray<View> mArrayView;
 
     public FRecyclerViewHolder(View itemView)
     {
@@ -23,7 +19,7 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
         this(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
     }
 
-    public void setAdapter(Adapter<T> adapter)
+    void setAdapter(Adapter<T> adapter)
     {
         mAdapter = adapter;
     }
@@ -39,29 +35,9 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
     }
 
     /**
-     * 在itemView中通过id查找view，如果需要频繁的通过id查找view，调用此方法查找效率较高
-     *
-     * @param id
-     * @param <V>
-     * @return
+     * 初始化
      */
-    public final <V extends View> V get(int id)
-    {
-        if (mArrayView == null)
-        {
-            mArrayView = new SparseArray<>();
-        }
-        View view = mArrayView.get(id);
-        if (view == null)
-        {
-            view = itemView.findViewById(id);
-            if (view != null)
-            {
-                mArrayView.put(id, view);
-            }
-        }
-        return (V) view;
-    }
+    protected abstract void init();
 
     /**
      * 绑定数据

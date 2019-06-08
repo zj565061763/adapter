@@ -5,8 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
-
 public abstract class FSimpleRecyclerAdapter<T> extends FRecyclerAdapter<T>
 {
     public FSimpleRecyclerAdapter()
@@ -25,6 +23,11 @@ public abstract class FSimpleRecyclerAdapter<T> extends FRecyclerAdapter<T>
         final View itemView = LayoutInflater.from(getContext()).inflate(layoutId, parent, false);
         FRecyclerViewHolder<T> holder = new FRecyclerViewHolder<T>(itemView)
         {
+            @Override
+            public void init()
+            {
+            }
+
             @Override
             public void onBindData(int position, T model)
             {
