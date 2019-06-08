@@ -5,8 +5,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sd.adapter.model.DataModel;
-import com.sd.lib.adapter.FSimpleRecyclerAdapter;
 import com.sd.lib.adapter.FRecyclerViewHolder;
+import com.sd.lib.adapter.FSimpleRecyclerAdapter;
 
 public class RecyclerViewAdapter extends FSimpleRecyclerAdapter<DataModel>
 {
@@ -22,7 +22,7 @@ public class RecyclerViewAdapter extends FSimpleRecyclerAdapter<DataModel>
     @Override
     public void onBindData(FRecyclerViewHolder<DataModel> holder, int position, final DataModel model)
     {
-        TextView textview = holder.get(R.id.textview);
+        TextView textview = holder.findViewById(R.id.textview);
         textview.setText(model.name);
 
         holder.itemView.setOnClickListener(new View.OnClickListener()

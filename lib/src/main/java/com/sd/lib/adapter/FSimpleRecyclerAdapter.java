@@ -24,7 +24,7 @@ public abstract class FSimpleRecyclerAdapter<T> extends FRecyclerAdapter<T>
         FRecyclerViewHolder<T> holder = new FRecyclerViewHolder<T>(itemView)
         {
             @Override
-            public void init()
+            public void onCreate()
             {
             }
 

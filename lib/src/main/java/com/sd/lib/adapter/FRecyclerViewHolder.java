@@ -35,9 +35,18 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
     }
 
     /**
-     * 初始化
+     * {@link #findViewById(int)}
      */
-    protected abstract void init();
+    @Deprecated
+    public final <V extends View> V get(int id)
+    {
+        return itemView.findViewById(id);
+    }
+
+    /**
+     * 创建回调，用来初始化
+     */
+    protected abstract void onCreate();
 
     /**
      * 绑定数据

@@ -99,7 +99,7 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
 
         FRecyclerViewHolder<T> holder = onCreateVHolder(parent, viewType);
         holder.setAdapter(this);
-        holder.init();
+        holder.onCreate();
         return holder;
     }
 
