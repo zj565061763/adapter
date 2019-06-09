@@ -1,9 +1,11 @@
-package com.sd.lib.adapter;
+package com.sd.lib.adapter.viewholder;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.sd.lib.adapter.Adapter;
 
 public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
 {
@@ -19,7 +21,7 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
         this(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
     }
 
-    void setAdapter(Adapter<T> adapter)
+    public void setAdapter(Adapter<T> adapter)
     {
         mAdapter = adapter;
     }
@@ -46,7 +48,7 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
     /**
      * 创建回调，用来初始化
      */
-    protected abstract void onCreate();
+    public abstract void onCreate();
 
     /**
      * 绑定数据

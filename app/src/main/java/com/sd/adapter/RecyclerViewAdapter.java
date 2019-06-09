@@ -5,7 +5,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.sd.adapter.model.DataModel;
-import com.sd.lib.adapter.FRecyclerViewHolder;
+import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 import com.sd.lib.adapter.FSimpleRecyclerAdapter;
 
 public class RecyclerViewAdapter extends FSimpleRecyclerAdapter<DataModel>

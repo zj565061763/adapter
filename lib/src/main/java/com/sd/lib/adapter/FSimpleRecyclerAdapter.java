@@ -5,6 +5,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
+
 public abstract class FSimpleRecyclerAdapter<T> extends FRecyclerAdapter<T>
 {
     public FSimpleRecyclerAdapter()
