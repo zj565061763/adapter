@@ -101,7 +101,13 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
         final FRecyclerViewHolder<T> holder = onCreateVHolder(parent, viewType);
         holder.setAdapter(this);
         holder.onCreate();
+
+        onViewHolderCreated(holder);
         return holder;
+    }
+
+    protected void onViewHolderCreated(FRecyclerViewHolder<T> viewHolder)
+    {
     }
 
     @Override
