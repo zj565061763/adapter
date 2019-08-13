@@ -2,10 +2,10 @@ package com.sd.adapter;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.sd.adapter.model.DataModel;
 import com.sd.lib.adapter.callback.ItemClickCallback;
@@ -29,7 +29,7 @@ public class RecyclerViewActivity extends Activity
         mRecyclerView = findViewById(R.id.recyclerview);
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
-        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        layoutManager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
 
