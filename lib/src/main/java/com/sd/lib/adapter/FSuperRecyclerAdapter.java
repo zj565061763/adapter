@@ -1,11 +1,10 @@
 package com.sd.lib.adapter;
 
-import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sd.lib.adapter.annotation.TagViewHolder;
+import com.sd.lib.adapter.annotation.SuperViewHolder;
 import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 import com.sd.lib.adapter.viewholder.FSuperRecyclerViewHolder;
 
@@ -18,29 +17,21 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
     private final Map<Class<?>, ViewHolderInfo> mMapViewHolderInfo = new HashMap<>();
     private final Map<Integer, ViewHolderInfo> mMapTypeViewHolderInfo = new HashMap<>();
 
-    private final View mView;
-
-    public FSuperRecyclerAdapter(Activity context)
-    {
-        super(context);
-        mView = new View(context.getApplicationContext());
-    }
-
     public void register(Class<? extends FSuperRecyclerViewHolder> clazz)
     {
         if (clazz == FSuperRecyclerViewHolder.class)
             throw new IllegalArgumentException();
 
-        final TagViewHolder tagViewHolder = clazz.getAnnotation(TagViewHolder.class);
-        if (tagViewHolder == null)
-            throw new IllegalArgumentException("TagViewHolder was not found");
+        final SuperViewHolder annotation = clazz.getAnnotation(SuperViewHolder.class);
+        if (annotation == null)
+            throw new IllegalArgumentException("SuperViewHolder was not found");
 
-        if (tagViewHolder.layout() == 0)
-            throw new IllegalArgumentException("TagViewHolder's layout == 0");
+        if (annotation.layout() == 0)
+            throw new IllegalArgumentException("SuperViewHolder's layout == 0");
 
-        final Class<?> modelClass = tagViewHolder.modelClass();
+        final Class<?> modelClass = annotation.modelClass();
         if (modelClass == null)
-            throw new IllegalArgumentException("TagViewHolder's modelClass == null");
+            throw new IllegalArgumentException("SuperViewHolder's modelClass == null");
 
         Constructor<?> targetConstructor = null;
 
@@ -59,7 +50,7 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
         if (mMapTypeViewHolderInfo.containsKey(viewType))
             throw new IllegalArgumentException("ViewHolder with view type " + viewType + "  has been registered:" + clazz);
 
-        final ViewHolderInfo viewHolderInfo = new ViewHolderInfo(viewType, tagViewHolder, targetConstructor);
+        final ViewHolderInfo viewHolderInfo = new ViewHolderInfo(viewType, annotation, targetConstructor);
         mMapViewHolderInfo.put(modelClass, viewHolderInfo);
         mMapTypeViewHolderInfo.put(viewType, viewHolderInfo);
     }
@@ -81,7 +72,7 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
     public final FRecyclerViewHolder<Object> onCreateVHolder(ViewGroup parent, int viewType)
     {
         final ViewHolderInfo viewHolderInfo = mMapTypeViewHolderInfo.get(viewType);
-        final int layout = viewHolderInfo.mTagViewHolder.layout();
+        final int layout = viewHolderInfo.mSuperViewHolder.layout();
 
         final View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
 
@@ -104,13 +95,13 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
     private static class ViewHolderInfo
     {
         private final int mViewType;
-        private final TagViewHolder mTagViewHolder;
+        private final SuperViewHolder mSuperViewHolder;
         private final Constructor<?> mConstructor;
 
-        public ViewHolderInfo(int viewType, TagViewHolder tagViewHolder, Constructor<?> constructor)
+        public ViewHolderInfo(int viewType, SuperViewHolder superViewHolder, Constructor<?> constructor)
         {
             mViewType = viewType;
-            mTagViewHolder = tagViewHolder;
+            mSuperViewHolder = superViewHolder;
             mConstructor = constructor;
         }
     }

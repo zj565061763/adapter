@@ -7,9 +7,19 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface TagViewHolder
+public @interface SuperViewHolder
 {
+    /**
+     * 布局id
+     *
+     * @return
+     */
     int layout();
 
+    /**
+     * 实体类型
+     *
+     * @return
+     */
     Class<?> modelClass();
 }
