@@ -38,6 +38,10 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
         if (tagViewHolder.layout() == 0)
             throw new IllegalArgumentException("TagViewHolder's layout == 0");
 
+        final Class<?> modelClass = tagViewHolder.modelClass();
+        if (modelClass == null)
+            throw new IllegalArgumentException("TagViewHolder's modelClass == null");
+
         Constructor<?> targetConstructor = null;
 
         try
@@ -48,28 +52,14 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
             throw new IllegalArgumentException("Constructor with View params was not found");
         }
 
-        Class<?> modelClass = null;
-
-        try
-        {
-            final FSuperRecyclerViewHolder target = (FSuperRecyclerViewHolder) targetConstructor.newInstance(mView);
-            modelClass = target.getModelClass();
-        } catch (Exception e)
-        {
-            throw new RuntimeException(e);
-        }
-
-        if (modelClass == null)
-            throw new RuntimeException("model class is null");
-
         if (mMapViewHolderInfo.containsKey(modelClass))
-            throw new IllegalArgumentException("ViewHolder with model class " + modelClass.getName() + " has been registered");
+            throw new IllegalArgumentException("ViewHolder with model class " + modelClass.getName() + " has been registered:" + clazz);
 
-        final int viewType = tagViewHolder.type();
+        final int viewType = System.identityHashCode(modelClass);
         if (mMapTypeViewHolderInfo.containsKey(viewType))
-            throw new IllegalArgumentException("ViewHolder with type " + viewType + "  has been registered: " + modelClass.getName());
+            throw new IllegalArgumentException("ViewHolder with view type " + viewType + "  has been registered:" + clazz);
 
-        final ViewHolderInfo viewHolderInfo = new ViewHolderInfo(tagViewHolder, targetConstructor);
+        final ViewHolderInfo viewHolderInfo = new ViewHolderInfo(viewType, tagViewHolder, targetConstructor);
         mMapViewHolderInfo.put(modelClass, viewHolderInfo);
         mMapTypeViewHolderInfo.put(viewType, viewHolderInfo);
     }
@@ -84,7 +74,7 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
         if (info == null)
             throw new RuntimeException("ViewHolder for model " + clazz.getName() + " was not register");
 
-        return info.mTagViewHolder.type();
+        return info.mViewType;
     }
 
     @Override
@@ -113,11 +103,13 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
 
     private static class ViewHolderInfo
     {
+        private final int mViewType;
         private final TagViewHolder mTagViewHolder;
         private final Constructor<?> mConstructor;
 
-        public ViewHolderInfo(TagViewHolder tagViewHolder, Constructor<?> constructor)
+        public ViewHolderInfo(int viewType, TagViewHolder tagViewHolder, Constructor<?> constructor)
         {
+            mViewType = viewType;
             mTagViewHolder = tagViewHolder;
             mConstructor = constructor;
         }

@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface TagViewHolder
 {
-    int type() default 0;
-
     int layout();
+
+    Class<?> modelClass();
 }
