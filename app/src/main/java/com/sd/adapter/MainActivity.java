@@ -6,7 +6,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity implements View.OnClickListener
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -15,12 +15,22 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
     }
 
-    public void onClickListViewActivity(View view)
+    @Override
+    public void onClick(View v)
     {
-        startActivity(new Intent(this, ListViewActivity.class));
-    }
-    public void onClickRecyclerViewActivity(View view)
-    {
-        startActivity(new Intent(this, RecyclerViewActivity.class));
+        switch (v.getId())
+        {
+            case R.id.btn_listview:
+                startActivity(new Intent(this, ListViewActivity.class));
+                break;
+            case R.id.btn_recyclerview:
+                startActivity(new Intent(this, RecyclerViewActivity.class));
+                break;
+            case R.id.btn_super_recyclerview:
+                startActivity(new Intent(this, SuperRecyclerViewActivity.class));
+                break;
+            default:
+                break;
+        }
     }
 }
