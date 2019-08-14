@@ -1,6 +1,7 @@
 package com.sd.adapter;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -15,6 +16,8 @@ import java.util.List;
 
 public class SuperRecyclerViewActivity extends AppCompatActivity
 {
+    public static final String TAG = SuperRecyclerViewActivity.class.getSimpleName();
+
     private RecyclerView mRecyclerView;
     private FSuperRecyclerAdapter mAdapter;
 
@@ -52,8 +55,22 @@ public class SuperRecyclerViewActivity extends AppCompatActivity
         if (mAdapter == null)
         {
             mAdapter = new FSuperRecyclerAdapter();
-            mAdapter.register(TextViewViewHolder.class);
-            mAdapter.register(ButtonViewHolder.class);
+            mAdapter.register(TextViewViewHolder.class, new FSuperRecyclerAdapter.ViewHolderCallback<TextViewViewHolder>()
+            {
+                @Override
+                public void onCreated(TextViewViewHolder viewHolder)
+                {
+                    Log.i(TAG, "TextViewViewHolder onCreated:" + viewHolder);
+                }
+            });
+            mAdapter.register(ButtonViewHolder.class, new FSuperRecyclerAdapter.ViewHolderCallback<ButtonViewHolder>()
+            {
+                @Override
+                public void onCreated(ButtonViewHolder viewHolder)
+                {
+                    Log.i(TAG, "ButtonViewHolder onCreated:" + viewHolder);
+                }
+            });
         }
         return mAdapter;
     }

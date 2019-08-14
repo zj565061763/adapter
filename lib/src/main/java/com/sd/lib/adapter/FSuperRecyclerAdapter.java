@@ -17,7 +17,7 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
     private final Map<Class<?>, ViewHolderInfo> mMapViewHolderInfo = new HashMap<>();
     private final Map<Integer, ViewHolderInfo> mMapTypeViewHolderInfo = new HashMap<>();
 
-    public void register(Class<? extends FSuperRecyclerViewHolder> clazz)
+    public <T extends FSuperRecyclerViewHolder> void register(Class<T> clazz, ViewHolderCallback<T> viewHolderCallback)
     {
         if (clazz == FSuperRecyclerViewHolder.class)
             throw new IllegalArgumentException();
@@ -50,7 +50,7 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
         if (mMapTypeViewHolderInfo.containsKey(viewType))
             throw new IllegalArgumentException("ViewHolder with view type " + viewType + "  has been registered:" + clazz);
 
-        final ViewHolderInfo viewHolderInfo = new ViewHolderInfo(viewType, annotation, targetConstructor);
+        final ViewHolderInfo viewHolderInfo = new ViewHolderInfo(viewType, annotation, targetConstructor, viewHolderCallback);
         mMapViewHolderInfo.put(modelClass, viewHolderInfo);
         mMapTypeViewHolderInfo.put(viewType, viewHolderInfo);
     }
@@ -78,7 +78,8 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
 
         try
         {
-            final FRecyclerViewHolder viewHolder = (FRecyclerViewHolder) viewHolderInfo.mConstructor.newInstance(view);
+            final FSuperRecyclerViewHolder viewHolder = (FSuperRecyclerViewHolder) viewHolderInfo.mConstructor.newInstance(view);
+            viewHolderInfo.notifyViewHolderCreated(viewHolder);
             return viewHolder;
         } catch (Exception e)
         {
@@ -97,12 +98,25 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
         private final int mViewType;
         private final SuperViewHolder mSuperViewHolder;
         private final Constructor<?> mConstructor;
+        private final ViewHolderCallback mViewHolderCallback;
 
-        public ViewHolderInfo(int viewType, SuperViewHolder superViewHolder, Constructor<?> constructor)
+        public ViewHolderInfo(int viewType, SuperViewHolder superViewHolder, Constructor<?> constructor, ViewHolderCallback viewHolderCallback)
         {
             mViewType = viewType;
             mSuperViewHolder = superViewHolder;
             mConstructor = constructor;
+            mViewHolderCallback = viewHolderCallback;
         }
+
+        public void notifyViewHolderCreated(FSuperRecyclerViewHolder viewHolder)
+        {
+            if (mViewHolderCallback != null)
+                mViewHolderCallback.onCreated(viewHolder);
+        }
+    }
+
+    public interface ViewHolderCallback<T extends FSuperRecyclerViewHolder>
+    {
+        void onCreated(T viewHolder);
     }
 }
