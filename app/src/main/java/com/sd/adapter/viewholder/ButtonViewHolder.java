@@ -29,6 +29,9 @@ public class ButtonViewHolder extends FSuperRecyclerViewHolder<ButtonViewHolder.
         btn_content.setText(model.name);
     }
 
+    /**
+     * ViewHolder对应的实体
+     */
     public static class Model
     {
         public String name;
