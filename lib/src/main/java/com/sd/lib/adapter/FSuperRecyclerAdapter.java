@@ -76,15 +76,17 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
 
         final View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
 
+        FSuperRecyclerViewHolder viewHolder = null;
         try
         {
-            final FSuperRecyclerViewHolder viewHolder = (FSuperRecyclerViewHolder) viewHolderInfo.mConstructor.newInstance(view);
-            viewHolderInfo.notifyViewHolderCreated(viewHolder);
-            return viewHolder;
+            viewHolder = (FSuperRecyclerViewHolder) viewHolderInfo.mConstructor.newInstance(view);
         } catch (Exception e)
         {
             throw new RuntimeException("ViewHolder create failed: " + e);
         }
+
+        viewHolderInfo.notifyViewHolderCreated(viewHolder);
+        return viewHolder;
     }
 
     @Override
