@@ -19,12 +19,12 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
 
     public <T extends FSuperRecyclerViewHolder> void register(Class<T> clazz, ViewHolderCallback<T> viewHolderCallback)
     {
-        if (clazz == FSuperRecyclerViewHolder.class)
+        if (clazz == null || clazz == FSuperRecyclerViewHolder.class)
             throw new IllegalArgumentException();
 
         final SuperViewHolder annotation = clazz.getAnnotation(SuperViewHolder.class);
         if (annotation == null)
-            throw new IllegalArgumentException("SuperViewHolder was not found");
+            throw new IllegalArgumentException("SuperViewHolder annotation was not found");
 
         if (annotation.layout() == 0)
             throw new IllegalArgumentException("SuperViewHolder's layout == 0");
@@ -63,7 +63,7 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
 
         final ViewHolderInfo info = mMapViewHolderInfo.get(clazz);
         if (info == null)
-            throw new RuntimeException("ViewHolder for model " + clazz.getName() + " was not register");
+            throw new RuntimeException("ViewHolder for model " + clazz.getName() + " has not been registered");
 
         return info.mViewType;
     }

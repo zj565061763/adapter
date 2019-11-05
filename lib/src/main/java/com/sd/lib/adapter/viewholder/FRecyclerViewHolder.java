@@ -43,7 +43,7 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
     @Deprecated
     public final <V extends View> V get(int id)
     {
-        return itemView.findViewById(id);
+        return findViewById(id);
     }
 
     /**
