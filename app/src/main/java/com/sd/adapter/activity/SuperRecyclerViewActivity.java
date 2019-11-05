@@ -1,4 +1,4 @@
-package com.sd.adapter;
+package com.sd.adapter.activity;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sd.adapter.R;
 import com.sd.adapter.viewholder.ButtonViewHolder;
 import com.sd.adapter.viewholder.TextViewViewHolder;
 import com.sd.lib.adapter.FSuperRecyclerAdapter;

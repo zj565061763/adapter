@@ -1,9 +1,10 @@
-package com.sd.adapter;
+package com.sd.adapter.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.sd.adapter.R;
 import com.sd.adapter.model.DataModel;
 import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 import com.sd.lib.adapter.FSimpleRecyclerAdapter;

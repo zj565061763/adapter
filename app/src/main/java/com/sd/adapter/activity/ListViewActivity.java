@@ -1,10 +1,12 @@
-package com.sd.adapter;
+package com.sd.adapter.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.sd.adapter.R;
+import com.sd.adapter.adapter.ListViewAdapter;
 import com.sd.adapter.model.DataModel;
 import com.sd.lib.adapter.callback.ItemClickCallback;
 import com.sd.lib.adapter.callback.ItemLongClickCallback;
