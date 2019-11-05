@@ -17,6 +17,24 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
     private final Map<Class<?>, ViewHolderInfo> mMapViewHolderInfo = new HashMap<>();
     private final Map<Integer, ViewHolderInfo> mMapTypeViewHolderInfo = new HashMap<>();
 
+    /**
+     * 注册ViewHolder
+     *
+     * @param clazz
+     * @param <T>
+     */
+    public <T extends FSuperRecyclerViewHolder> void register(Class<T> clazz)
+    {
+        register(clazz, null);
+    }
+
+    /**
+     * 注册ViewHolder
+     *
+     * @param clazz
+     * @param viewHolderCallback
+     * @param <T>
+     */
     public <T extends FSuperRecyclerViewHolder> void register(Class<T> clazz, ViewHolderCallback<T> viewHolderCallback)
     {
         if (clazz == null || clazz == FSuperRecyclerViewHolder.class)
