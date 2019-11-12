@@ -7,10 +7,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sd.adapter.R;
-import com.sd.adapter.adapter.TestSuperAdapter;
 import com.sd.adapter.model.DataModel;
 import com.sd.adapter.viewholder.ButtonViewHolder;
 import com.sd.adapter.viewholder.TextViewViewHolder;
+import com.sd.lib.adapter.FSuperRecyclerAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ import java.util.List;
 public class SuperRecyclerViewActivity extends AppCompatActivity
 {
     private RecyclerView mRecyclerView;
-    private final TestSuperAdapter mAdapter = new TestSuperAdapter();
+    private final FSuperRecyclerAdapter<Object> mAdapter = new FSuperRecyclerAdapter<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -29,6 +29,10 @@ public class SuperRecyclerViewActivity extends AppCompatActivity
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(mAdapter);
+
+        // 注册ViewHolder
+        mAdapter.registerViewHolder(TextViewViewHolder.class);
+        mAdapter.registerViewHolder(ButtonViewHolder.class);
 
         fillData();
     }

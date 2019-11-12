@@ -14,7 +14,7 @@ import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
-public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
+public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
 {
     private final Map<Class<?>, ViewHolderInfo> mMapViewHolderInfo = new HashMap<>();
     private final Map<Integer, ViewHolderInfo> mMapTypeViewHolderInfo = new HashMap<>();
@@ -25,9 +25,9 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
      * @param clazz
      * @param <T>
      */
-    public <T extends FSuperRecyclerViewHolder> void register(Class<T> clazz)
+    public <T extends FSuperRecyclerViewHolder> void registerViewHolder(Class<T> clazz)
     {
-        register(clazz, null);
+        registerViewHolder(clazz, null);
     }
 
     /**
@@ -37,7 +37,7 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
      * @param viewHolderCallback
      * @param <T>
      */
-    public <T extends FSuperRecyclerViewHolder> void register(Class<T> clazz, ViewHolderCallback<T> viewHolderCallback)
+    public <T extends FSuperRecyclerViewHolder> void registerViewHolder(Class<T> clazz, ViewHolderCallback<T> viewHolderCallback)
     {
         if (clazz == null || clazz == FSuperRecyclerViewHolder.class)
             throw new IllegalArgumentException();
@@ -91,7 +91,7 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
     }
 
     @Override
-    public final FRecyclerViewHolder<Object> onCreateVHolder(ViewGroup parent, int viewType)
+    public final FRecyclerViewHolder<T> onCreateVHolder(ViewGroup parent, int viewType)
     {
         final ViewHolderInfo viewHolderInfo = mMapTypeViewHolderInfo.get(viewType);
         final View view = LayoutInflater.from(parent.getContext()).inflate(viewHolderInfo.mLayoutId, parent, false);
@@ -110,7 +110,7 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
     }
 
     @Override
-    public void onBindData(FRecyclerViewHolder<Object> holder, int position, Object model)
+    public void onBindData(FRecyclerViewHolder<T> holder, int position, T model)
     {
 
     }
