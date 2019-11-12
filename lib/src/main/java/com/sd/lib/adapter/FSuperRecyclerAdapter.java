@@ -54,10 +54,10 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
         if (modelClass == null)
             throw new IllegalArgumentException("model class was not found in " + clazz.getSimpleName());
 
-        Constructor<?> targetConstructor = null;
+        Constructor<?> constructor = null;
         try
         {
-            targetConstructor = clazz.getConstructor(View.class);
+            constructor = clazz.getConstructor(View.class);
         } catch (Exception e)
         {
             throw new IllegalArgumentException("Constructor with View params was not found");
@@ -70,7 +70,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
         final ViewHolderInfo viewHolderInfo = new ViewHolderInfo(
                 viewType,
                 layoutId,
-                targetConstructor,
+                constructor,
                 viewHolderCallback
         );
 
