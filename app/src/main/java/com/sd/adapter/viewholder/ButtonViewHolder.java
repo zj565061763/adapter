@@ -4,10 +4,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.sd.adapter.R;
-import com.sd.lib.adapter.annotation.SuperViewHolder;
+import com.sd.adapter.model.DataModel;
+import com.sd.lib.adapter.annotation.ASuperViewHolder;
 import com.sd.lib.adapter.viewholder.FSuperRecyclerViewHolder;
 
-@SuperViewHolder(layout = R.layout.item_super_button, modelClass = ButtonViewHolder.Model.class)
+@ASuperViewHolder(layoutId = R.layout.item_super_button)
 public class ButtonViewHolder extends FSuperRecyclerViewHolder<ButtonViewHolder.Model>
 {
     private Button btn_content;
@@ -26,14 +27,13 @@ public class ButtonViewHolder extends FSuperRecyclerViewHolder<ButtonViewHolder.
     @Override
     public void onBindData(int position, ButtonViewHolder.Model model)
     {
-        btn_content.setText(model.name);
+        btn_content.setText(model.getSource().name);
     }
 
     /**
      * ViewHolder对应的实体
      */
-    public static class Model
+    public static class Model extends FSuperRecyclerViewHolder.Model<DataModel>
     {
-        public String name;
     }
 }

@@ -8,8 +8,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.sd.adapter.R;
 import com.sd.adapter.adapter.TestSuperAdapter;
+import com.sd.adapter.model.DataModel;
 import com.sd.adapter.viewholder.ButtonViewHolder;
 import com.sd.adapter.viewholder.TextViewViewHolder;
+import com.sd.lib.adapter.viewholder.FSuperRecyclerViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,16 +42,16 @@ public class SuperRecyclerViewActivity extends AppCompatActivity
         final List<Object> listData = new ArrayList<>();
         for (int i = 0; i < 100; i++)
         {
+            final DataModel dataModel = new DataModel();
+            dataModel.name = String.valueOf(i);
             if (i % 2 == 0)
             {
-                TextViewViewHolder.Model model = new TextViewViewHolder.Model();
-                model.name = String.valueOf(i);
-                listData.add(model);
+                final Object transformModel = FSuperRecyclerViewHolder.Model.transform(dataModel, TextViewViewHolder.Model.class);
+                listData.add(transformModel);
             } else
             {
-                ButtonViewHolder.Model model = new ButtonViewHolder.Model();
-                model.name = String.valueOf(i);
-                listData.add(model);
+                final Object transformModel = FSuperRecyclerViewHolder.Model.transform(dataModel, ButtonViewHolder.Model.class);
+                listData.add(transformModel);
             }
         }
 

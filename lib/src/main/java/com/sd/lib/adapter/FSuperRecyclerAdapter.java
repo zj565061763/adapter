@@ -4,11 +4,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.sd.lib.adapter.annotation.SuperViewHolder;
+import com.sd.lib.adapter.annotation.ASuperViewHolder;
 import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 import com.sd.lib.adapter.viewholder.FSuperRecyclerViewHolder;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -40,19 +42,19 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
         if (clazz == null || clazz == FSuperRecyclerViewHolder.class)
             throw new IllegalArgumentException();
 
-        final SuperViewHolder annotation = clazz.getAnnotation(SuperViewHolder.class);
+        final ASuperViewHolder annotation = clazz.getAnnotation(ASuperViewHolder.class);
         if (annotation == null)
-            throw new IllegalArgumentException("SuperViewHolder annotation was not found");
+            throw new IllegalArgumentException(ASuperViewHolder.class.getSimpleName() + " annotation was not found");
 
-        if (annotation.layout() == 0)
-            throw new IllegalArgumentException("SuperViewHolder's layout == 0");
+        final int layoutId = annotation.layoutId();
+        if (layoutId == 0)
+            throw new IllegalArgumentException(ASuperViewHolder.class.getSimpleName() + "'s layoutId == 0");
 
-        final Class<?> modelClass = annotation.modelClass();
+        final Class<?> modelClass = getModelClass(clazz, annotation);
         if (modelClass == null)
-            throw new IllegalArgumentException("SuperViewHolder's modelClass == null");
+            throw new IllegalArgumentException("model class was not found in " + clazz.getSimpleName());
 
         Constructor<?> targetConstructor = null;
-
         try
         {
             targetConstructor = clazz.getConstructor(View.class);
@@ -65,7 +67,13 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
             throw new IllegalArgumentException("ViewHolder with model class " + modelClass.getName() + " has been registered:" + clazz);
 
         final int viewType = System.identityHashCode(modelClass);
-        final ViewHolderInfo viewHolderInfo = new ViewHolderInfo(viewType, annotation, targetConstructor, viewHolderCallback);
+        final ViewHolderInfo viewHolderInfo = new ViewHolderInfo(
+                viewType,
+                layoutId,
+                targetConstructor,
+                viewHolderCallback
+        );
+
         mMapViewHolderInfo.put(modelClass, viewHolderInfo);
         mMapTypeViewHolderInfo.put(viewType, viewHolderInfo);
     }
@@ -73,12 +81,11 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
     @Override
     public final int getItemViewType(int position)
     {
-        final Object data = getDataHolder().get(position);
-        final Class<?> clazz = data.getClass();
+        final Class<?> modelClass = getDataHolder().get(position).getClass();
 
-        final ViewHolderInfo info = mMapViewHolderInfo.get(clazz);
+        final ViewHolderInfo info = mMapViewHolderInfo.get(modelClass);
         if (info == null)
-            throw new RuntimeException("ViewHolder for model " + clazz.getName() + " has not been registered");
+            throw new RuntimeException("ViewHolder for model " + modelClass.getName() + " has not been registered");
 
         return info.mViewType;
     }
@@ -87,9 +94,7 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
     public final FRecyclerViewHolder<Object> onCreateVHolder(ViewGroup parent, int viewType)
     {
         final ViewHolderInfo viewHolderInfo = mMapTypeViewHolderInfo.get(viewType);
-        final int layout = viewHolderInfo.mSuperViewHolder.layout();
-
-        final View view = LayoutInflater.from(parent.getContext()).inflate(layout, parent, false);
+        final View view = LayoutInflater.from(parent.getContext()).inflate(viewHolderInfo.mLayoutId, parent, false);
 
         FSuperRecyclerViewHolder viewHolder = null;
         try
@@ -110,17 +115,46 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
 
     }
 
+    private static <T extends FSuperRecyclerViewHolder> Class<?> getModelClass(Class<T> clazz, ASuperViewHolder annotation)
+    {
+        if (clazz == null)
+            throw new IllegalArgumentException("clazz is null");
+
+        final Class<?> modelClass = annotation.modelClass();
+        if (modelClass != null && modelClass != ASuperViewHolder.class)
+            return modelClass;
+
+        final Type type = getGenericType(clazz);
+        if (type == null)
+            throw new IllegalArgumentException("model generic type for " + clazz.getSimpleName() + " was not found");
+
+        return (Class<?>) type;
+    }
+
+    private static Type getGenericType(Class<?> clazz)
+    {
+        final ParameterizedType parameterizedType = (ParameterizedType) clazz.getGenericSuperclass();
+        final Type[] types = parameterizedType.getActualTypeArguments();
+        if (types != null && types.length > 0)
+        {
+            return types[0];
+        } else
+        {
+            return null;
+        }
+    }
+
     private static class ViewHolderInfo
     {
         private final int mViewType;
-        private final SuperViewHolder mSuperViewHolder;
+        private final int mLayoutId;
         private final Constructor<?> mConstructor;
         private final ViewHolderCallback mViewHolderCallback;
 
-        public ViewHolderInfo(int viewType, SuperViewHolder superViewHolder, Constructor<?> constructor, ViewHolderCallback viewHolderCallback)
+        public ViewHolderInfo(int viewType, int layoutId, Constructor<?> constructor, ViewHolderCallback viewHolderCallback)
         {
             mViewType = viewType;
-            mSuperViewHolder = superViewHolder;
+            mLayoutId = layoutId;
             mConstructor = constructor;
             mViewHolderCallback = viewHolderCallback;
         }

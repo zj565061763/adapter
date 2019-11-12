@@ -7,19 +7,19 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface SuperViewHolder
+public @interface ASuperViewHolder
 {
     /**
      * 布局id
      *
      * @return
      */
-    int layout();
+    int layoutId();
 
     /**
      * 实体类型
      *
      * @return
      */
-    Class<?> modelClass();
+    Class<?> modelClass() default ASuperViewHolder.class;
 }

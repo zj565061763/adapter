@@ -4,10 +4,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.sd.adapter.R;
-import com.sd.lib.adapter.annotation.SuperViewHolder;
+import com.sd.adapter.model.DataModel;
+import com.sd.lib.adapter.annotation.ASuperViewHolder;
 import com.sd.lib.adapter.viewholder.FSuperRecyclerViewHolder;
 
-@SuperViewHolder(layout = R.layout.item_super_textview, modelClass = TextViewViewHolder.Model.class)
+@ASuperViewHolder(layoutId = R.layout.item_super_textview)
 public class TextViewViewHolder extends FSuperRecyclerViewHolder<TextViewViewHolder.Model>
 {
     private TextView tv_content;
@@ -26,14 +27,13 @@ public class TextViewViewHolder extends FSuperRecyclerViewHolder<TextViewViewHol
     @Override
     public void onBindData(int position, TextViewViewHolder.Model model)
     {
-        tv_content.setText(model.name);
+        tv_content.setText(model.getSource().name);
     }
 
     /**
      * ViewHolder对应的实体
      */
-    public static class Model
+    public static class Model extends FSuperRecyclerViewHolder.Model<DataModel>
     {
-        public String name;
     }
 }
