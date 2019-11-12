@@ -12,23 +12,35 @@ public abstract class FSuperRecyclerViewHolder<T> extends FRecyclerViewHolder<T>
         super(itemView);
     }
 
-    public static class Model<T>
+    public static abstract class Model<T>
     {
         T mSource;
+
+        protected Model()
+        {
+        }
 
         public T getSource()
         {
             return mSource;
         }
 
-        public static <M extends Model> Object transform(Object source, Class<M> clazz)
+        /**
+         * 把源对象转为当前类型的对象
+         *
+         * @param source
+         * @return
+         */
+        public Model<T> transform(T source)
         {
             if (source == null)
                 return null;
 
+            final Class<?> clazz = getClass();
+
             try
             {
-                final M model = clazz.newInstance();
+                final Model<T> model = (Model<T>) clazz.newInstance();
                 model.mSource = source;
                 return model;
             } catch (IllegalAccessException e)
@@ -41,15 +53,21 @@ public abstract class FSuperRecyclerViewHolder<T> extends FRecyclerViewHolder<T>
             return null;
         }
 
-        public static <M extends Model> List<Object> transform(List<? extends Object> source, Class<M> clazz)
+        /**
+         * 把源对象转为当前类型的对象
+         *
+         * @param source
+         * @return
+         */
+        public List<Model<T>> transform(List<T> source)
         {
             if (source == null || source.isEmpty())
                 return null;
 
-            final List<Object> list = new ArrayList<>();
-            for (Object item : source)
+            final List<Model<T>> list = new ArrayList<>();
+            for (T item : source)
             {
-                final Object model = transform(item, clazz);
+                final Model<T> model = transform(item);
                 if (model != null)
                     list.add(model);
             }
