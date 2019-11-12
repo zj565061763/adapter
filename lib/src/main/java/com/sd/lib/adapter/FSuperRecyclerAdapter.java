@@ -65,9 +65,6 @@ public class FSuperRecyclerAdapter extends FRecyclerAdapter<Object>
             throw new IllegalArgumentException("ViewHolder with model class " + modelClass.getName() + " has been registered:" + clazz);
 
         final int viewType = System.identityHashCode(modelClass);
-        if (mMapTypeViewHolderInfo.containsKey(viewType))
-            throw new IllegalArgumentException("ViewHolder with view type " + viewType + "  has been registered:" + clazz);
-
         final ViewHolderInfo viewHolderInfo = new ViewHolderInfo(viewType, annotation, targetConstructor, viewHolderCallback);
         mMapViewHolderInfo.put(modelClass, viewHolderInfo);
         mMapTypeViewHolderInfo.put(viewType, viewHolderInfo);
