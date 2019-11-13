@@ -23,8 +23,8 @@ public class RecyclerViewAdapter extends FSimpleRecyclerAdapter<DataModel>
     @Override
     public void onBindData(FRecyclerViewHolder<DataModel> holder, int position, final DataModel model)
     {
-        TextView textview = holder.findViewById(R.id.textview);
-        textview.setText(model.name);
+        TextView tv_content = holder.findViewById(R.id.tv_content);
+        tv_content.setText(model.name);
 
         holder.itemView.setOnClickListener(new View.OnClickListener()
         {

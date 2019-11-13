@@ -21,7 +21,7 @@ public class SimpleSuperViewHolder extends FSuperRecyclerViewHolder<DataModel>
     @Override
     public void onCreate()
     {
-        tv_name = findViewById(R.id.textview);
+        tv_name = findViewById(R.id.tv_content);
     }
 
     @Override

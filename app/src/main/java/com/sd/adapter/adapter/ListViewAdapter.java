@@ -22,8 +22,8 @@ public class ListViewAdapter extends FSimpleAdapter<DataModel>
     @Override
     public void onBindData(int position, View convertView, ViewGroup parent, final DataModel model)
     {
-        final TextView textView = get(R.id.textview, convertView);
-        textView.setText(model.name);
+        final TextView tv_content = get(R.id.tv_content, convertView);
+        tv_content.setText(model.name);
 
         convertView.setOnClickListener(new View.OnClickListener()
         {
