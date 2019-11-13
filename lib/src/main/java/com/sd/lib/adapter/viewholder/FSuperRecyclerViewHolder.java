@@ -31,17 +31,47 @@ public abstract class FSuperRecyclerViewHolder<T> extends FRecyclerViewHolder<T>
          * @param source
          * @return
          */
-        public Model<T> transform(T source)
+        public final Model<T> transform(T source)
         {
             if (source == null)
                 return null;
 
-            final Class<?> clazz = getClass();
+            mSource = source;
+            return this;
+        }
 
+        /**
+         * 把源对象转为当前类型的对象
+         *
+         * @param source
+         * @return
+         */
+        public final List<Model<T>> transform(List<T> source)
+        {
+            if (source == null || source.isEmpty())
+                return null;
+
+            final List<Model<T>> list = new ArrayList<>();
+            for (T item : source)
+            {
+                final Model<T> model = newInstance();
+                if (model == null)
+                    throw new RuntimeException("newInstance() return mull");
+
+                if (model.getClass() != getClass())
+                    throw new RuntimeException("newInstance() must return instance of " + getClass().getName());
+
+                model.mSource = item;
+                list.add(model);
+            }
+            return list;
+        }
+
+        protected Model<T> newInstance()
+        {
             try
             {
-                final Model<T> model = (Model<T>) clazz.newInstance();
-                model.mSource = source;
+                final Model<T> model = (Model<T>) getClass().newInstance();
                 return model;
             } catch (IllegalAccessException e)
             {
@@ -51,27 +81,6 @@ public abstract class FSuperRecyclerViewHolder<T> extends FRecyclerViewHolder<T>
                 e.printStackTrace();
             }
             return null;
-        }
-
-        /**
-         * 把源对象转为当前类型的对象
-         *
-         * @param source
-         * @return
-         */
-        public List<Model<T>> transform(List<T> source)
-        {
-            if (source == null || source.isEmpty())
-                return null;
-
-            final List<Model<T>> list = new ArrayList<>();
-            for (T item : source)
-            {
-                final Model<T> model = transform(item);
-                if (model != null)
-                    list.add(model);
-            }
-            return list;
         }
     }
 }
