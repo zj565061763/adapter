@@ -39,7 +39,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
      */
     public <T extends FSuperRecyclerViewHolder> void registerViewHolder(Class<T> clazz, ViewHolderCallback<T> viewHolderCallback)
     {
-        final ASuperViewHolder annotation = FSuperRecyclerViewHolder.getAnnotation(clazz);
+        final ASuperViewHolder annotation = getAnnotation(clazz);
 
         final int layoutId = annotation.layoutId();
         if (layoutId == 0)
@@ -108,6 +108,29 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
     public void onBindData(FRecyclerViewHolder<T> holder, int position, T model)
     {
 
+    }
+
+    private static <T extends FSuperRecyclerViewHolder> ASuperViewHolder getAnnotation(Class<T> clazz)
+    {
+        if (clazz == null)
+            throw new IllegalArgumentException("clazz is null");
+
+        if (clazz == FSuperRecyclerViewHolder.class)
+            throw new IllegalArgumentException("clazz must not be " + FSuperRecyclerViewHolder.class.getName());
+
+        while (true)
+        {
+            ASuperViewHolder annotation = clazz.getAnnotation(ASuperViewHolder.class);
+            if (annotation != null)
+                return annotation;
+
+            if (clazz == FSuperRecyclerViewHolder.class)
+                break;
+
+            clazz = (Class<T>) clazz.getSuperclass();
+        }
+
+        throw new IllegalArgumentException(ASuperViewHolder.class.getSimpleName() + " annotation was not found in " + clazz.getName());
     }
 
     private static <T extends FSuperRecyclerViewHolder> Class<?> getModelClass(Class<T> clazz, ASuperViewHolder annotation)
