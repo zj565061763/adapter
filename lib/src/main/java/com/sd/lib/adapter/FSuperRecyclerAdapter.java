@@ -39,12 +39,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
      */
     public <T extends FSuperRecyclerViewHolder> void registerViewHolder(Class<T> clazz, ViewHolderCallback<T> viewHolderCallback)
     {
-        if (clazz == null || clazz == FSuperRecyclerViewHolder.class)
-            throw new IllegalArgumentException();
-
-        final ASuperViewHolder annotation = clazz.getAnnotation(ASuperViewHolder.class);
-        if (annotation == null)
-            throw new IllegalArgumentException(ASuperViewHolder.class.getSimpleName() + " annotation was not found");
+        final ASuperViewHolder annotation = FSuperRecyclerViewHolder.getAnnotation(clazz);
 
         final int layoutId = annotation.layoutId();
         if (layoutId == 0)
