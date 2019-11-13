@@ -8,6 +8,7 @@ public class ListDataHolder<T> implements DataHolder<T>
 {
     private List<T> mListData = new ArrayList<>();
     private final List<DataChangeCallback<T>> mListDataChangeCallback = new ArrayList<>();
+    private DataTransform<T> mDataTransform;
 
     @Override
     public void addDataChangeCallback(DataChangeCallback<T> callback)
@@ -24,6 +25,12 @@ public class ListDataHolder<T> implements DataHolder<T>
         mListDataChangeCallback.remove(callback);
     }
 
+    @Override
+    public void setDataTransform(DataTransform<T> dataTransform)
+    {
+        mDataTransform = dataTransform;
+    }
+
     private ListIterator<DataChangeCallback<T>> getListIteratorPrevious()
     {
         return mListDataChangeCallback.listIterator(mListDataChangeCallback.size());
@@ -35,9 +42,13 @@ public class ListDataHolder<T> implements DataHolder<T>
     public void setData(List<T> list)
     {
         if (list != null)
+        {
+            list = transformData(list);
             mListData = list;
-        else
+        } else
+        {
             mListData = new ArrayList<>();
+        }
 
         final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
         while (it.hasPrevious())
@@ -51,6 +62,8 @@ public class ListDataHolder<T> implements DataHolder<T>
     {
         if (data == null)
             return false;
+
+        data = transformData(data);
 
         final int index = size();
         final boolean result = mListData.add(data);
@@ -70,10 +83,16 @@ public class ListDataHolder<T> implements DataHolder<T>
     @Override
     public boolean addData(List<T> list)
     {
+        return addAllData(list);
+    }
+
+    @Override
+    public boolean addAllData(List<T> list)
+    {
         if (list == null || list.isEmpty())
             return false;
 
-        // 这里不判断list里面是否包含null的元素
+        list = transformData(list);
 
         final int index = size();
         final boolean result = mListData.addAll(list);
@@ -93,6 +112,7 @@ public class ListDataHolder<T> implements DataHolder<T>
         if (data == null)
             return;
 
+        data = transformData(data);
         mListData.add(index, data);
 
         final List<T> list = new ArrayList<>(1);
@@ -108,9 +128,16 @@ public class ListDataHolder<T> implements DataHolder<T>
     @Override
     public boolean addData(int index, List<T> list)
     {
+        return addAllData(index, list);
+    }
+
+    @Override
+    public boolean addAllData(int index, List<T> list)
+    {
         if (list == null || list.isEmpty())
             return false;
 
+        list = transformData(list);
         final boolean result = mListData.addAll(index, list);
 
         final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
@@ -151,6 +178,7 @@ public class ListDataHolder<T> implements DataHolder<T>
         if (data == null || !isIndexLegal(index))
             return;
 
+        data = transformData(data);
         mListData.set(index, data);
 
         final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
@@ -193,5 +221,34 @@ public class ListDataHolder<T> implements DataHolder<T>
     public List<T> getData()
     {
         return mListData;
+    }
+
+    private List<T> transformData(List<T> data)
+    {
+        if (mDataTransform == null)
+            return data;
+
+        if (data == null || data.isEmpty())
+            return data;
+
+        final List<T> listResult = new ArrayList<>(data.size());
+        for (T item : data)
+        {
+            final T transform = transformData(item);
+            listResult.add(transform);
+        }
+        return listResult;
+    }
+
+    private T transformData(T data)
+    {
+        if (mDataTransform == null)
+            return data;
+
+        final T transform = mDataTransform.transform(data);
+        if (transform == null)
+            return data;
+
+        return transform;
     }
 }

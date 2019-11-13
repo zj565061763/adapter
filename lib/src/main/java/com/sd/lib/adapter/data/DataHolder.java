@@ -18,6 +18,13 @@ public interface DataHolder<T>
      */
     void removeDataChangeCallback(DataChangeCallback<T> callback);
 
+    /**
+     * 设置数据转换器
+     *
+     * @param transform
+     */
+    void setDataTransform(DataTransform<T> transform);
+
     //---------- modify start ----------
 
     /**
@@ -36,12 +43,21 @@ public interface DataHolder<T>
     boolean addData(T data);
 
     /**
+     * {@link #addAllData(List)}
+     *
+     * @param list
+     * @return
+     */
+    @Deprecated
+    boolean addData(List<T> list);
+
+    /**
      * 在末尾添加数据
      *
      * @param list
      * @return
      */
-    boolean addData(List<T> list);
+    boolean addAllData(List<T> list);
 
     /**
      * 在index位置添加数据
@@ -52,13 +68,23 @@ public interface DataHolder<T>
     void addData(int index, T data);
 
     /**
+     * {@link #addAllData(int, List)}
+     *
+     * @param index
+     * @param list
+     * @return
+     */
+    @Deprecated
+    boolean addData(int index, List<T> list);
+
+    /**
      * 在index位置添加数据
      *
      * @param index
      * @param list
      * @return
      */
-    boolean addData(int index, List<T> list);
+    boolean addAllData(int index, List<T> list);
 
     /**
      * 移除数据
@@ -161,5 +187,21 @@ public interface DataHolder<T>
          * @param data
          */
         void onDataRemoved(int index, T data);
+    }
+
+    /**
+     * 数据转换器
+     *
+     * @param <T>
+     */
+    interface DataTransform<T>
+    {
+        /**
+         * 转换数据
+         *
+         * @param source
+         * @return null-不进行转换
+         */
+        T transform(T source);
     }
 }
