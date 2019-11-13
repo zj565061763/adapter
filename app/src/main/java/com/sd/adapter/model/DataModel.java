@@ -6,7 +6,6 @@ import java.util.List;
 /**
  * Created by Administrator on 2018/3/19.
  */
-
 public class DataModel
 {
     public String name;

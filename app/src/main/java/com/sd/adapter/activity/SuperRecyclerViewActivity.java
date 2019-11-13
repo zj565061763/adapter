@@ -7,10 +7,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sd.adapter.R;
-import com.sd.adapter.model.DataModel;
+import com.sd.adapter.model.SuperDataModel;
 import com.sd.adapter.viewholder.ButtonViewHolder;
 import com.sd.adapter.viewholder.TextViewViewHolder;
 import com.sd.lib.adapter.FSuperRecyclerAdapter;
+import com.sd.lib.adapter.data.DataHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,30 +35,37 @@ public class SuperRecyclerViewActivity extends AppCompatActivity
         mAdapter.registerViewHolder(TextViewViewHolder.class);
         mAdapter.registerViewHolder(ButtonViewHolder.class);
 
+        // 设置数据转换器
+        mAdapter.getDataHolder().setDataTransform(new DataHolder.DataTransform<Object>()
+        {
+            @Override
+            public Object transform(Object source)
+            {
+                if (source instanceof SuperDataModel)
+                {
+                    final SuperDataModel model = (SuperDataModel) source;
+                    if (model.index % 2 == 0)
+                        return new ButtonViewHolder.Model().transform(model);
+                    else
+                        return new TextViewViewHolder.Model().transform(model);
+                }
+
+                return null;
+            }
+        });
+
         fillData();
     }
 
-    /**
-     * 设置数据给Adapter
-     */
     private void fillData()
     {
-        final List<Object> listData = new ArrayList<>();
+        final List<Object> list = new ArrayList<>();
         for (int i = 0; i < 100; i++)
         {
-            final DataModel dataModel = new DataModel();
-            dataModel.name = String.valueOf(i);
-            if (i % 2 == 0)
-            {
-                final Object transformModel = new TextViewViewHolder.Model().transform(dataModel);
-                listData.add(transformModel);
-            } else
-            {
-                final Object transformModel = new ButtonViewHolder.Model().transform(dataModel);
-                listData.add(transformModel);
-            }
+            final SuperDataModel model = new SuperDataModel();
+            model.index = i;
+            list.add(model);
         }
-
-        mAdapter.getDataHolder().setData(listData);
+        mAdapter.getDataHolder().setData(list);
     }
 }
