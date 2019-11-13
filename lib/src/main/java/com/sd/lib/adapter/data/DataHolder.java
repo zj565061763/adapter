@@ -32,7 +32,7 @@ public interface DataHolder<T>
      *
      * @param list
      */
-    void setData(List<T> list);
+    void setData(List<? extends T> list);
 
     /**
      * 在末尾添加数据
@@ -57,7 +57,7 @@ public interface DataHolder<T>
      * @param list
      * @return
      */
-    boolean addAllData(List<T> list);
+    boolean addAllData(List<? extends T> list);
 
     /**
      * 在index位置添加数据
@@ -84,7 +84,7 @@ public interface DataHolder<T>
      * @param list
      * @return
      */
-    boolean addAllData(int index, List<T> list);
+    boolean addAllData(int index, List<? extends T> list);
 
     /**
      * 移除数据

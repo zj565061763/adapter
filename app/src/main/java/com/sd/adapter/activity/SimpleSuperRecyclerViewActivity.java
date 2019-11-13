@@ -48,6 +48,6 @@ public class SimpleSuperRecyclerViewActivity extends Activity
         });
 
         // 设置数据
-        mAdapter.getDataHolder().setData(DataModel.get(100));
+        mAdapter.getDataHolder().setData(DataModel.get(20));
     }
 }

@@ -39,21 +39,21 @@ public class ListDataHolder<T> implements DataHolder<T>
     //---------- modify start ----------
 
     @Override
-    public void setData(List<T> list)
+    public void setData(List<? extends T> list)
     {
         if (list != null)
         {
-            list = transformData(list);
-            mListData = list;
+            mListData = transformData(list);
         } else
         {
             mListData = new ArrayList<>();
         }
 
+        final List<T> listCopy = new ArrayList<>(mListData);
         final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
         while (it.hasPrevious())
         {
-            it.previous().onDataChanged(list);
+            it.previous().onDataChanged(listCopy);
         }
     }
 
@@ -68,13 +68,13 @@ public class ListDataHolder<T> implements DataHolder<T>
         final int index = size();
         final boolean result = mListData.add(data);
 
-        final List<T> list = new ArrayList<>(1);
-        list.add(data);
+        final List<T> listCopy = new ArrayList<>(1);
+        listCopy.add(data);
 
         final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
         while (it.hasPrevious())
         {
-            it.previous().onDataAdded(index, list);
+            it.previous().onDataAdded(index, listCopy);
         }
 
         return result;
@@ -87,7 +87,7 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
-    public boolean addAllData(List<T> list)
+    public boolean addAllData(List<? extends T> list)
     {
         if (list == null || list.isEmpty())
             return false;
@@ -97,10 +97,11 @@ public class ListDataHolder<T> implements DataHolder<T>
         final int index = size();
         final boolean result = mListData.addAll(list);
 
+        final List<T> listCopy = new ArrayList<>(list);
         final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
         while (it.hasPrevious())
         {
-            it.previous().onDataAdded(index, list);
+            it.previous().onDataAdded(index, listCopy);
         }
 
         return result;
@@ -132,7 +133,7 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
-    public boolean addAllData(int index, List<T> list)
+    public boolean addAllData(int index, List<? extends T> list)
     {
         if (list == null || list.isEmpty())
             return false;
@@ -140,10 +141,11 @@ public class ListDataHolder<T> implements DataHolder<T>
         list = transformData(list);
         final boolean result = mListData.addAll(index, list);
 
+        final List<T> listCopy = new ArrayList<>(list);
         final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
         while (it.hasPrevious())
         {
-            it.previous().onDataAdded(index, list);
+            it.previous().onDataAdded(index, listCopy);
         }
 
         return result;
@@ -223,13 +225,13 @@ public class ListDataHolder<T> implements DataHolder<T>
         return mListData;
     }
 
-    private List<T> transformData(List<T> data)
+    private List<T> transformData(List<? extends T> data)
     {
         if (mDataTransform == null)
-            return data;
+            return (List<T>) data;
 
         if (data == null || data.isEmpty())
-            return data;
+            return (List<T>) data;
 
         final List<T> listResult = new ArrayList<>(data.size());
         for (T item : data)

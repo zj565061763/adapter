@@ -13,9 +13,6 @@ import com.sd.adapter.viewholder.TextViewViewHolder;
 import com.sd.lib.adapter.FSuperRecyclerAdapter;
 import com.sd.lib.adapter.data.DataHolder;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SuperRecyclerViewActivity extends AppCompatActivity
 {
     private RecyclerView mRecyclerView;
@@ -54,18 +51,6 @@ public class SuperRecyclerViewActivity extends AppCompatActivity
             }
         });
 
-        fillData();
-    }
-
-    private void fillData()
-    {
-        final List<Object> list = new ArrayList<>();
-        for (int i = 0; i < 100; i++)
-        {
-            final SuperDataModel model = new SuperDataModel();
-            model.index = i;
-            list.add(model);
-        }
-        mAdapter.getDataHolder().setData(list);
+        mAdapter.getDataHolder().setData(SuperDataModel.get(100));
     }
 }
