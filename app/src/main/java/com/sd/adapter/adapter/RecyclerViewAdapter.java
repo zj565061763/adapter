@@ -6,8 +6,8 @@ import android.widget.TextView;
 
 import com.sd.adapter.R;
 import com.sd.adapter.model.DataModel;
-import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 import com.sd.lib.adapter.FSimpleRecyclerAdapter;
+import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 
 public class RecyclerViewAdapter extends FSimpleRecyclerAdapter<DataModel>
 {
@@ -31,7 +31,7 @@ public class RecyclerViewAdapter extends FSimpleRecyclerAdapter<DataModel>
             @Override
             public void onClick(View v)
             {
-                notifyItemClickCallback(model, v);
+                getCallbackHolder().notifyItemClickCallback(model, v);
             }
         });
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener()
@@ -39,7 +39,7 @@ public class RecyclerViewAdapter extends FSimpleRecyclerAdapter<DataModel>
             @Override
             public boolean onLongClick(View v)
             {
-                return notifyItemLongClickCallback(model, v);
+                return getCallbackHolder().notifyItemLongClickCallback(model, v);
             }
         });
     }
