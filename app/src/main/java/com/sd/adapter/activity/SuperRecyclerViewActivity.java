@@ -31,8 +31,8 @@ public class SuperRecyclerViewActivity extends AppCompatActivity
         mRecyclerView.setAdapter(mAdapter);
 
         // 注册ViewHolder
-        mAdapter.registerViewHolder(TextViewViewHolder.class);
         mAdapter.registerViewHolder(ButtonViewHolder.class);
+        mAdapter.registerViewHolder(TextViewViewHolder.class);
 
         fillData();
     }
