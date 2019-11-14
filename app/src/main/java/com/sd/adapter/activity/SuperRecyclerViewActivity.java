@@ -19,6 +19,8 @@ import java.util.List;
 
 public class SuperRecyclerViewActivity extends AppCompatActivity
 {
+    public static final String TAG = SuperRecyclerViewActivity.class.getSimpleName();
+
     private RecyclerView mRecyclerView;
     private final FSuperRecyclerAdapter<Object> mAdapter = new FSuperRecyclerAdapter<>();
 
