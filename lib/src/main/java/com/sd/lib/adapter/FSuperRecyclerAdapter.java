@@ -27,7 +27,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
      * @param clazz
      * @param <T>
      */
-    public <T extends FSuperRecyclerViewHolder> void registerViewHolder(Class<T> clazz)
+    public final <T extends FSuperRecyclerViewHolder> void registerViewHolder(Class<T> clazz)
     {
         registerViewHolder(clazz, null);
     }
@@ -39,7 +39,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
      * @param viewHolderCallback
      * @param <T>
      */
-    public <T extends FSuperRecyclerViewHolder> void registerViewHolder(Class<T> clazz, ViewHolderCallback<T> viewHolderCallback)
+    public final <T extends FSuperRecyclerViewHolder> void registerViewHolder(Class<T> clazz, ViewHolderCallback<T> viewHolderCallback)
     {
         final ASuperViewHolder annotation = getAnnotation(clazz);
 
@@ -81,7 +81,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
      *
      * @return
      */
-    public ViewHolderFactory getViewHolderFactory()
+    public final ViewHolderFactory getViewHolderFactory()
     {
         if (mViewHolderFactory == null)
             mViewHolderFactory = new DefaultViewHolderFactory();
@@ -93,7 +93,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
      *
      * @param viewHolderFactory
      */
-    public void setViewHolderFactory(ViewHolderFactory viewHolderFactory)
+    public final void setViewHolderFactory(ViewHolderFactory viewHolderFactory)
     {
         mViewHolderFactory = viewHolderFactory;
     }
@@ -181,7 +181,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
         }
     }
 
-    public static class ViewHolderInfo
+    public static final class ViewHolderInfo
     {
         public final Class<? extends FSuperRecyclerViewHolder> mClass;
         public final int mLayoutId;
