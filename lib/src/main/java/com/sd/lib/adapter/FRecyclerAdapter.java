@@ -119,7 +119,8 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     @Override
     public final void onBindViewHolder(FRecyclerViewHolder<T> holder, int position, List<Object> payloads)
     {
-        onBindViewHolderInternal(holder, position, true);
+        final boolean isUpdate = payloads != null && payloads.size() > 0;
+        onBindViewHolderInternal(holder, position, isUpdate);
     }
 
     @Override
