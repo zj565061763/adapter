@@ -27,7 +27,8 @@ public class ButtonViewHolder extends FSuperRecyclerViewHolder<ButtonViewHolder.
     @Override
     public void onBindData(int position, ButtonViewHolder.Model model)
     {
-        btn_content.setText((model.getSource().name));
+        final DataModel dataModel = model.getSource();
+        btn_content.setText(dataModel.name);
     }
 
     /**

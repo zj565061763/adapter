@@ -27,7 +27,8 @@ public class TextViewViewHolder extends FSuperRecyclerViewHolder<TextViewViewHol
     @Override
     public void onBindData(int position, TextViewViewHolder.Model model)
     {
-        tv_content.setText(model.getSource().name);
+        final DataModel dataModel = model.getSource();
+        tv_content.setText(dataModel.name);
     }
 
     /**
