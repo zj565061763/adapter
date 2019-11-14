@@ -2,6 +2,7 @@ package com.sd.lib.adapter;
 
 import android.content.Context;
 
+import com.sd.lib.adapter.callback.CallbackHolder;
 import com.sd.lib.adapter.data.DataHolder;
 import com.sd.lib.adapter.data.ListDataHolder;
 
@@ -12,6 +13,8 @@ public class AdapterProxy<T> implements Adapter<T>
     private Context mContext;
     private DataHolder<T> mDataHolder;
     private NotifyDataChangeMode mNotifyDataChangeMode = NotifyDataChangeMode.Smart;
+
+    private CallbackHolder<T> mCallbackHolder;
 
     private final Callback mCallback;
 
@@ -119,6 +122,14 @@ public class AdapterProxy<T> implements Adapter<T>
             });
         }
         return mDataHolder;
+    }
+
+    @Override
+    public CallbackHolder<T> getCallbackHolder()
+    {
+        if (mCallbackHolder == null)
+            mCallbackHolder = new CallbackHolder<>();
+        return mCallbackHolder;
     }
 
     public interface Callback

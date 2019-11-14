@@ -2,6 +2,7 @@ package com.sd.lib.adapter;
 
 import android.content.Context;
 
+import com.sd.lib.adapter.callback.CallbackHolder;
 import com.sd.lib.adapter.data.DataHolder;
 
 public interface Adapter<T>
@@ -45,6 +46,13 @@ public interface Adapter<T>
      * @return
      */
     DataHolder<T> getDataHolder();
+
+    /**
+     * 回调持有者有对象
+     *
+     * @return
+     */
+    CallbackHolder<T> getCallbackHolder();
 
     enum NotifyDataChangeMode
     {

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
+import com.sd.lib.adapter.callback.CallbackHolder;
 import com.sd.lib.adapter.callback.ItemClickCallback;
 import com.sd.lib.adapter.callback.ItemLongClickCallback;
 import com.sd.lib.adapter.data.DataHolder;
@@ -38,31 +39,34 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements Adapter<T>
     }
 
     /**
-     * 设置item点击回调
+     * {@link #getCallbackHolder()}
      *
      * @param itemClickCallback
      */
+    @Deprecated
     public void setItemClickCallback(ItemClickCallback<T> itemClickCallback)
     {
         mItemClickCallback = itemClickCallback;
     }
 
     /**
-     * 设置item长按回调
+     * {@link #getCallbackHolder()}
      *
      * @param itemLongClickCallback
      */
+    @Deprecated
     public void setItemLongClickCallback(ItemLongClickCallback<T> itemLongClickCallback)
     {
         mItemLongClickCallback = itemLongClickCallback;
     }
 
     /**
-     * 通知item点击回调
+     * {@link #getCallbackHolder()}
      *
      * @param item
      * @param view
      */
+    @Deprecated
     public final void notifyItemClickCallback(T item, View view)
     {
         if (mItemClickCallback != null)
@@ -73,12 +77,13 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements Adapter<T>
     }
 
     /**
-     * 通知item长按回调
+     * {@link #getCallbackHolder()}
      *
      * @param item
      * @param view
      * @return
      */
+    @Deprecated
     public final boolean notifyItemLongClickCallback(T item, View view)
     {
         if (mItemLongClickCallback != null)
@@ -248,6 +253,12 @@ public abstract class FBaseAdapter<T> extends BaseAdapter implements Adapter<T>
     public DataHolder<T> getDataHolder()
     {
         return getAdapterProxy().getDataHolder();
+    }
+
+    @Override
+    public CallbackHolder<T> getCallbackHolder()
+    {
+        return getAdapterProxy().getCallbackHolder();
     }
 
     //----------Adapter implements end----------

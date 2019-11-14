@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 
 import androidx.viewpager.widget.PagerAdapter;
 
+import com.sd.lib.adapter.callback.CallbackHolder;
 import com.sd.lib.adapter.callback.ItemClickCallback;
 import com.sd.lib.adapter.data.DataHolder;
 
@@ -78,11 +79,24 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements Adapter<T
         mArrCacheView.clear();
     }
 
+    /**
+     * {@link #getCallbackHolder()}
+     *
+     * @param itemClickCallback
+     */
+    @Deprecated
     public void setItemClickCallback(ItemClickCallback<T> itemClickCallback)
     {
         this.mItemClickCallback = itemClickCallback;
     }
 
+    /**
+     * {@link #getCallbackHolder()}
+     *
+     * @param item
+     * @param view
+     */
+    @Deprecated
     public final void notifyItemClickCallback(T item, View view)
     {
         if (mItemClickCallback != null)
@@ -197,6 +211,12 @@ public abstract class FPagerAdapter<T> extends PagerAdapter implements Adapter<T
     public DataHolder<T> getDataHolder()
     {
         return getAdapterProxy().getDataHolder();
+    }
+
+    @Override
+    public CallbackHolder<T> getCallbackHolder()
+    {
+        return getAdapterProxy().getCallbackHolder();
     }
 
     //----------Adapter implements end----------
