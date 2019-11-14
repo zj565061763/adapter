@@ -19,6 +19,8 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
     private final Map<Class<?>, ViewHolderInfo> mMapViewHolderInfo = new HashMap<>();
     private final Map<Integer, ViewHolderInfo> mMapTypeViewHolderInfo = new HashMap<>();
 
+    private ViewHolderFactory mViewHolderFactory;
+
     /**
      * 注册ViewHolder
      *
@@ -63,6 +65,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
 
         final int viewType = System.identityHashCode(modelClass);
         final ViewHolderInfo viewHolderInfo = new ViewHolderInfo(
+                clazz,
                 viewType,
                 layoutId,
                 constructor,
@@ -71,6 +74,28 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
 
         mMapViewHolderInfo.put(modelClass, viewHolderInfo);
         mMapTypeViewHolderInfo.put(viewType, viewHolderInfo);
+    }
+
+    /**
+     * {@link ViewHolderFactory}
+     *
+     * @return
+     */
+    public ViewHolderFactory getViewHolderFactory()
+    {
+        if (mViewHolderFactory == null)
+            mViewHolderFactory = new DefaultViewHolderFactory();
+        return mViewHolderFactory;
+    }
+
+    /**
+     * {@link ViewHolderFactory}
+     *
+     * @param viewHolderFactory
+     */
+    public void setViewHolderFactory(ViewHolderFactory viewHolderFactory)
+    {
+        mViewHolderFactory = viewHolderFactory;
     }
 
     @Override
@@ -89,17 +114,8 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
     public final FRecyclerViewHolder<T> onCreateVHolder(ViewGroup parent, int viewType)
     {
         final ViewHolderInfo viewHolderInfo = mMapTypeViewHolderInfo.get(viewType);
-        final View view = LayoutInflater.from(parent.getContext()).inflate(viewHolderInfo.mLayoutId, parent, false);
 
-        FSuperRecyclerViewHolder viewHolder = null;
-        try
-        {
-            viewHolder = (FSuperRecyclerViewHolder) viewHolderInfo.mConstructor.newInstance(view);
-        } catch (Exception e)
-        {
-            throw new RuntimeException("ViewHolder create failed: " + e);
-        }
-
+        final FSuperRecyclerViewHolder viewHolder = getViewHolderFactory().create(viewHolderInfo, parent);
         viewHolderInfo.notifyViewHolderCreated(viewHolder);
         return viewHolder;
     }
@@ -162,15 +178,18 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
         }
     }
 
-    private static class ViewHolderInfo
+    public static class ViewHolderInfo
     {
+        public final Class<? extends FSuperRecyclerViewHolder> mClass;
+        public final int mLayoutId;
+
         private final int mViewType;
-        private final int mLayoutId;
         private final Constructor<?> mConstructor;
         private final ViewHolderCallback mViewHolderCallback;
 
-        public ViewHolderInfo(int viewType, int layoutId, Constructor<?> constructor, ViewHolderCallback viewHolderCallback)
+        public ViewHolderInfo(Class<? extends FSuperRecyclerViewHolder> clazz, int viewType, int layoutId, Constructor<?> constructor, ViewHolderCallback viewHolderCallback)
         {
+            mClass = clazz;
             mViewType = viewType;
             mLayoutId = layoutId;
             mConstructor = constructor;
@@ -184,8 +203,39 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
         }
     }
 
+    private final class DefaultViewHolderFactory implements ViewHolderFactory
+    {
+        @Override
+        public FSuperRecyclerViewHolder create(ViewHolderInfo viewHolderInfo, ViewGroup parent)
+        {
+            final View view = LayoutInflater.from(parent.getContext()).inflate(viewHolderInfo.mLayoutId, parent, false);
+
+            FSuperRecyclerViewHolder viewHolder = null;
+            try
+            {
+                viewHolder = (FSuperRecyclerViewHolder) viewHolderInfo.mConstructor.newInstance(view);
+            } catch (Exception e)
+            {
+                throw new RuntimeException("ViewHolder create failed: " + e);
+            }
+            return viewHolder;
+        }
+    }
+
     public interface ViewHolderCallback<T extends FSuperRecyclerViewHolder>
     {
         void onCreated(T viewHolder);
+    }
+
+    public interface ViewHolderFactory
+    {
+        /**
+         * 创建ViewHolder
+         *
+         * @param viewHolderInfo
+         * @param parent
+         * @return
+         */
+        FSuperRecyclerViewHolder create(ViewHolderInfo viewHolderInfo, ViewGroup parent);
     }
 }
