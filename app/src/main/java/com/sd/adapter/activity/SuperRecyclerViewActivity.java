@@ -1,6 +1,7 @@
 package com.sd.adapter.activity;
 
 import android.os.Bundle;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +12,7 @@ import com.sd.adapter.model.DataModel;
 import com.sd.adapter.viewholder.ButtonViewHolder;
 import com.sd.adapter.viewholder.TextViewViewHolder;
 import com.sd.lib.adapter.FSuperRecyclerAdapter;
+import com.sd.lib.adapter.callback.OnItemClickCallback;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +34,24 @@ public class SuperRecyclerViewActivity extends AppCompatActivity
 
         // 注册ViewHolder
         mAdapter.registerViewHolder(ButtonViewHolder.class);
-        mAdapter.registerViewHolder(TextViewViewHolder.class);
+        mAdapter.registerViewHolder(TextViewViewHolder.class, new FSuperRecyclerAdapter.ViewHolderCallback<TextViewViewHolder>()
+        {
+            @Override
+            public void onCreated(TextViewViewHolder viewHolder)
+            {
+                viewHolder.getCallbackHolder().setOnItemClickCallback(new OnItemClickCallback<TextViewViewHolder.Model>()
+                {
+                    @Override
+                    public void onItemClick(TextViewViewHolder.Model item, View view)
+                    {
+                        /**
+                         * 移除数据
+                         */
+                        mAdapter.getDataHolder().removeData(item);
+                    }
+                });
+            }
+        });
 
         fillData();
     }
