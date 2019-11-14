@@ -2,6 +2,11 @@ package com.sd.lib.adapter.callback;
 
 import android.view.View;
 
+/**
+ * 回调持有对象
+ *
+ * @param <T>
+ */
 public class CallbackHolder<T>
 {
     private OnItemClickCallback<T> mOnItemClickCallback;

@@ -2,14 +2,30 @@ package com.sd.lib.adapter.viewholder;
 
 import android.view.View;
 
+import com.sd.lib.adapter.callback.CallbackHolder;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class FSuperRecyclerViewHolder<T> extends FRecyclerViewHolder<T>
 {
+    private CallbackHolder<T> mCallbackHolder;
+
     public FSuperRecyclerViewHolder(View itemView)
     {
         super(itemView);
+    }
+
+    /**
+     * {@link CallbackHolder}
+     *
+     * @return
+     */
+    public final CallbackHolder<T> getCallbackHolder()
+    {
+        if (mCallbackHolder == null)
+            mCallbackHolder = new CallbackHolder<>();
+        return mCallbackHolder;
     }
 
     public static abstract class Model<T>
