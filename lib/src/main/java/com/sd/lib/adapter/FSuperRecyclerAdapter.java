@@ -225,11 +225,24 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
         }
     }
 
+    /**
+     * ViewHolder回调
+     *
+     * @param <T>
+     */
     public interface ViewHolderCallback<T extends FSuperRecyclerViewHolder>
     {
+        /**
+         * ViewHolder被创建
+         *
+         * @param viewHolder
+         */
         void onCreated(T viewHolder);
     }
 
+    /**
+     * ViewHolder工厂
+     */
     public interface ViewHolderFactory
     {
         /**
