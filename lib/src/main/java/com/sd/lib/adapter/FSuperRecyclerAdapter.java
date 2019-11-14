@@ -116,6 +116,9 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
         final ViewHolderInfo viewHolderInfo = mMapTypeViewHolderInfo.get(viewType);
 
         final FSuperRecyclerViewHolder viewHolder = getViewHolderFactory().create(viewHolderInfo, parent);
+        if (viewHolder == null)
+            throw new RuntimeException(ViewHolderFactory.class.getSimpleName() + " create view holder null for:" + viewHolderInfo.mClass.getName());
+
         viewHolderInfo.notifyViewHolderCreated(viewHolder);
         return viewHolder;
     }
@@ -196,7 +199,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
             mViewHolderCallback = viewHolderCallback;
         }
 
-        public void notifyViewHolderCreated(FSuperRecyclerViewHolder viewHolder)
+        private void notifyViewHolderCreated(FSuperRecyclerViewHolder viewHolder)
         {
             if (mViewHolderCallback != null)
                 mViewHolderCallback.onCreated(viewHolder);
