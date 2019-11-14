@@ -104,7 +104,7 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
 
         final FRecyclerViewHolder<T> holder = onCreateVHolder(parent, viewType);
         holder.setAdapter(this);
-        holder.onCreate();
+        holder.notifyOnCreate();
 
         onViewHolderCreated(holder);
         return holder;
@@ -133,11 +133,11 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
 
         if (isUpdate)
         {
-            holder.onUpdateData(position, model);
+            holder.notifyOnUpdateData(position, model);
             onUpdateData(holder, position, model);
         } else
         {
-            holder.onBindData(position, model);
+            holder.notifyOnBindData(position, model);
             onBindData(holder, position, model);
         }
     }

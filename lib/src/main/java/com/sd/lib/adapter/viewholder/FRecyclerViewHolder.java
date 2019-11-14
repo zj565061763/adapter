@@ -11,6 +11,7 @@ import com.sd.lib.adapter.Adapter;
 public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
 {
     private Adapter<T> mAdapter;
+    private BindDataCallback<T> mBindDataCallback;
 
     public FRecyclerViewHolder(View itemView)
     {
@@ -47,9 +48,61 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
     }
 
     /**
+     * {@link BindDataCallback}
+     *
+     * @param bindDataCallback
+     */
+    public void setBindDataCallback(BindDataCallback<T> bindDataCallback)
+    {
+        mBindDataCallback = bindDataCallback;
+    }
+
+    /**
+     * 通知{@link #onCreate()}
+     */
+    public final void notifyOnCreate()
+    {
+        this.onCreate();
+    }
+
+    /**
+     * 通知{@link #onBindData(int, Object)}
+     *
+     * @param position
+     * @param model
+     */
+    public final void notifyOnBindData(int position, T model)
+    {
+        if (mBindDataCallback != null)
+        {
+            if (mBindDataCallback.onBindData(position, model, false))
+                return;
+        }
+
+        this.onBindData(position, model);
+    }
+
+    /**
+     * 通知{@link #onUpdateData(int, Object)}
+     *
+     * @param position
+     * @param model
+     */
+    public final void notifyOnUpdateData(int position, T model)
+    {
+        if (mBindDataCallback != null)
+        {
+            if (mBindDataCallback.onBindData(position, model, true))
+                return;
+        }
+
+        this.onUpdateData(position, model);
+    }
+
+    /**
      * 创建回调，用来初始化
      */
-    public abstract void onCreate();
+    protected abstract void onCreate();
 
     /**
      * 绑定数据
@@ -57,7 +110,7 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
      * @param position
      * @param model
      */
-    public abstract void onBindData(int position, T model);
+    protected abstract void onBindData(int position, T model);
 
     /**
      * 刷新item的时候触发，默认整个item重新绑定数据
@@ -65,8 +118,21 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
      * @param position
      * @param model
      */
-    public void onUpdateData(int position, T model)
+    protected void onUpdateData(int position, T model)
     {
         onBindData(position, model);
+    }
+
+    public interface BindDataCallback<T>
+    {
+        /**
+         * 绑定数据回调
+         *
+         * @param position
+         * @param model
+         * @param isUpdate
+         * @return true-不执行ViewHolder中的逻辑
+         */
+        boolean onBindData(int position, T model, boolean isUpdate);
     }
 }
