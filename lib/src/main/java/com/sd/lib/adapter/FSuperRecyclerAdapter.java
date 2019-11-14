@@ -1,5 +1,7 @@
 package com.sd.lib.adapter;
 
+import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,13 +45,13 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
     {
         final ASuperViewHolder annotation = getAnnotation(clazz);
 
-        final int layoutId = annotation.layoutId();
-        if (layoutId == 0)
-            throw new IllegalArgumentException(ASuperViewHolder.class.getSimpleName() + "'s layoutId == 0");
+        final String layoutName = annotation.layoutName();
+        if (TextUtils.isEmpty(layoutName))
+            throw new IllegalArgumentException(ASuperViewHolder.class.getSimpleName() + "'s layoutName is empty in " + clazz.getName());
 
         final Class<?> modelClass = getModelClass(clazz, annotation);
         if (modelClass == null)
-            throw new IllegalArgumentException("model class was not found in " + clazz.getSimpleName());
+            throw new IllegalArgumentException("model class was not found in " + clazz.getName());
 
         Constructor<?> constructor = null;
         try
@@ -67,7 +69,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
         final ViewHolderInfo viewHolderInfo = new ViewHolderInfo(
                 clazz,
                 viewType,
-                layoutId,
+                layoutName,
                 constructor,
                 viewHolderCallback
         );
@@ -117,7 +119,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
 
         final FSuperRecyclerViewHolder viewHolder = getViewHolderFactory().create(viewHolderInfo, parent);
         if (viewHolder == null)
-            throw new RuntimeException(ViewHolderFactory.class.getSimpleName() + " create view holder null for:" + viewHolderInfo.mClass.getName());
+            throw new RuntimeException(ViewHolderFactory.class.getSimpleName() + " create view holder null for:" + viewHolderInfo.mViewHolderClass.getName());
 
         viewHolderInfo.notifyViewHolderCreated(viewHolder);
         return viewHolder;
@@ -183,20 +185,44 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
 
     public static final class ViewHolderInfo
     {
-        public final Class<? extends FSuperRecyclerViewHolder> mClass;
-        public final int mLayoutId;
-
+        private final Class<? extends FSuperRecyclerViewHolder> mViewHolderClass;
         private final int mViewType;
+        private final String mLayoutName;
         private final Constructor<?> mConstructor;
         private final ViewHolderCallback mViewHolderCallback;
 
-        public ViewHolderInfo(Class<? extends FSuperRecyclerViewHolder> clazz, int viewType, int layoutId, Constructor<?> constructor, ViewHolderCallback viewHolderCallback)
+        private Integer mLayoutId = null;
+
+        public ViewHolderInfo(Class<? extends FSuperRecyclerViewHolder> clazz, int viewType, String layoutName, Constructor<?> constructor, ViewHolderCallback viewHolderCallback)
         {
-            mClass = clazz;
+            mViewHolderClass = clazz;
             mViewType = viewType;
-            mLayoutId = layoutId;
+            mLayoutName = layoutName;
             mConstructor = constructor;
             mViewHolderCallback = viewHolderCallback;
+        }
+
+        public Class<? extends FSuperRecyclerViewHolder> getViewHolderClass()
+        {
+            return mViewHolderClass;
+        }
+
+        public String getLayoutName()
+        {
+            return mLayoutName;
+        }
+
+        public int getLayoutId(Context context)
+        {
+            if (mLayoutId != null)
+                return mLayoutId;
+
+            final int layoutId = context.getResources().getIdentifier(mLayoutName, "layout", context.getPackageName());
+            if (layoutId == 0)
+                throw new RuntimeException("layout was not found:" + mLayoutName);
+
+            mLayoutId = layoutId;
+            return mLayoutId;
         }
 
         private void notifyViewHolderCreated(FSuperRecyclerViewHolder viewHolder)
@@ -211,7 +237,8 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
         @Override
         public FSuperRecyclerViewHolder create(ViewHolderInfo viewHolderInfo, ViewGroup parent)
         {
-            final View view = LayoutInflater.from(parent.getContext()).inflate(viewHolderInfo.mLayoutId, parent, false);
+            final int layoutId = viewHolderInfo.getLayoutId(parent.getContext());
+            final View view = LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false);
 
             FSuperRecyclerViewHolder viewHolder = null;
             try

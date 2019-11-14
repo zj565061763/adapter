@@ -8,7 +8,7 @@ import com.sd.adapter.model.DataModel;
 import com.sd.lib.adapter.annotation.ASuperViewHolder;
 import com.sd.lib.adapter.viewholder.FSuperRecyclerViewHolder;
 
-@ASuperViewHolder(layoutId = R.layout.item_super_button)
+@ASuperViewHolder(layoutName = "item_super_button")
 public class ButtonViewHolder extends FSuperRecyclerViewHolder<ButtonViewHolder.Model>
 {
     private Button btn_content;

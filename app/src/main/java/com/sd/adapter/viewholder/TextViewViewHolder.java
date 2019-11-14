@@ -8,7 +8,7 @@ import com.sd.adapter.model.DataModel;
 import com.sd.lib.adapter.annotation.ASuperViewHolder;
 import com.sd.lib.adapter.viewholder.FSuperRecyclerViewHolder;
 
-@ASuperViewHolder(layoutId = R.layout.item_super_textview)
+@ASuperViewHolder(layoutName = "item_super_textview")
 public class TextViewViewHolder extends FSuperRecyclerViewHolder<TextViewViewHolder.Model>
 {
     private TextView tv_content;

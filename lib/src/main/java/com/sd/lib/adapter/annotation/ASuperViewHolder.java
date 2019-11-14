@@ -10,11 +10,11 @@ import java.lang.annotation.Target;
 public @interface ASuperViewHolder
 {
     /**
-     * 布局id
+     * xml布局名称
      *
      * @return
      */
-    int layoutId();
+    String layoutName();
 
     /**
      * 实体类型
