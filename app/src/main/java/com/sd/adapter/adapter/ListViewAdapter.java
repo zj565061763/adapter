@@ -33,7 +33,7 @@ public class ListViewAdapter extends FSimpleAdapter<DataModel>
                 /**
                  * 通知回调对象
                  */
-                notifyItemClickCallback(model, v);
+                getCallbackHolder().notifyItemClickCallback(model, v);
             }
         });
         convertView.setOnLongClickListener(new View.OnLongClickListener()
@@ -44,7 +44,7 @@ public class ListViewAdapter extends FSimpleAdapter<DataModel>
                 /**
                  * 通知回调对象
                  */
-                return notifyItemLongClickCallback(model, v);
+                return getCallbackHolder().notifyItemLongClickCallback(model, v);
             }
         });
     }

@@ -8,8 +8,8 @@ import android.widget.ListView;
 import com.sd.adapter.R;
 import com.sd.adapter.adapter.ListViewAdapter;
 import com.sd.adapter.model.DataModel;
-import com.sd.lib.adapter.callback.ItemClickCallback;
-import com.sd.lib.adapter.callback.ItemLongClickCallback;
+import com.sd.lib.adapter.callback.OnItemClickCallback;
+import com.sd.lib.adapter.callback.OnItemLongClickCallback;
 
 /**
  * Created by Administrator on 2018/3/19.
@@ -27,10 +27,13 @@ public class ListViewActivity extends Activity
         mListView = findViewById(R.id.listview);
         mListView.setAdapter(mAdapter);
 
-        mAdapter.setItemClickCallback(new ItemClickCallback<DataModel>()
+        /**
+         * 点击回调
+         */
+        mAdapter.getCallbackHolder().setOnItemClickCallback(new OnItemClickCallback<DataModel>()
         {
             @Override
-            public void onItemClick(int position, DataModel item, View view)
+            public void onItemClick(DataModel item, View view)
             {
                 final DataModel model = new DataModel();
                 model.name = String.valueOf(mAdapter.getDataHolder().size());
@@ -41,10 +44,14 @@ public class ListViewActivity extends Activity
                 mAdapter.getDataHolder().addData(model);
             }
         });
-        mAdapter.setItemLongClickCallback(new ItemLongClickCallback<DataModel>()
+
+        /**
+         * 长按回调
+         */
+        mAdapter.getCallbackHolder().setOnItemLongClickCallback(new OnItemLongClickCallback<DataModel>()
         {
             @Override
-            public boolean onItemLongClick(int position, DataModel item, View view)
+            public boolean onItemLongClick(DataModel item, View view)
             {
                 /**
                  * 移除数据
@@ -53,6 +60,7 @@ public class ListViewActivity extends Activity
                 return false;
             }
         });
+
         /**
          * 设置数据
          */
