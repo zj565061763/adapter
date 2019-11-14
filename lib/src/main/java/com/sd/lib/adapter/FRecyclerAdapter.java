@@ -12,7 +12,6 @@ import com.sd.lib.adapter.callback.ItemLongClickCallback;
 import com.sd.lib.adapter.data.DataHolder;
 import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,7 +22,6 @@ import java.util.List;
 public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecyclerViewHolder<T>> implements Adapter<T>
 {
     private AdapterProxy<T> mAdapterProxy;
-    private final List<Object> mDefaultPayloads = new ArrayList<>();
 
     private ItemClickCallback<T> mItemClickCallback;
     private ItemLongClickCallback<T> mItemLongClickCallback;
@@ -182,6 +180,15 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
         {
             mAdapterProxy = new AdapterProxy<>(new AdapterProxy.Callback()
             {
+                private byte[] mDefaultPayload;
+
+                public byte[] getDefaultPayload()
+                {
+                    if (mDefaultPayload == null)
+                        mDefaultPayload = new byte[0];
+                    return mDefaultPayload;
+                }
+
                 @Override
                 public void onDataSetChanged()
                 {
@@ -191,7 +198,7 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
                 @Override
                 public void onItemRangeChanged(int index, int itemCount)
                 {
-                    FRecyclerAdapter.this.notifyItemRangeChanged(index, itemCount, mDefaultPayloads);
+                    FRecyclerAdapter.this.notifyItemRangeChanged(index, itemCount, getDefaultPayload());
                 }
 
                 @Override
