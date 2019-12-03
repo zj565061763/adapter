@@ -43,21 +43,12 @@ public interface DataHolder<T>
     boolean addData(T data);
 
     /**
-     * {@link #addAllData(List)}
-     *
-     * @param list
-     * @return
-     */
-    @Deprecated
-    boolean addData(List<T> list);
-
-    /**
      * 在末尾添加数据
      *
      * @param list
      * @return
      */
-    boolean addAllData(List<? extends T> list);
+    boolean addData(List<? extends T> list);
 
     /**
      * 在index位置添加数据
@@ -68,23 +59,13 @@ public interface DataHolder<T>
     void addData(int index, T data);
 
     /**
-     * {@link #addAllData(int, List)}
-     *
-     * @param index
-     * @param list
-     * @return
-     */
-    @Deprecated
-    boolean addData(int index, List<T> list);
-
-    /**
      * 在index位置添加数据
      *
      * @param index
      * @param list
      * @return
      */
-    boolean addAllData(int index, List<? extends T> list);
+    boolean addData(int index, List<? extends T> list);
 
     /**
      * 移除数据

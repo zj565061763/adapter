@@ -81,13 +81,7 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
-    public boolean addData(List<T> list)
-    {
-        return addAllData(list);
-    }
-
-    @Override
-    public boolean addAllData(List<? extends T> list)
+    public boolean addData(List<? extends T> list)
     {
         if (list == null || list.isEmpty())
             return false;
@@ -127,13 +121,7 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
-    public boolean addData(int index, List<T> list)
-    {
-        return addAllData(index, list);
-    }
-
-    @Override
-    public boolean addAllData(int index, List<? extends T> list)
+    public boolean addData(int index, List<? extends T> list)
     {
         if (list == null || list.isEmpty())
             return false;
