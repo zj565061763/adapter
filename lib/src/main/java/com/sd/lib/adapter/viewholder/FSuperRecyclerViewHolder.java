@@ -98,5 +98,27 @@ public abstract class FSuperRecyclerViewHolder<T> extends FRecyclerViewHolder<T>
             }
             return null;
         }
+
+        @Override
+        public boolean equals(Object obj)
+        {
+            if (obj == null)
+                return false;
+
+            if (obj == this)
+                return true;
+
+            if (obj.getClass() != getClass())
+                return false;
+
+            final Model<T> other = (Model<T>) obj;
+
+            return equals(getSource(), other.getSource());
+        }
+
+        private static boolean equals(Object a, Object b)
+        {
+            return (a == b) || (a != null && a.equals(b));
+        }
     }
 }
