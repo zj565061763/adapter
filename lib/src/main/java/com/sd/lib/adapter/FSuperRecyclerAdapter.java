@@ -57,6 +57,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
         try
         {
             constructor = clazz.getConstructor(View.class);
+            constructor.setAccessible(true);
         } catch (Exception e)
         {
             throw new IllegalArgumentException("Constructor with View params was not found");
