@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.sd.lib.adapter.annotation.ASuperViewHolder;
 import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 import com.sd.lib.adapter.viewholder.FSuperRecyclerViewHolder;
@@ -15,12 +17,15 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.WeakHashMap;
 
 public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
 {
-    private final Map<Class<?>, ViewHolderInfo> mMapViewHolderInfo = new HashMap<>();
+    private final Map<Class<?>, ViewHolderInfo> mMapModelViewHolderInfo = new HashMap<>();
     private final Map<Integer, ViewHolderInfo> mMapTypeViewHolderInfo = new HashMap<>();
     private boolean mSearchParentModel = true;
+
+    private final Map<RecyclerView.ViewHolder, ViewHolderInfo> mMapViewHolder = new WeakHashMap<>();
 
     private ViewHolderFactory mViewHolderFactory;
 
@@ -74,7 +79,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
             throw new IllegalArgumentException("Constructor with View params was not found");
         }
 
-        if (mMapViewHolderInfo.containsKey(modelClass))
+        if (mMapModelViewHolderInfo.containsKey(modelClass))
             throw new IllegalArgumentException("ViewHolder with model class " + modelClass.getName() + " has been registered:" + clazz);
 
         final int viewType = System.identityHashCode(modelClass);
@@ -86,7 +91,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
                 viewHolderCallback
         );
 
-        mMapViewHolderInfo.put(modelClass, viewHolderInfo);
+        mMapModelViewHolderInfo.put(modelClass, viewHolderInfo);
         mMapTypeViewHolderInfo.put(viewType, viewHolderInfo);
     }
 
@@ -117,19 +122,19 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
     {
         final Class<?> modelClass = getDataHolder().get(position).getClass();
 
-        ViewHolderInfo info = mMapViewHolderInfo.get(modelClass);
+        ViewHolderInfo info = mMapModelViewHolderInfo.get(modelClass);
         if (info == null)
         {
             if (mSearchParentModel)
             {
-                for (Map.Entry<Class<?>, ViewHolderInfo> item : mMapViewHolderInfo.entrySet())
+                for (Map.Entry<Class<?>, ViewHolderInfo> item : mMapModelViewHolderInfo.entrySet())
                 {
                     final Class<?> key = item.getKey();
                     final ViewHolderInfo value = item.getValue();
                     if (key.isAssignableFrom(modelClass))
                     {
                         info = value;
-                        mMapViewHolderInfo.put(modelClass, value);
+                        mMapModelViewHolderInfo.put(modelClass, value);
                         break;
                     }
                 }
@@ -151,8 +156,18 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
         if (viewHolder == null)
             throw new RuntimeException(ViewHolderFactory.class.getSimpleName() + " create view holder null for:" + viewHolderInfo.mViewHolderClass.getName());
 
-        viewHolderInfo.notifyViewHolderCreated(viewHolder);
+        mMapViewHolder.put(viewHolder, viewHolderInfo);
         return viewHolder;
+    }
+
+    @Override
+    protected void onViewHolderCreated(FRecyclerViewHolder<T> viewHolder)
+    {
+        super.onViewHolderCreated(viewHolder);
+
+        final ViewHolderInfo viewHolderInfo = mMapViewHolder.get(viewHolder);
+        if (viewHolderInfo != null)
+            viewHolderInfo.notifyViewHolderCreated((FSuperRecyclerViewHolder) viewHolder);
     }
 
     @Override
