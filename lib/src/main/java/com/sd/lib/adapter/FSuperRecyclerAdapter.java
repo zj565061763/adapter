@@ -20,8 +20,19 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
 {
     private final Map<Class<?>, ViewHolderInfo> mMapViewHolderInfo = new HashMap<>();
     private final Map<Integer, ViewHolderInfo> mMapTypeViewHolderInfo = new HashMap<>();
+    private boolean mSearchParentModel = true;
 
     private ViewHolderFactory mViewHolderFactory;
+
+    /**
+     * 如果集合中的实体未被注册，是否查找缓存中与之匹配的父类
+     *
+     * @param search
+     */
+    public void setSearchParentModel(boolean search)
+    {
+        mSearchParentModel = search;
+    }
 
     /**
      * 注册ViewHolder
@@ -106,7 +117,25 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
     {
         final Class<?> modelClass = getDataHolder().get(position).getClass();
 
-        final ViewHolderInfo info = mMapViewHolderInfo.get(modelClass);
+        ViewHolderInfo info = mMapViewHolderInfo.get(modelClass);
+        if (info == null)
+        {
+            if (mSearchParentModel)
+            {
+                for (Map.Entry<Class<?>, ViewHolderInfo> item : mMapViewHolderInfo.entrySet())
+                {
+                    final Class<?> key = item.getKey();
+                    final ViewHolderInfo value = item.getValue();
+                    if (key.isAssignableFrom(modelClass))
+                    {
+                        info = value;
+                        mMapViewHolderInfo.put(modelClass, value);
+                        break;
+                    }
+                }
+            }
+        }
+
         if (info == null)
             throw new RuntimeException("ViewHolder for model " + modelClass.getName() + " has not been registered");
 
