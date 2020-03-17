@@ -11,6 +11,7 @@ import com.sd.lib.adapter.Adapter;
 public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
 {
     private Adapter<T> mAdapter;
+    private T mModel;
     private BindDataCallback<T> mBindDataCallback;
 
     public FRecyclerViewHolder(View itemView)
@@ -57,6 +58,11 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
         mBindDataCallback = bindDataCallback;
     }
 
+    public T getModel()
+    {
+        return mModel;
+    }
+
     /**
      * 通知{@link #onCreate()}
      */
@@ -73,6 +79,7 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
      */
     public final void notifyOnBindData(int position, T model)
     {
+        mModel = model;
         if (mBindDataCallback != null)
         {
             if (mBindDataCallback.onBindData(position, model, false))
@@ -90,6 +97,7 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
      */
     public final void notifyOnUpdateData(int position, T model)
     {
+        mModel = model;
         if (mBindDataCallback != null)
         {
             if (mBindDataCallback.onBindData(position, model, true))
