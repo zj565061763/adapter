@@ -35,7 +35,6 @@ public class SuperRecyclerViewActivity extends AppCompatActivity
         mRecyclerView.setAdapter(mAdapter);
 
         // 注册ViewHolder
-        mAdapter.registerViewHolder(ButtonViewHolder.class);
         mAdapter.registerViewHolder(TextViewViewHolder.class, new FSuperRecyclerAdapter.ViewHolderCallback<TextViewViewHolder>()
         {
             @Override
@@ -46,14 +45,27 @@ public class SuperRecyclerViewActivity extends AppCompatActivity
                     @Override
                     public void onItemClick(TextViewViewHolder.Model item, View view)
                     {
-                        /**
-                         * 移除数据
-                         */
                         mAdapter.getDataHolder().removeData(item);
                     }
                 });
             }
         });
+        mAdapter.registerViewHolder(ButtonViewHolder.class, new FSuperRecyclerAdapter.ViewHolderCallback<ButtonViewHolder>()
+        {
+            @Override
+            public void onCreated(final ButtonViewHolder viewHolder)
+            {
+                viewHolder.btn_content.setOnClickListener(new View.OnClickListener()
+                {
+                    @Override
+                    public void onClick(View v)
+                    {
+                        mAdapter.getDataHolder().removeData(viewHolder.getModel());
+                    }
+                });
+            }
+        });
+
 
         fillData();
     }

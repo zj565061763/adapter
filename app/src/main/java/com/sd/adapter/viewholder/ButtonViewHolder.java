@@ -11,7 +11,7 @@ import com.sd.lib.adapter.viewholder.FSuperRecyclerViewHolder;
 @ASuperViewHolder(layoutName = "item_super_button")
 public class ButtonViewHolder extends FSuperRecyclerViewHolder<ButtonViewHolder.Model>
 {
-    private Button btn_content;
+    public Button btn_content;
 
     public ButtonViewHolder(View itemView)
     {
