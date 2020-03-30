@@ -165,7 +165,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
     {
         super.onViewHolderCreated(viewHolder);
 
-        final ViewHolderInfo viewHolderInfo = mMapViewHolder.get(viewHolder);
+        final ViewHolderInfo viewHolderInfo = mMapViewHolder.remove(viewHolder);
         if (viewHolderInfo != null)
             viewHolderInfo.notifyViewHolderCreated((FSuperRecyclerViewHolder) viewHolder);
     }
