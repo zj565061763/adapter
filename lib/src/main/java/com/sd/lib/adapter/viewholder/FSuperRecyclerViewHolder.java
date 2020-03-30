@@ -100,19 +100,24 @@ public abstract class FSuperRecyclerViewHolder<T> extends FRecyclerViewHolder<T>
         }
 
         @Override
+        public int hashCode()
+        {
+            return mSource != null ? mSource.hashCode() : super.hashCode();
+        }
+
+        @Override
         public boolean equals(Object obj)
         {
-            if (obj == null)
-                return false;
-
             if (obj == this)
                 return true;
+
+            if (obj == null)
+                return false;
 
             if (obj.getClass() != getClass())
                 return false;
 
             final Model<T> other = (Model<T>) obj;
-
             return equals(getSource(), other.getSource());
         }
 
