@@ -130,7 +130,19 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     private void onBindViewHolderInternal(FRecyclerViewHolder<T> holder, int position, boolean isUpdate)
     {
         final T model = getDataHolder().get(position);
+        dispatchBindData(holder, position, model, isUpdate);
+    }
 
+    /**
+     * 分发数据绑定
+     *
+     * @param holder
+     * @param position
+     * @param model
+     * @param isUpdate
+     */
+    protected void dispatchBindData(FRecyclerViewHolder<T> holder, int position, T model, boolean isUpdate)
+    {
         if (isUpdate)
         {
             holder.notifyOnUpdateData(position, model);
