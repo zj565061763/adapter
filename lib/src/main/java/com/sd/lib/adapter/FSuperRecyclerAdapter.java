@@ -17,7 +17,6 @@ import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.WeakHashMap;
 
 public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
 {
@@ -25,7 +24,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
     private final Map<Integer, ViewHolderInfo> mMapTypeViewHolderInfo = new HashMap<>();
     private boolean mSearchParentModel = true;
 
-    private final Map<RecyclerView.ViewHolder, ViewHolderInfo> mMapViewHolder = new WeakHashMap<>();
+    private final Map<RecyclerView.ViewHolder, ViewHolderInfo> mMapViewHolder = new HashMap<>();
 
     private ViewHolderFactory mViewHolderFactory;
 
@@ -151,6 +150,8 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
     public final FRecyclerViewHolder<T> onCreateVHolder(ViewGroup parent, int viewType)
     {
         final ViewHolderInfo viewHolderInfo = mMapTypeViewHolderInfo.get(viewType);
+        if (viewHolderInfo == null)
+            throw new NullPointerException(ViewHolderInfo.class.getSimpleName() + " for viewType " + viewType + " was not found");
 
         final FSuperRecyclerViewHolder viewHolder = getViewHolderFactory().create(viewHolderInfo, parent);
         if (viewHolder == null)
