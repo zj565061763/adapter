@@ -76,7 +76,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
             constructor.setAccessible(true);
         } catch (Exception e)
         {
-            throw new IllegalArgumentException("Constructor with View params was not found");
+            throw new IllegalArgumentException("Constructor with View params was not found in " + clazz);
         }
 
         if (mMapModelViewHolderInfo.containsKey(modelClass))
