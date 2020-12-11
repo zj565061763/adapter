@@ -21,8 +21,7 @@ public abstract class FSimpleRecyclerAdapter<T> extends FRecyclerAdapter<T>
     @Override
     public FRecyclerViewHolder<T> onCreateVHolder(ViewGroup parent, int viewType)
     {
-        final int layoutId = getLayoutId(parent, viewType);
-        final View itemView = LayoutInflater.from(getContext()).inflate(layoutId, parent, false);
+        final View itemView = onCreateItemView(parent, viewType);
         FRecyclerViewHolder<T> holder = new FRecyclerViewHolder<T>(itemView)
         {
             @Override
@@ -36,6 +35,13 @@ public abstract class FSimpleRecyclerAdapter<T> extends FRecyclerAdapter<T>
             }
         };
         return holder;
+    }
+
+    protected View onCreateItemView(ViewGroup parent, int viewType)
+    {
+        final int layoutId = getLayoutId(parent, viewType);
+        final View itemView = LayoutInflater.from(getContext()).inflate(layoutId, parent, false);
+        return itemView;
     }
 
     /**
