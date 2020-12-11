@@ -40,11 +40,27 @@ public abstract class FSimpleAdapter<T> extends FBaseAdapter<T>
         return null;
     }
 
-    public abstract int getLayoutId(int position, View convertView, ViewGroup parent);
-
     public void onInitItemView(int position, View convertView, ViewGroup parent)
     {
     }
 
+    /**
+     * 返回布局Id
+     *
+     * @param position
+     * @param convertView
+     * @param parent
+     * @return
+     */
+    public abstract int getLayoutId(int position, View convertView, ViewGroup parent);
+
+    /**
+     * 绑定数据
+     *
+     * @param position
+     * @param convertView
+     * @param parent
+     * @param model
+     */
     public abstract void onBindData(int position, View convertView, ViewGroup parent, T model);
 }
