@@ -118,10 +118,5 @@ public abstract class FSuperRecyclerViewHolder<T> extends FRecyclerViewHolder<T>
             final Model<T> other = (Model<T>) obj;
             return mSource.equals(other.mSource);
         }
-
-        private static boolean equals(Object a, Object b)
-        {
-            return (a == b) || (a != null && a.equals(b));
-        }
     }
 }
