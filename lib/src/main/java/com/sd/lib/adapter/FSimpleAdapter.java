@@ -31,7 +31,7 @@ public abstract class FSimpleAdapter<T> extends FBaseAdapter<T>
         return convertView;
     }
 
-    public View onCreateItemView(int position, View convertView, ViewGroup parent)
+    protected View onCreateItemView(int position, View convertView, ViewGroup parent)
     {
         final int layoutId = getLayoutId(position, convertView, parent);
         if (layoutId != 0)
@@ -40,7 +40,7 @@ public abstract class FSimpleAdapter<T> extends FBaseAdapter<T>
         return null;
     }
 
-    public void onInitItemView(int position, View convertView, ViewGroup parent)
+    protected void onInitItemView(int position, View convertView, ViewGroup parent)
     {
     }
 
