@@ -1,5 +1,7 @@
 package com.sd.adapter.adapter;
 
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -11,6 +13,8 @@ import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 
 public class RecyclerViewAdapter extends FSimpleRecyclerAdapter<DataModel>
 {
+    public static final String TAG = RecyclerViewAdapter.class.getSimpleName();
+
     @Override
     public int getLayoutId(ViewGroup parent, int viewType)
     {
@@ -42,5 +46,18 @@ public class RecyclerViewAdapter extends FSimpleRecyclerAdapter<DataModel>
                 return getCallbackHolder().notifyItemLongClickCallback(model, v);
             }
         });
+
+        getRecyclerView().removeCallbacks(mRunnable);
+        getRecyclerView().postDelayed(mRunnable, 2 * 1000);
     }
+
+    private final Runnable mRunnable = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            final String position = TextUtils.join(",", getAllViewHolder().keySet());
+            Log.i(TAG, "getAllViewHolder:" + position);
+        }
+    };
 }

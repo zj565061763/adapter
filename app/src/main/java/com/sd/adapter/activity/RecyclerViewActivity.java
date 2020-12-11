@@ -30,7 +30,7 @@ public class RecyclerViewActivity extends Activity
         setContentView(R.layout.act_recyclerview);
         mRecyclerView = findViewById(R.id.recyclerview);
 
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 3);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.setAdapter(mAdapter);
@@ -72,6 +72,6 @@ public class RecyclerViewActivity extends Activity
         /**
          * 设置数据
          */
-        mAdapter.getDataHolder().setData(DataModel.get(5));
+        mAdapter.getDataHolder().setData(DataModel.get(100));
     }
 }

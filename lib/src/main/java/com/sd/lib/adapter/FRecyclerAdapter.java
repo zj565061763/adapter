@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.sd.lib.adapter.callback.CallbackHolder;
@@ -12,7 +13,10 @@ import com.sd.lib.adapter.callback.ItemLongClickCallback;
 import com.sd.lib.adapter.data.DataHolder;
 import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * RecyclerView适配器
@@ -22,6 +26,9 @@ import java.util.List;
 public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecyclerViewHolder<T>> implements Adapter<T>
 {
     private AdapterProxy<T> mAdapterProxy;
+
+    private RecyclerView mRecyclerView;
+    private final Map<FRecyclerViewHolder<T>, String> mViewHolder = new ConcurrentHashMap<>();
 
     private ItemClickCallback<T> mItemClickCallback;
     private ItemLongClickCallback<T> mItemLongClickCallback;
@@ -33,6 +40,16 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     public FRecyclerAdapter(Context context)
     {
         setContext(context);
+    }
+
+    /**
+     * 返回适配器当前依附的RecyclerView
+     *
+     * @return
+     */
+    public RecyclerView getRecyclerView()
+    {
+        return mRecyclerView;
     }
 
     /**
@@ -182,6 +199,71 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     public void onUpdateData(FRecyclerViewHolder<T> holder, int position, T model)
     {
         onBindData(holder, position, model);
+    }
+
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView)
+    {
+        super.onAttachedToRecyclerView(recyclerView);
+        mRecyclerView = recyclerView;
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
+    {
+        super.onDetachedFromRecyclerView(recyclerView);
+        if (mRecyclerView == recyclerView)
+            mRecyclerView = null;
+    }
+
+    @Override
+    public void onViewAttachedToWindow(@NonNull FRecyclerViewHolder<T> holder)
+    {
+        super.onViewAttachedToWindow(holder);
+        mViewHolder.put(holder, "");
+    }
+
+    @Override
+    public void onViewDetachedFromWindow(@NonNull FRecyclerViewHolder<T> holder)
+    {
+        super.onViewDetachedFromWindow(holder);
+        mViewHolder.remove(holder);
+    }
+
+    /**
+     * 返回当前已经添加到UI上面的所有ViewHolder对象
+     *
+     * @return
+     */
+    public Map<Integer, FRecyclerViewHolder<T>> getAllViewHolder()
+    {
+        final Map<Integer, FRecyclerViewHolder<T>> map = new HashMap<>();
+        for (FRecyclerViewHolder<T> item : mViewHolder.keySet())
+        {
+            final int position = item.getAdapterPosition();
+            map.put(position, item);
+        }
+        return map;
+    }
+
+    /**
+     * 返回某个位置的ViewHolder
+     *
+     * @param position
+     * @return
+     */
+    public FRecyclerViewHolder<T> getViewHolder(int position)
+    {
+        if (position < 0)
+            return null;
+
+        for (FRecyclerViewHolder<T> item : mViewHolder.keySet())
+        {
+            final int adapterPosition = item.getAdapterPosition();
+            if (adapterPosition == position)
+                return item;
+        }
+        return null;
     }
 
     //----------Adapter implements start----------

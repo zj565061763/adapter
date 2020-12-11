@@ -11,6 +11,6 @@
         android:layout_height="wrap_content"
         android:background="@android:color/darker_gray"
         android:gravity="center"
-        android:minHeight="50dp" />
+        android:minHeight="200dp" />
 
 </LinearLayout>
