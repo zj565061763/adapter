@@ -30,7 +30,7 @@ public abstract class FSuperRecyclerViewHolder<T> extends FRecyclerViewHolder<T>
 
     public static abstract class Model<T>
     {
-        T mSource;
+        private T mSource;
 
         protected Model()
         {
