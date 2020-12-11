@@ -151,7 +151,7 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
     {
         final ViewHolderInfo viewHolderInfo = mMapTypeViewHolderInfo.get(viewType);
         if (viewHolderInfo == null)
-            throw new NullPointerException(ViewHolderInfo.class.getSimpleName() + " for viewType " + viewType + " was not found");
+            throw new RuntimeException(ViewHolderInfo.class.getSimpleName() + " for viewType " + viewType + " was not found");
 
         final FSuperRecyclerViewHolder viewHolder = getViewHolderFactory().create(viewHolderInfo, parent);
         if (viewHolder == null)
@@ -167,8 +167,10 @@ public class FSuperRecyclerAdapter<T> extends FRecyclerAdapter<T>
         super.onViewHolderCreated(viewHolder);
 
         final ViewHolderInfo viewHolderInfo = mMapViewHolder.remove(viewHolder);
-        if (viewHolderInfo != null)
-            viewHolderInfo.notifyViewHolderCreated((FSuperRecyclerViewHolder) viewHolder);
+        if (viewHolderInfo == null)
+            throw new RuntimeException(ViewHolderInfo.class.getSimpleName() + " for viewHolder " + viewHolder.getClass().getName());
+
+        viewHolderInfo.notifyViewHolderCreated((FSuperRecyclerViewHolder) viewHolder);
     }
 
     @Override
