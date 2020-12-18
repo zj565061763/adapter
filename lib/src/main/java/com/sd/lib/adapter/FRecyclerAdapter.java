@@ -26,8 +26,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecyclerViewHolder<T>> implements Adapter<T>
 {
     private AdapterProxy<T> mAdapterProxy;
-
-    private RecyclerView mRecyclerView;
     private final Map<FRecyclerViewHolder<T>, String> mViewHolder = new ConcurrentHashMap<>();
 
     private ItemClickCallback<T> mItemClickCallback;
@@ -40,16 +38,6 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     public FRecyclerAdapter(Context context)
     {
         setContext(context);
-    }
-
-    /**
-     * 返回适配器当前依附的RecyclerView
-     *
-     * @return
-     */
-    public RecyclerView getRecyclerView()
-    {
-        return mRecyclerView;
     }
 
     /**
@@ -199,21 +187,6 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     public void onUpdateData(FRecyclerViewHolder<T> holder, int position, T model)
     {
         onBindData(holder, position, model);
-    }
-
-    @Override
-    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView)
-    {
-        super.onAttachedToRecyclerView(recyclerView);
-        mRecyclerView = recyclerView;
-    }
-
-    @Override
-    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView)
-    {
-        super.onDetachedFromRecyclerView(recyclerView);
-        if (mRecyclerView == recyclerView)
-            mRecyclerView = null;
     }
 
     @Override
