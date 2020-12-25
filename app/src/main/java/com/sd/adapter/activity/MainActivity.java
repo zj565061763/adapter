@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btn_simple_super_recyclerview:
                 startActivity(new Intent(this, SimpleSuperRecyclerViewActivity.class));
                 break;
+            case R.id.btn_view_pager2:
+                startActivity(new Intent(this, ViewPager2Activity.class));
+                break;
             default:
                 break;
         }

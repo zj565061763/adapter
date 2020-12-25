@@ -21,6 +21,7 @@
         <activity android:name=".activity.RecyclerViewActivity" />
         <activity android:name=".activity.SuperRecyclerViewActivity" />
         <activity android:name=".activity.SimpleSuperRecyclerViewActivity" />
+        <activity android:name=".activity.ViewPager2Activity" />
 
     </application>
 

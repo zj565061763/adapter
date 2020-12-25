@@ -8,6 +8,18 @@ import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 
 public class FViewRecyclerAdapter extends FRecyclerAdapter<View>
 {
+    private boolean mIsMatchParent = false;
+
+    /**
+     * 设置宽高是否{@link ViewGroup.LayoutParams#MATCH_PARENT}
+     *
+     * @param matchParent
+     */
+    public void setMatchParent(boolean matchParent)
+    {
+        mIsMatchParent = matchParent;
+    }
+
     @Override
     public FRecyclerViewHolder<View> onCreateVHolder(ViewGroup parent, int viewType)
     {
@@ -39,6 +51,8 @@ public class FViewRecyclerAdapter extends FRecyclerAdapter<View>
     protected View onCreateItemView(ViewGroup parent, int viewType)
     {
         final FrameLayout frameLayout = new FrameLayout(parent.getContext());
+        if (mIsMatchParent)
+            frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return frameLayout;
     }
 }
