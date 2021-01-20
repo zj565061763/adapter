@@ -25,7 +25,7 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
         this(LayoutInflater.from(parent.getContext()).inflate(layoutId, parent, false));
     }
 
-    public void setAdapter(Adapter<T> adapter)
+    public final void setAdapter(Adapter<T> adapter)
     {
         mAdapter = adapter;
     }
@@ -35,18 +35,14 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
         return mAdapter;
     }
 
-    public final <V extends View> V findViewById(int id)
-    {
-        return itemView.findViewById(id);
-    }
-
     /**
-     * {@link #findViewById(int)}
+     * 返回ViewHolder最后一次绑定数据的实体对象
+     *
+     * @return
      */
-    @Deprecated
-    public final <V extends View> V get(int id)
+    public T getModel()
     {
-        return findViewById(id);
+        return mModel;
     }
 
     /**
@@ -59,9 +55,16 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
         mBindDataCallback = bindDataCallback;
     }
 
-    public T getModel()
+    /**
+     * 根据id从{@link #itemView}中查找View
+     *
+     * @param id
+     * @param <V>
+     * @return
+     */
+    public final <V extends View> V findViewById(int id)
     {
-        return mModel;
+        return itemView.findViewById(id);
     }
 
     /**
@@ -175,5 +178,14 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
          * @return true-不执行ViewHolder中的逻辑
          */
         boolean onBindData(int position, T model, boolean isUpdate);
+    }
+
+    /**
+     * {@link #findViewById(int)}
+     */
+    @Deprecated
+    public final <V extends View> V get(int id)
+    {
+        return findViewById(id);
     }
 }
