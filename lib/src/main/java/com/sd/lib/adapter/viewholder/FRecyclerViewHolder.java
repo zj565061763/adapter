@@ -66,9 +66,9 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
     /**
      * 通知{@link #onCreate()}
      */
-    public final void notifyOnCreate()
+    public final void notifyCreate()
     {
-        this.onCreate();
+        onCreate();
     }
 
     /**
@@ -77,7 +77,7 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
      * @param position
      * @param model
      */
-    public final void notifyOnBindData(int position, T model)
+    public final void notifyBindData(int position, T model)
     {
         mModel = model;
         if (mBindDataCallback != null)
@@ -86,7 +86,7 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
                 return;
         }
 
-        this.onBindData(position, model);
+        onBindData(position, model);
     }
 
     /**
@@ -95,7 +95,7 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
      * @param position
      * @param model
      */
-    public final void notifyOnUpdateData(int position, T model)
+    public final void notifyUpdateData(int position, T model)
     {
         mModel = model;
         if (mBindDataCallback != null)
