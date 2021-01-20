@@ -35,8 +35,10 @@ public class FViewRecyclerAdapter extends FRecyclerAdapter<View>
             public void onBindData(int position, View model)
             {
                 final ViewGroup viewGroup = (ViewGroup) this.itemView;
-                viewGroup.removeAllViews();
-                viewGroup.addView(model);
+                if (model.getParent() != viewGroup)
+                {
+                    viewGroup.addView(model);
+                }
             }
         };
         return holder;
@@ -48,7 +50,7 @@ public class FViewRecyclerAdapter extends FRecyclerAdapter<View>
 
     }
 
-    protected View onCreateItemView(ViewGroup parent, int viewType)
+    protected ViewGroup onCreateItemView(ViewGroup parent, int viewType)
     {
         final FrameLayout frameLayout = new FrameLayout(parent.getContext());
         if (mIsMatchParent)
