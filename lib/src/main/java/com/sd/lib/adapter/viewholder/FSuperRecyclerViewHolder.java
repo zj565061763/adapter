@@ -99,24 +99,51 @@ public abstract class FSuperRecyclerViewHolder<T> extends FRecyclerViewHolder<T>
             return null;
         }
 
+        /**
+         * {@link #hashCode()}和{@link #equals(Object)}是否考虑source
+         *
+         * @return
+         */
+        protected boolean compareSource()
+        {
+            return true;
+        }
+
         @Override
         public int hashCode()
         {
-            return mSource != null ? mSource.hashCode() : super.hashCode();
+            if (!compareSource())
+                return super.hashCode();
+
+            if (mSource == null)
+                return super.hashCode();
+
+            return mSource.hashCode();
         }
 
         @Override
         public boolean equals(Object obj)
         {
+            if (!compareSource())
+                return super.equals(obj);
+
             if (obj == this) return true;
             if (obj == null) return false;
-            if (obj.getClass() != getClass()) return false;
 
             if (mSource == null)
                 return super.equals(obj);
 
-            final Model<T> other = (Model<T>) obj;
-            return mSource.equals(other.mSource);
+            if (obj.getClass() == mSource.getClass())
+            {
+                return obj.equals(mSource);
+            } else if (obj.getClass() == getClass())
+            {
+                final Model<T> other = (Model<T>) obj;
+                return mSource.equals(other.mSource);
+            } else
+            {
+                return false;
+            }
         }
     }
 }
