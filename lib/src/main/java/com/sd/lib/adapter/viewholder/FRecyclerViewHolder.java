@@ -17,6 +17,7 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
     public FRecyclerViewHolder(View itemView)
     {
         super(itemView);
+        itemView.addOnAttachStateChangeListener(mOnAttachStateChangeListener);
     }
 
     public FRecyclerViewHolder(int layoutId, ViewGroup parent)
@@ -129,6 +130,38 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
     protected void onUpdateData(int position, T model)
     {
         onBindData(position, model);
+    }
+
+    /**
+     * {@link #itemView}添加移除状态回调
+     */
+    private final View.OnAttachStateChangeListener mOnAttachStateChangeListener = new View.OnAttachStateChangeListener()
+    {
+        @Override
+        public void onViewAttachedToWindow(View v)
+        {
+            onAttachedToWindow();
+        }
+
+        @Override
+        public void onViewDetachedFromWindow(View v)
+        {
+            onDetachedFromWindow();
+        }
+    };
+
+    /**
+     * {@link #itemView}被添加到界面上
+     */
+    protected void onAttachedToWindow()
+    {
+    }
+
+    /**
+     * {@link #itemView}从界面上被移除
+     */
+    protected void onDetachedFromWindow()
+    {
     }
 
     public interface BindDataCallback<T>
