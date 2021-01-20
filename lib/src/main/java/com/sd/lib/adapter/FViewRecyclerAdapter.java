@@ -2,6 +2,7 @@ package com.sd.lib.adapter;
 
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewParent;
 import android.widget.FrameLayout;
 
 import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
@@ -37,6 +38,7 @@ public class FViewRecyclerAdapter extends FRecyclerAdapter<View>
                 final ViewGroup viewGroup = (ViewGroup) this.itemView;
                 if (model.getParent() != viewGroup)
                 {
+                    removeView(model);
                     viewGroup.addView(model);
                 }
             }
@@ -56,5 +58,20 @@ public class FViewRecyclerAdapter extends FRecyclerAdapter<View>
         if (mIsMatchParent)
             frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         return frameLayout;
+    }
+
+    private static void removeView(final View view)
+    {
+        final ViewParent viewParent = view.getParent();
+        if (viewParent instanceof ViewGroup)
+        {
+            try
+            {
+                final ViewGroup viewGroup = (ViewGroup) viewParent;
+                viewGroup.removeView(view);
+            } catch (Exception e)
+            {
+            }
+        }
     }
 }
