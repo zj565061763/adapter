@@ -193,14 +193,16 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     public void onViewAttachedToWindow(@NonNull FRecyclerViewHolder<T> holder)
     {
         super.onViewAttachedToWindow(holder);
-        mViewHolder.put(holder, "");
+        if (holder instanceof FRecyclerViewHolder)
+            mViewHolder.put(holder, "");
     }
 
     @Override
     public void onViewDetachedFromWindow(@NonNull FRecyclerViewHolder<T> holder)
     {
         super.onViewDetachedFromWindow(holder);
-        mViewHolder.remove(holder);
+        if (holder instanceof FRecyclerViewHolder)
+            mViewHolder.remove(holder);
     }
 
     /**
