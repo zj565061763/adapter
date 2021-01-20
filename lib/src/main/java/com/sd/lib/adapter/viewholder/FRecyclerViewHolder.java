@@ -46,25 +46,6 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
     }
 
     /**
-     * 刷新ViewHolder
-     *
-     * @return true-通知刷新成功
-     */
-    public boolean notifyViewHolderChanged()
-    {
-        final int position = getAdapterPosition();
-        if (position == RecyclerView.NO_POSITION)
-            return false;
-
-        final Adapter<T> adapter = getAdapter();
-        if (adapter == null)
-            return false;
-
-        adapter.notifyItemViewChanged(position);
-        return true;
-    }
-
-    /**
      * {@link BindDataCallback}
      *
      * @param bindDataCallback
@@ -84,6 +65,25 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
     public final <V extends View> V findViewById(int id)
     {
         return itemView.findViewById(id);
+    }
+
+    /**
+     * 刷新ViewHolder
+     *
+     * @return true-通知刷新成功
+     */
+    public boolean notifyViewHolderChanged()
+    {
+        final int position = getAdapterPosition();
+        if (position == RecyclerView.NO_POSITION)
+            return false;
+
+        final Adapter<T> adapter = getAdapter();
+        if (adapter == null)
+            return false;
+
+        adapter.notifyItemViewChanged(position);
+        return true;
     }
 
     /**
