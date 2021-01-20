@@ -135,7 +135,7 @@ public abstract class FSuperRecyclerViewHolder<T> extends FRecyclerViewHolder<T>
 
             if (obj.getClass() == mSource.getClass())
             {
-                return obj.equals(mSource);
+                return mSource.equals(obj);
             } else if (obj.getClass() == getClass())
             {
                 final Model<T> other = (Model<T>) obj;
