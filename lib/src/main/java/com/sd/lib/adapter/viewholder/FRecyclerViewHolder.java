@@ -47,16 +47,21 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
 
     /**
      * 刷新ViewHolder
+     *
+     * @return true-通知刷新成功
      */
-    public void notifyViewHolderChanged()
+    public boolean notifyViewHolderChanged()
     {
         final int position = getAdapterPosition();
         if (position == RecyclerView.NO_POSITION)
-            return;
+            return false;
 
         final Adapter<T> adapter = getAdapter();
-        if (adapter != null)
-            adapter.notifyItemViewChanged(position);
+        if (adapter == null)
+            return false;
+
+        adapter.notifyItemViewChanged(position);
+        return true;
     }
 
     /**
