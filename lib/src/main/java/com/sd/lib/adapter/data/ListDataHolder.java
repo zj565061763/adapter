@@ -204,7 +204,17 @@ public class ListDataHolder<T> implements DataHolder<T>
     @Override
     public int indexOf(Object data)
     {
-        return mListData.indexOf(data);
+        if (data == null || mListData.isEmpty())
+            return -1;
+
+        final List<T> list = new ArrayList<>(mListData);
+        for (int i = 0; i < list.size(); i++)
+        {
+            final T item = list.get(i);
+            if (item != null && item.equals(data))
+                return i;
+        }
+        return -1;
     }
 
     @Override
