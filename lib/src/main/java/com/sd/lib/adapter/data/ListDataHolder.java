@@ -142,7 +142,7 @@ public class ListDataHolder<T> implements DataHolder<T>
     @Override
     public boolean removeData(T data)
     {
-        final int position = mListData.indexOf(data);
+        final int position = indexOf(data);
         return removeData(position) != null;
     }
 
