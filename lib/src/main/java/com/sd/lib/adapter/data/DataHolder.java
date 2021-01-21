@@ -122,7 +122,7 @@ public interface DataHolder<T>
      * @param data
      * @return
      */
-    int indexOf(T data);
+    int indexOf(Object data);
 
     /**
      * 获得数据集

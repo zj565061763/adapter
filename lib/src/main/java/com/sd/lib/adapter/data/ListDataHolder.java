@@ -202,7 +202,7 @@ public class ListDataHolder<T> implements DataHolder<T>
     }
 
     @Override
-    public int indexOf(T data)
+    public int indexOf(Object data)
     {
         return mListData.indexOf(data);
     }
