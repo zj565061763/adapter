@@ -127,11 +127,11 @@ public abstract class FSuperRecyclerViewHolder<T> extends FRecyclerViewHolder<T>
             if (!compareSource())
                 return super.equals(obj);
 
-            if (obj == this) return true;
-            if (obj == null) return false;
-
             if (mSource == null)
                 return super.equals(obj);
+
+            if (obj == this) return true;
+            if (obj == null) return false;
 
             if (obj.getClass() == mSource.getClass())
             {
