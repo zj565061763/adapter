@@ -206,6 +206,17 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     }
 
     /**
+     * 刷新ViewHolder
+     */
+    public void refreshViewHolder()
+    {
+        for (FRecyclerViewHolder<T> item : mViewHolder.keySet())
+        {
+            item.refreshData();
+        }
+    }
+
+    /**
      * 返回当前已经添加到UI上面的所有ViewHolder对象
      *
      * @return

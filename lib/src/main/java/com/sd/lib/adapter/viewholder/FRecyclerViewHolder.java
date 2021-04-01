@@ -131,6 +131,13 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
     }
 
     /**
+     * 刷新数据
+     */
+    public void refreshData()
+    {
+    }
+
+    /**
      * 创建回调，用来初始化
      */
     protected abstract void onCreate();
