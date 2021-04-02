@@ -13,6 +13,8 @@ import com.sd.lib.adapter.callback.ItemLongClickCallback;
 import com.sd.lib.adapter.data.DataHolder;
 import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -208,6 +210,7 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
     /**
      * 刷新ViewHolder
      */
+    @Deprecated
     public void refreshViewHolder()
     {
         for (FRecyclerViewHolder<T> item : mViewHolder.keySet())
@@ -250,6 +253,27 @@ public abstract class FRecyclerAdapter<T> extends RecyclerView.Adapter<FRecycler
                 return item;
         }
         return null;
+    }
+
+    /**
+     * 返回指定类型的ViewHolder
+     *
+     * @param clazz
+     * @param <T>
+     * @return
+     */
+    public <T extends FRecyclerViewHolder> Collection<T> getViewHolder(Class<T> clazz)
+    {
+        final List<T> list = new ArrayList<>();
+        if (clazz != null)
+        {
+            for (FRecyclerViewHolder item : mViewHolder.keySet())
+            {
+                if (item.getClass() == clazz)
+                    list.add((T) item);
+            }
+        }
+        return list;
     }
 
     //----------Adapter implements start----------

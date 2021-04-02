@@ -133,6 +133,7 @@ public abstract class FRecyclerViewHolder<T> extends RecyclerView.ViewHolder
     /**
      * 刷新数据
      */
+    @Deprecated
     public void refreshData()
     {
     }
