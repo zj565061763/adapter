@@ -1,11 +1,11 @@
-package com.sd.adapter.viewholder;
+package com.sd.demo.adapter.viewholder;
 
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
-import com.sd.adapter.R;
-import com.sd.adapter.model.DataModel;
+import com.sd.demo.adapter.R;
+import com.sd.demo.adapter.model.DataModel;
 import com.sd.lib.adapter.annotation.ASuperViewHolder;
 import com.sd.lib.adapter.viewholder.FSuperRecyclerViewHolder;
 

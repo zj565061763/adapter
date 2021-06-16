@@ -1,4 +1,4 @@
-package com.sd.adapter.activity;
+package com.sd.demo.adapter.activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,10 +7,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.sd.adapter.R;
-import com.sd.adapter.model.DataModel;
-import com.sd.adapter.viewholder.ButtonViewHolder;
-import com.sd.adapter.viewholder.TextViewViewHolder;
+import com.sd.demo.adapter.R;
+import com.sd.demo.adapter.model.DataModel;
+import com.sd.demo.adapter.viewholder.ButtonViewHolder;
+import com.sd.demo.adapter.viewholder.TextViewViewHolder;
 import com.sd.lib.adapter.FSuperRecyclerAdapter;
 import com.sd.lib.adapter.callback.OnItemClickCallback;
 

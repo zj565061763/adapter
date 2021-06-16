@@ -1,4 +1,4 @@
-package com.sd.adapter.adapter;
+package com.sd.demo.adapter.adapter;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.sd.adapter.R;
-import com.sd.adapter.model.DataModel;
+import com.sd.demo.adapter.R;
+import com.sd.demo.adapter.model.DataModel;
 import com.sd.lib.adapter.FSimpleRecyclerAdapter;
 import com.sd.lib.adapter.viewholder.FRecyclerViewHolder;
 

@@ -1,37 +1,29 @@
-package com.sd.adapter.activity;
+package com.sd.demo.adapter.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ListView;
 
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import com.sd.adapter.R;
-import com.sd.adapter.adapter.RecyclerViewAdapter;
-import com.sd.adapter.model.DataModel;
+import com.sd.demo.adapter.R;
+import com.sd.demo.adapter.adapter.ListViewAdapter;
+import com.sd.demo.adapter.model.DataModel;
 import com.sd.lib.adapter.callback.OnItemClickCallback;
 import com.sd.lib.adapter.callback.OnItemLongClickCallback;
 
 /**
  * Created by Administrator on 2018/3/19.
  */
-public class RecyclerViewActivity extends Activity {
-    public static final String TAG = RecyclerViewActivity.class.getSimpleName();
-
-    private RecyclerView mRecyclerView;
-    private RecyclerViewAdapter mAdapter = new RecyclerViewAdapter();
+public class ListViewActivity extends Activity {
+    private ListView mListView;
+    private ListViewAdapter mAdapter = new ListViewAdapter();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.act_recyclerview);
-        mRecyclerView = findViewById(R.id.recyclerview);
-
-        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
-        layoutManager.setOrientation(RecyclerView.VERTICAL);
-        mRecyclerView.setLayoutManager(layoutManager);
-        mRecyclerView.setAdapter(mAdapter);
+        setContentView(R.layout.act_listview);
+        mListView = findViewById(R.id.listview);
+        mListView.setAdapter(mAdapter);
 
         /**
          * 点击回调
@@ -66,6 +58,6 @@ public class RecyclerViewActivity extends Activity {
         /**
          * 设置数据
          */
-        mAdapter.getDataHolder().setData(DataModel.get(100));
+        mAdapter.getDataHolder().setData(DataModel.get(5));
     }
 }

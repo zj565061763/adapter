@@ -1,4 +1,4 @@
-package com.sd.adapter.activity;
+package com.sd.demo.adapter.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sd.adapter.R;
+import com.sd.demo.adapter.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     @Override

@@ -1,4 +1,4 @@
-package com.sd.adapter.activity;
+package com.sd.demo.adapter.activity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.sd.adapter.databinding.ActViewPager2Binding;
+import com.sd.demo.adapter.databinding.ActViewPager2Binding;
 import com.sd.lib.adapter.FViewRecyclerAdapter;
 
 import java.util.ArrayList;

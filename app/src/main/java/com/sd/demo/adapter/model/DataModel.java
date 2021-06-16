@@ -1,4 +1,4 @@
-package com.sd.adapter.model;
+package com.sd.demo.adapter.model;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 30
     defaultConfig {
-        applicationId "com.sd.adapter"
+        applicationId "com.sd.demo.adapter"
         minSdkVersion 15
         targetSdkVersion 30
         versionCode 1
