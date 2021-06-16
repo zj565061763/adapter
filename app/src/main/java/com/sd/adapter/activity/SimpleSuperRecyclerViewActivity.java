@@ -16,14 +16,12 @@ import com.sd.lib.adapter.FSuperRecyclerAdapter;
 /**
  * Created by Administrator on 2018/3/19.
  */
-public class SimpleSuperRecyclerViewActivity extends Activity
-{
+public class SimpleSuperRecyclerViewActivity extends Activity {
     private RecyclerView mRecyclerView;
     private final FSuperRecyclerAdapter<DataModel> mAdapter = new FSuperRecyclerAdapter<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_recyclerview);
         mRecyclerView = findViewById(R.id.recyclerview);
@@ -31,16 +29,12 @@ public class SimpleSuperRecyclerViewActivity extends Activity
         mRecyclerView.setAdapter(mAdapter);
 
         // 注册ViewHolder
-        mAdapter.registerViewHolder(SimpleSuperViewHolder.class, new FSuperRecyclerAdapter.ViewHolderCallback<SimpleSuperViewHolder>()
-        {
+        mAdapter.registerViewHolder(SimpleSuperViewHolder.class, new FSuperRecyclerAdapter.ViewHolderCallback<SimpleSuperViewHolder>() {
             @Override
-            public void onCreated(final SimpleSuperViewHolder viewHolder)
-            {
-                viewHolder.itemView.setOnClickListener(new View.OnClickListener()
-                {
+            public void onCreated(final SimpleSuperViewHolder viewHolder) {
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v)
-                    {
+                    public void onClick(View v) {
                         Toast.makeText(SimpleSuperRecyclerViewActivity.this, "click:" + viewHolder.getAdapterPosition(), Toast.LENGTH_SHORT).show();
                     }
                 });

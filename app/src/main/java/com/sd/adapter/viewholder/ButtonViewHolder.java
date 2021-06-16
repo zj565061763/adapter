@@ -9,24 +9,20 @@ import com.sd.lib.adapter.annotation.ASuperViewHolder;
 import com.sd.lib.adapter.viewholder.FSuperRecyclerViewHolder;
 
 @ASuperViewHolder(layoutName = "item_super_button")
-public class ButtonViewHolder extends FSuperRecyclerViewHolder<ButtonViewHolder.Model>
-{
+public class ButtonViewHolder extends FSuperRecyclerViewHolder<ButtonViewHolder.Model> {
     public Button btn_content;
 
-    public ButtonViewHolder(View itemView)
-    {
+    public ButtonViewHolder(View itemView) {
         super(itemView);
     }
 
     @Override
-    public void onCreate()
-    {
+    public void onCreate() {
         btn_content = findViewById(R.id.btn_content);
     }
 
     @Override
-    public void onBindData(int position, ButtonViewHolder.Model model)
-    {
+    public void onBindData(int position, ButtonViewHolder.Model model) {
         final DataModel dataModel = model.getSource();
         btn_content.setText(dataModel.name);
     }
@@ -34,7 +30,6 @@ public class ButtonViewHolder extends FSuperRecyclerViewHolder<ButtonViewHolder.
     /**
      * ViewHolder对应的实体
      */
-    public static class Model extends FSuperRecyclerViewHolder.Model<DataModel>
-    {
+    public static class Model extends FSuperRecyclerViewHolder.Model<DataModel> {
     }
 }

@@ -8,20 +8,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.sd.adapter.R;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener
-{
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
     }
 
     @Override
-    public void onClick(View v)
-    {
-        switch (v.getId())
-        {
+    public void onClick(View v) {
+        switch (v.getId()) {
             case R.id.btn_listview:
                 startActivity(new Intent(this, ListViewActivity.class));
                 break;

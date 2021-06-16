@@ -16,16 +16,14 @@ import com.sd.lib.adapter.callback.OnItemLongClickCallback;
 /**
  * Created by Administrator on 2018/3/19.
  */
-public class RecyclerViewActivity extends Activity
-{
+public class RecyclerViewActivity extends Activity {
     public static final String TAG = RecyclerViewActivity.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
     private RecyclerViewAdapter mAdapter = new RecyclerViewAdapter();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_recyclerview);
         mRecyclerView = findViewById(R.id.recyclerview);
@@ -38,11 +36,9 @@ public class RecyclerViewActivity extends Activity
         /**
          * 点击回调
          */
-        mAdapter.getCallbackHolder().setOnItemClickCallback(new OnItemClickCallback<DataModel>()
-        {
+        mAdapter.getCallbackHolder().setOnItemClickCallback(new OnItemClickCallback<DataModel>() {
             @Override
-            public void onItemClick(DataModel item, View view)
-            {
+            public void onItemClick(DataModel item, View view) {
                 final DataModel model = new DataModel();
                 model.name = String.valueOf(mAdapter.getDataHolder().size());
 
@@ -56,11 +52,9 @@ public class RecyclerViewActivity extends Activity
         /**
          * 长按回调
          */
-        mAdapter.getCallbackHolder().setOnItemLongClickCallback(new OnItemLongClickCallback<DataModel>()
-        {
+        mAdapter.getCallbackHolder().setOnItemLongClickCallback(new OnItemLongClickCallback<DataModel>() {
             @Override
-            public boolean onItemLongClick(DataModel item, View view)
-            {
+            public boolean onItemLongClick(DataModel item, View view) {
                 /**
                  * 移除数据
                  */

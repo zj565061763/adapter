@@ -17,16 +17,14 @@ import com.sd.lib.adapter.callback.OnItemClickCallback;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SuperRecyclerViewActivity extends AppCompatActivity
-{
+public class SuperRecyclerViewActivity extends AppCompatActivity {
     public static final String TAG = SuperRecyclerViewActivity.class.getSimpleName();
 
     private RecyclerView mRecyclerView;
     private final FSuperRecyclerAdapter<Object> mAdapter = new FSuperRecyclerAdapter<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_super_recyclerview);
         mRecyclerView = findViewById(R.id.recyclerview);
@@ -35,31 +33,23 @@ public class SuperRecyclerViewActivity extends AppCompatActivity
         mRecyclerView.setAdapter(mAdapter);
 
         // 注册ViewHolder
-        mAdapter.registerViewHolder(TextViewViewHolder.class, new FSuperRecyclerAdapter.ViewHolderCallback<TextViewViewHolder>()
-        {
+        mAdapter.registerViewHolder(TextViewViewHolder.class, new FSuperRecyclerAdapter.ViewHolderCallback<TextViewViewHolder>() {
             @Override
-            public void onCreated(TextViewViewHolder viewHolder)
-            {
-                viewHolder.getCallbackHolder().setOnItemClickCallback(new OnItemClickCallback<TextViewViewHolder.Model>()
-                {
+            public void onCreated(TextViewViewHolder viewHolder) {
+                viewHolder.getCallbackHolder().setOnItemClickCallback(new OnItemClickCallback<TextViewViewHolder.Model>() {
                     @Override
-                    public void onItemClick(TextViewViewHolder.Model item, View view)
-                    {
+                    public void onItemClick(TextViewViewHolder.Model item, View view) {
                         mAdapter.getDataHolder().removeData(item);
                     }
                 });
             }
         });
-        mAdapter.registerViewHolder(ButtonViewHolder.class, new FSuperRecyclerAdapter.ViewHolderCallback<ButtonViewHolder>()
-        {
+        mAdapter.registerViewHolder(ButtonViewHolder.class, new FSuperRecyclerAdapter.ViewHolderCallback<ButtonViewHolder>() {
             @Override
-            public void onCreated(final ButtonViewHolder viewHolder)
-            {
-                viewHolder.btn_content.setOnClickListener(new View.OnClickListener()
-                {
+            public void onCreated(final ButtonViewHolder viewHolder) {
+                viewHolder.btn_content.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v)
-                    {
+                    public void onClick(View v) {
                         mAdapter.getDataHolder().removeData(viewHolder.getModel());
                     }
                 });
@@ -70,20 +60,16 @@ public class SuperRecyclerViewActivity extends AppCompatActivity
         fillData();
     }
 
-    private void fillData()
-    {
+    private void fillData() {
         final List<Object> listModel = new ArrayList<>();
-        for (int i = 0; i < 100; i++)
-        {
+        for (int i = 0; i < 100; i++) {
             final DataModel model = new DataModel();
             model.name = String.valueOf(i);
 
-            if (i % 2 == 0)
-            {
+            if (i % 2 == 0) {
                 final Object viewHolderModel = new ButtonViewHolder.Model().transform(model);
                 listModel.add(viewHolderModel);
-            } else
-            {
+            } else {
                 final Object viewHolderModel = new TextViewViewHolder.Model().transform(model);
                 listModel.add(viewHolderModel);
             }

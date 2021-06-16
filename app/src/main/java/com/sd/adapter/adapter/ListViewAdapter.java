@@ -8,11 +8,9 @@ import com.sd.adapter.R;
 import com.sd.adapter.model.DataModel;
 import com.sd.lib.adapter.FSimpleAdapter;
 
-public class ListViewAdapter extends FSimpleAdapter<DataModel>
-{
+public class ListViewAdapter extends FSimpleAdapter<DataModel> {
     @Override
-    public int getLayoutId(int position, View convertView, ViewGroup parent)
-    {
+    public int getLayoutId(int position, View convertView, ViewGroup parent) {
         /**
          * 返回item布局
          */
@@ -20,27 +18,22 @@ public class ListViewAdapter extends FSimpleAdapter<DataModel>
     }
 
     @Override
-    public void onBindData(int position, View convertView, ViewGroup parent, final DataModel model)
-    {
+    public void onBindData(int position, View convertView, ViewGroup parent, final DataModel model) {
         final TextView tv_content = get(R.id.tv_content, convertView);
         tv_content.setText(model.name);
 
-        convertView.setOnClickListener(new View.OnClickListener()
-        {
+        convertView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 /**
                  * 通知回调对象
                  */
                 getCallbackHolder().notifyItemClickCallback(model, v);
             }
         });
-        convertView.setOnLongClickListener(new View.OnLongClickListener()
-        {
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public boolean onLongClick(View v)
-            {
+            public boolean onLongClick(View v) {
                 /**
                  * 通知回调对象
                  */

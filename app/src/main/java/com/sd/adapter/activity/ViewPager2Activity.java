@@ -13,14 +13,12 @@ import com.sd.lib.adapter.FViewRecyclerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ViewPager2Activity extends AppCompatActivity
-{
+public class ViewPager2Activity extends AppCompatActivity {
     private ActViewPager2Binding mBinding;
     private final FViewRecyclerAdapter mAdapter = new FViewRecyclerAdapter();
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState)
-    {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mBinding = ActViewPager2Binding.inflate(getLayoutInflater());
         setContentView(mBinding.getRoot());
@@ -29,8 +27,7 @@ public class ViewPager2Activity extends AppCompatActivity
         mBinding.viewPager.setAdapter(mAdapter);
 
         List<View> list = new ArrayList<>();
-        for (int i = 0; i < 100; i++)
-        {
+        for (int i = 0; i < 100; i++) {
             final Button button = new Button(this);
             button.setText(String.valueOf(i));
             list.add(button);
