@@ -228,7 +228,6 @@ public class ListDataHolder<T> implements DataHolder<T> {
         if (transform == null) {
             return data;
         }
-
         return transform;
     }
 
