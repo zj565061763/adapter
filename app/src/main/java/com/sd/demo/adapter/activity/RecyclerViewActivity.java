@@ -30,6 +30,7 @@ public class RecyclerViewActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.act_recyclerview);
         mRecyclerView = findViewById(R.id.recyclerview);
 
         final GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
