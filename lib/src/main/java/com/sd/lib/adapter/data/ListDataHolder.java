@@ -85,11 +85,11 @@ public class ListDataHolder<T> implements DataHolder<T> {
             return;
         }
 
-        data = transformData(data);
-        mListData.add(index, data);
+        final T transform = transformData(data);
+        mListData.add(index, transform);
 
         final List<T> listCopy = new ArrayList<>(1);
-        listCopy.add(data);
+        listCopy.add(transform);
         foreachCallback(new ForeachCallback<DataChangeCallback<T>>() {
             @Override
             public void onNext(DataChangeCallback<T> item) {
