@@ -167,13 +167,15 @@ public class ListDataHolder<T> implements DataHolder<T> {
             return;
         }
 
-        data = transformData(data);
-        mListData.set(index, data);
+        final T transform = transformData(data);
+        mListData.set(index, transform);
 
-        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
-        while (it.hasPrevious()) {
-            it.previous().onDataChanged(index, data);
-        }
+        foreachCallback(new ForeachCallback<DataChangeCallback<T>>() {
+            @Override
+            public void onNext(DataChangeCallback<T> item) {
+                item.onDataChanged(index, transform);
+            }
+        });
     }
 
     //---------- modify end ----------
