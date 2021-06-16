@@ -23,5 +23,9 @@ public class ExampleInstrumentedTest {
         Assert.assertEquals(2, dataHolder.size());
         Assert.assertEquals("0", dataHolder.get(0).name);
         Assert.assertEquals("1", dataHolder.get(1).name);
+
+        Assert.assertEquals("1", dataHolder.removeData(1).name);
+        Assert.assertEquals(true, dataHolder.removeData(new TestModel("0")));
+        Assert.assertEquals(0, dataHolder.size());
     }
 }
