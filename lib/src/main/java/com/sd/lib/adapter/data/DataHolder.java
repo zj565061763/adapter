@@ -87,6 +87,8 @@ public interface DataHolder<T> {
      */
     List<T> getData();
 
+    //---------- Deprecated start ----------
+
     /**
      * {@link #add(Object)}
      */
@@ -128,6 +130,8 @@ public interface DataHolder<T> {
      */
     @Deprecated
     void updateData(int index, T data);
+
+    //---------- Deprecated end ----------
 
     /**
      * 数据变化回调
