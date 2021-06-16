@@ -104,12 +104,11 @@ public class ListDataHolder<T> implements DataHolder<T> {
             return false;
         }
 
-        list = transformDataList(list);
-
+        final List<T> transform = transformDataList(list);
         final int index = size();
-        final boolean result = mListData.addAll(list);
+        final boolean result = mListData.addAll(transform);
 
-        final List<T> listCopy = new ArrayList<>(list);
+        final List<T> listCopy = new ArrayList<>(transform);
         foreachCallback(new ForeachCallback<DataChangeCallback<T>>() {
             @Override
             public void onNext(DataChangeCallback<T> item) {
@@ -125,10 +124,10 @@ public class ListDataHolder<T> implements DataHolder<T> {
             return false;
         }
 
-        list = transformDataList(list);
-        final boolean result = mListData.addAll(index, list);
+        final List<T> transform = transformDataList(list);
+        final boolean result = mListData.addAll(index, transform);
 
-        final List<T> listCopy = new ArrayList<>(list);
+        final List<T> listCopy = new ArrayList<>(transform);
         foreachCallback(new ForeachCallback<DataChangeCallback<T>>() {
             @Override
             public void onNext(DataChangeCallback<T> item) {
