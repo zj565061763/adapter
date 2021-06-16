@@ -11,16 +11,16 @@ public class ListDataHolder<T> implements DataHolder<T> {
 
     @Override
     public void addDataChangeCallback(DataChangeCallback<T> callback) {
-        if (callback == null || mListDataChangeCallback.contains(callback)) {
-            return;
+        if (callback != null) {
+            mListDataChangeCallback.add(callback);
         }
-
-        mListDataChangeCallback.add(callback);
     }
 
     @Override
     public void removeDataChangeCallback(DataChangeCallback<T> callback) {
-        mListDataChangeCallback.remove(callback);
+        if (callback != null) {
+            mListDataChangeCallback.remove(callback);
+        }
     }
 
     @Override
