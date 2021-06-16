@@ -53,5 +53,9 @@ public class ExampleInstrumentedTest {
         Assert.assertEquals("2", dataHolder.get(3).name);
         Assert.assertEquals("0", dataHolder.get(4).name);
         Assert.assertEquals("1", dataHolder.get(5).name);
+
+        // test updateData
+        dataHolder.updateData(1, new TestModel("update"));
+        Assert.assertEquals("update", dataHolder.get(1).name);
     }
 }
