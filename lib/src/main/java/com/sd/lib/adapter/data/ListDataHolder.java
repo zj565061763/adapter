@@ -64,13 +64,12 @@ public class ListDataHolder<T> implements DataHolder<T> {
             return false;
         }
 
-        data = transformData(data);
-
+        final T transform = transformData(data);
         final int index = size();
-        final boolean result = mListData.add(data);
+        final boolean result = mListData.add(transform);
 
         final List<T> listCopy = new ArrayList<>(1);
-        listCopy.add(data);
+        listCopy.add(transform);
         foreachCallback(new ForeachCallback<DataChangeCallback<T>>() {
             @Override
             public void onNext(DataChangeCallback<T> item) {
