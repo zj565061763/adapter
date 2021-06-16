@@ -44,7 +44,7 @@ public class ListDataHolder<T> implements DataHolder<T> {
     @Override
     public void setData(List<? extends T> list) {
         if (list != null) {
-            mListData = transformData(list);
+            mListData = transformDataList(list);
         } else {
             mListData = new ArrayList<>();
         }
@@ -104,7 +104,7 @@ public class ListDataHolder<T> implements DataHolder<T> {
             return false;
         }
 
-        list = transformData(list);
+        list = transformDataList(list);
 
         final int index = size();
         final boolean result = mListData.addAll(list);
@@ -125,7 +125,7 @@ public class ListDataHolder<T> implements DataHolder<T> {
             return false;
         }
 
-        list = transformData(list);
+        list = transformDataList(list);
         final boolean result = mListData.addAll(index, list);
 
         final List<T> listCopy = new ArrayList<>(list);
@@ -219,7 +219,7 @@ public class ListDataHolder<T> implements DataHolder<T> {
         return mListData;
     }
 
-    private List<T> transformData(List<? extends T> data) {
+    private List<T> transformDataList(List<? extends T> data) {
         if (mDataTransform == null) {
             return (List<T>) data;
         }
@@ -242,7 +242,6 @@ public class ListDataHolder<T> implements DataHolder<T> {
         if (mDataTransform == null) {
             return data;
         }
-
         final T transform = mDataTransform.transform(data);
         return transform != null ? transform : data;
     }
