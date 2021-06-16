@@ -32,6 +32,13 @@ public class ListDataHolder<T> implements DataHolder<T> {
         return mListDataChangeCallback.listIterator(mListDataChangeCallback.size());
     }
 
+    private void foreachCallback(ForeachCallback<DataChangeCallback<T>> callback) {
+        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
+        while (it.hasPrevious()) {
+            callback.onNext(it.previous());
+        }
+    }
+
     //---------- modify start ----------
 
     @Override
@@ -43,10 +50,12 @@ public class ListDataHolder<T> implements DataHolder<T> {
         }
 
         final List<T> listCopy = new ArrayList<>(mListData);
-        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
-        while (it.hasPrevious()) {
-            it.previous().onDataChanged(listCopy);
-        }
+        foreachCallback(new ForeachCallback<DataChangeCallback<T>>() {
+            @Override
+            public void onNext(DataChangeCallback<T> item) {
+                item.onDataChanged(listCopy);
+            }
+        });
     }
 
     @Override
@@ -62,11 +71,12 @@ public class ListDataHolder<T> implements DataHolder<T> {
 
         final List<T> listCopy = new ArrayList<>(1);
         listCopy.add(data);
-
-        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
-        while (it.hasPrevious()) {
-            it.previous().onDataAdded(index, listCopy);
-        }
+        foreachCallback(new ForeachCallback<DataChangeCallback<T>>() {
+            @Override
+            public void onNext(DataChangeCallback<T> item) {
+                item.onDataAdded(index, listCopy);
+            }
+        });
         return result;
     }
 
@@ -79,13 +89,14 @@ public class ListDataHolder<T> implements DataHolder<T> {
         data = transformData(data);
         mListData.add(index, data);
 
-        final List<T> list = new ArrayList<>(1);
-        list.add(data);
-
-        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
-        while (it.hasPrevious()) {
-            it.previous().onDataAdded(index, list);
-        }
+        final List<T> listCopy = new ArrayList<>(1);
+        listCopy.add(data);
+        foreachCallback(new ForeachCallback<DataChangeCallback<T>>() {
+            @Override
+            public void onNext(DataChangeCallback<T> item) {
+                item.onDataAdded(index, listCopy);
+            }
+        });
     }
 
     @Override
@@ -100,10 +111,12 @@ public class ListDataHolder<T> implements DataHolder<T> {
         final boolean result = mListData.addAll(list);
 
         final List<T> listCopy = new ArrayList<>(list);
-        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
-        while (it.hasPrevious()) {
-            it.previous().onDataAdded(index, listCopy);
-        }
+        foreachCallback(new ForeachCallback<DataChangeCallback<T>>() {
+            @Override
+            public void onNext(DataChangeCallback<T> item) {
+                item.onDataAdded(index, listCopy);
+            }
+        });
         return result;
     }
 
@@ -117,10 +130,12 @@ public class ListDataHolder<T> implements DataHolder<T> {
         final boolean result = mListData.addAll(index, list);
 
         final List<T> listCopy = new ArrayList<>(list);
-        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
-        while (it.hasPrevious()) {
-            it.previous().onDataAdded(index, listCopy);
-        }
+        foreachCallback(new ForeachCallback<DataChangeCallback<T>>() {
+            @Override
+            public void onNext(DataChangeCallback<T> item) {
+                item.onDataAdded(index, listCopy);
+            }
+        });
         return result;
     }
 
@@ -137,11 +152,12 @@ public class ListDataHolder<T> implements DataHolder<T> {
         }
 
         final T model = mListData.remove(index);
-
-        final ListIterator<DataChangeCallback<T>> it = getListIteratorPrevious();
-        while (it.hasPrevious()) {
-            it.previous().onDataRemoved(index, model);
-        }
+        foreachCallback(new ForeachCallback<DataChangeCallback<T>>() {
+            @Override
+            public void onNext(DataChangeCallback<T> item) {
+                item.onDataRemoved(index, model);
+            }
+        });
         return model;
     }
 
@@ -214,7 +230,9 @@ public class ListDataHolder<T> implements DataHolder<T> {
         final List<T> listResult = new ArrayList<>(data.size());
         for (T item : data) {
             final T transform = transformData(item);
-            listResult.add(transform);
+            if (transform != null) {
+                listResult.add(transform);
+            }
         }
         return listResult;
     }
@@ -225,10 +243,7 @@ public class ListDataHolder<T> implements DataHolder<T> {
         }
 
         final T transform = mDataTransform.transform(data);
-        if (transform == null) {
-            return data;
-        }
-        return transform;
+        return transform != null ? transform : data;
     }
 
     @Override
@@ -259,5 +274,9 @@ public class ListDataHolder<T> implements DataHolder<T> {
     @Override
     public T removeData(int index) {
         return removeAt(index);
+    }
+
+    private interface ForeachCallback<T> {
+        void onNext(T item);
     }
 }
