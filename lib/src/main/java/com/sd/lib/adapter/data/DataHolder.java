@@ -58,7 +58,7 @@ public interface DataHolder<T> {
     /**
      * 更新index位置的数据
      */
-    void updateData(int index, T data);
+    void set(int index, T data);
 
     //---------- modify end ----------
 
@@ -122,6 +122,12 @@ public interface DataHolder<T> {
      */
     @Deprecated
     T removeData(int index);
+
+    /**
+     * {@link #set(int, Object)}
+     */
+    @Deprecated
+    void updateData(int index, T data);
 
     /**
      * 数据变化回调

@@ -162,7 +162,7 @@ public class ListDataHolder<T> implements DataHolder<T> {
     }
 
     @Override
-    public void updateData(int index, T data) {
+    public void set(int index, T data) {
         if (data == null || !isIndexLegal(index)) {
             return;
         }
@@ -274,6 +274,11 @@ public class ListDataHolder<T> implements DataHolder<T> {
     @Override
     public T removeData(int index) {
         return removeAt(index);
+    }
+
+    @Override
+    public void updateData(int index, T data) {
+        set(index, data);
     }
 
     private interface ForeachCallback<T> {
