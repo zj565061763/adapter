@@ -60,6 +60,7 @@ public class RecyclerViewActivity extends Activity {
             }
         });
 
+        // 监听数据变化
         mAdapter.getDataHolder().addDataChangeCallback(new DataHolder.DataChangeCallback<DataModel>() {
             @Override
             public void onDataChanged(List<DataModel> list) {
@@ -79,6 +80,16 @@ public class RecyclerViewActivity extends Activity {
             @Override
             public void onDataRemoved(int index, DataModel data) {
                 Log.i(TAG, "onDataRemoved index:" + index + " data:" + data);
+            }
+        });
+
+        // 设置数据转换
+        mAdapter.getDataHolder().setDataTransform(new DataHolder.DataTransform<DataModel>() {
+            @Override
+            public DataModel transform(DataModel source) {
+                Log.i(TAG, "transform " + source);
+                source.name += " transform";
+                return source;
             }
         });
 
