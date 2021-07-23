@@ -238,11 +238,17 @@ public class ListDataHolder<T> implements DataHolder<T> {
     }
 
     private T transformData(T data) {
-        if (mDataTransform == null) {
+        if (data == null) {
+            return null;
+        }
+
+        final DataTransform<T> transform = mDataTransform;
+        if (transform == null) {
             return data;
         }
-        final T transform = mDataTransform.transform(data);
-        return transform != null ? transform : data;
+
+        final T transformData = transform.transform(data);
+        return transformData != null ? transformData : data;
     }
 
     @Override
