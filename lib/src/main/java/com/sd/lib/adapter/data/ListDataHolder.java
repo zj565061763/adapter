@@ -43,10 +43,17 @@ public class ListDataHolder<T> implements DataHolder<T> {
 
     @Override
     public void setData(List<? extends T> list) {
-        if (list != null) {
-            mListData = transformDataList(list);
+        if (list == null) {
+            list = new ArrayList<>();
+        }
+
+        final List<T> listTransform = transformDataList(list);
+        if (list == listTransform) {
+            // 数据未转换
+            mListData = new ArrayList<>(list);
         } else {
-            mListData = new ArrayList<>();
+            // 数据转换了
+            mListData = listTransform;
         }
 
         final List<T> listCopy = new ArrayList<>(mListData);
@@ -218,17 +225,17 @@ public class ListDataHolder<T> implements DataHolder<T> {
         return mListData;
     }
 
-    private List<T> transformDataList(List<? extends T> data) {
-        if (data == null || data.isEmpty()) {
-            return (List<T>) data;
-        }
-
+    private List<T> transformDataList(List<? extends T> list) {
         if (mDataTransform == null) {
-            return (List<T>) data;
+            return (List<T>) list;
         }
 
-        final List<T> listResult = new ArrayList<>(data.size());
-        for (T item : data) {
+        if (list == null || list.isEmpty()) {
+            return (List<T>) list;
+        }
+
+        final List<T> listResult = new ArrayList<>(list.size());
+        for (T item : list) {
             final T transform = transformData(item);
             if (transform != null) {
                 listResult.add(transform);
