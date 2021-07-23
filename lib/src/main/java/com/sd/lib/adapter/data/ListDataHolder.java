@@ -219,11 +219,11 @@ public class ListDataHolder<T> implements DataHolder<T> {
     }
 
     private List<T> transformDataList(List<? extends T> data) {
-        if (mDataTransform == null) {
+        if (data == null || data.isEmpty()) {
             return (List<T>) data;
         }
 
-        if (data == null || data.isEmpty()) {
+        if (mDataTransform == null) {
             return (List<T>) data;
         }
 
