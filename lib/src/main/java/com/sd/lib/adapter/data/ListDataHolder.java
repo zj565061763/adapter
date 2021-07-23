@@ -42,8 +42,8 @@ public class ListDataHolder<T> implements DataHolder<T> {
     //---------- modify start ----------
 
     @Override
-    public void setData(final List<? extends T> list) {
-        if (list == null) {
+    public void setData(List<? extends T> list) {
+        if (list == null || list.isEmpty()) {
             mListData = new ArrayList<>();
         } else {
             final List<T> listTransform = transformDataList(list);
