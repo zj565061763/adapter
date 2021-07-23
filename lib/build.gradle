@@ -5,8 +5,8 @@ plugins {
 
 def libGroupId = "com.sd.lib.android"
 def libArtifactId = "adapter"
-def libVersionCode = 20210616
-def libVersionName = "1.2.2-beta01"
+def libVersionCode = 20210723
+def libVersionName = "1.2.2-beta02"
 
 android {
     compileSdkVersion 30
