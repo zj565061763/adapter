@@ -42,18 +42,18 @@ public class ListDataHolder<T> implements DataHolder<T> {
     //---------- modify start ----------
 
     @Override
-    public void setData(List<? extends T> list) {
+    public void setData(final List<? extends T> list) {
         if (list == null) {
-            list = new ArrayList<>();
-        }
-
-        final List<T> listTransform = transformDataList(list);
-        if (list == listTransform) {
-            // 数据未转换
-            mListData = new ArrayList<>(list);
+            mListData = new ArrayList<>();
         } else {
-            // 数据转换了
-            mListData = listTransform;
+            final List<T> listTransform = transformDataList(list);
+            if (list == listTransform) {
+                // 数据未转换
+                mListData = new ArrayList<>(list);
+            } else {
+                // 数据转换了
+                mListData = listTransform;
+            }
         }
 
         final List<T> listCopy = new ArrayList<>(mListData);
