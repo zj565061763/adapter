@@ -58,4 +58,21 @@ public class ExampleInstrumentedTest {
         dataHolder.updateData(1, new TestModel("update"));
         Assert.assertEquals("update", dataHolder.get(1).name);
     }
+
+    @Test
+    public void testDataHolderIndexOutOfBounds() {
+        final DataHolder<TestModel> dataHolder = new ListDataHolder<>();
+
+        dataHolder.addData(new TestModel("a"));
+        dataHolder.addData(100, new TestModel("b"));
+        Assert.assertEquals(2, dataHolder.size());
+        Assert.assertEquals("a", dataHolder.get(0).name);
+        Assert.assertEquals("b", dataHolder.get(1).name);
+
+        dataHolder.addData(1000, TestModel.get(3));
+        Assert.assertEquals(5, dataHolder.size());
+        Assert.assertEquals("0", dataHolder.get(2).name);
+        Assert.assertEquals("1", dataHolder.get(3).name);
+        Assert.assertEquals("2", dataHolder.get(4).name);
+    }
 }
