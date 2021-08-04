@@ -137,6 +137,11 @@ public class ListDataHolder<T> implements DataHolder<T> {
             return false;
         }
 
+        final int size = mListData.size();
+        if (index > size) {
+            return addAll(list);
+        }
+
         final List<T> transform = transformDataList(list);
         final boolean result = mListData.addAll(index, transform);
 
