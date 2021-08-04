@@ -92,6 +92,12 @@ public class ListDataHolder<T> implements DataHolder<T> {
             return;
         }
 
+        final int size = mListData.size();
+        if (index > size) {
+            addData(data);
+            return;
+        }
+
         final T transform = transformData(data);
         mListData.add(index, transform);
 
